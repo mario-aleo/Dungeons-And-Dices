@@ -1,8 +1,8 @@
-"use strict";
+(function(){
+    "use strict";
 
-angular.module("ngapp").controller("MainController", function( $state, $scope ){
+    angular.module("ngapp").controller("MainController", function( $state, $scope ){
 
-    var ctrl = this;
-
-    
-});
+        var ctrl = this;
+    });
+})();
