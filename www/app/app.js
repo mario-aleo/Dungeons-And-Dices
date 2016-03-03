@@ -55,6 +55,7 @@ angular.module("ngapp", [ "ui.router", "ngCordova", "ngStorage" ])
         name: null,
         description: null,
         type: null,
+        effectAllys: false,
         abilityEffectList: [] // List Must Be From Sheet
     };
 });
