@@ -50,6 +50,13 @@ angular.module("ngapp", [ "ui.router", "ngCordova", "ngStorage" ])
         effect: null,
         skill: null
     };
+    
+    $rootScope.BaseEffect = {
+        name: null,
+        description: null,
+        type: null,
+        abilityEffectList: [] // List Must Be From Sheet
+    };
 });
 
 /*
@@ -96,4 +103,8 @@ angular.module("ngapp", [ "ui.router", "ngCordova", "ngStorage" ])
             02- Leather
             03- Mail
             04- Plate
+            
+        ## Effect Type
+            01- Buff
+            02- Debuff
 */
