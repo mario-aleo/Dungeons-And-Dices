@@ -2,10 +2,8 @@
 
 angular.module("ngapp", [ "ui.router", "ngCordova", "ngStorage" ])
 
-.run(function($rootScope, $state, $localstorage, $cordovaDevice, $cordovaStatusbar){
+.run(function($rootScope, $state, $localstorage){
     document.addEventListener("deviceready", function () {
-        $cordovaStatusbar.overlaysWebView(false); // Always Show Status Bar
-        $cordovaStatusbar.styleHex('#616161'); // Status Bar With Red Color, Using Angular-Material Style
         window.plugins.orientationLock.lock("portrait");
     }, false);
     
@@ -15,7 +13,7 @@ angular.module("ngapp", [ "ui.router", "ngCordova", "ngStorage" ])
         }  else{
             e.preventDefault();
         }
-        }, false);
+    }, false);
         
     if(typeof $localstorage.DungeonsDices == 'undefined')
     {
@@ -104,8 +102,4 @@ angular.module("ngapp", [ "ui.router", "ngCordova", "ngStorage" ])
             02- Leather
             03- Mail
             04- Plate
-            
-        ## Effect Type
-            01- Buff
-            02- Debuff
 */
