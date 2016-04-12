@@ -1,0 +1,54 @@
+<!--link href="../../../assets/bower_components/polymer/polymer.html" rel="import"-->
+
+<dom-module id="sheet-list">  
+    <template>
+        <style>
+            :host {
+                width: 100%;
+            }
+            
+            .add-sheet {
+                float: right;
+                margin: 16px;
+            }
+        </style>
+        
+        <template is="dom-repeat" items="{{ sheetList }}">    
+            <sheet-card personagem="{{ item.name }}" level="{{ item.level }}" classe="{{ item.class }}" raca="{{ item.race }}" sistema="{{ item.system }}"></sheet-card>
+        </template>
+
+        <a data-route="teste" href="{{baseUrl}}teste"><paper-fab class="add-sheet" noink icon="add"></paper-fab></a>
+    </template>
+</dom-module>
+    
+<script>
+    Polymer({
+        is: "sheet-list",
+        properties: {
+            sheetList: {
+                type: Array,
+                value: [
+                    {
+                        name: "Marad",
+                        class: "Paladino",
+                        race: "Draenei",
+                        level: 100,
+                        system: "WoWTable"
+                    },
+                    {
+                        name: "Bilbo",
+                        class: "Ladino",
+                        race: "Hobbit",
+                        level: 10,
+                        system: "LotR RPG"
+                    }
+                ]
+            }
+        },
+        ready: function(e){
+        },
+        addSheet: function(e){
+            console.log("Test");
+        }
+    });
+</script>

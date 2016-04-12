@@ -22,7 +22,7 @@
             }
         </style>
         
-        <paper-card on-click="{{openSheet}}">
+        <paper-card on-click="openSheet">
             <div class="card-content">
                 <div class="card-content-row">
                     <p>Personagem:</p><p>{{ personagem }}</p>
@@ -71,6 +71,7 @@
         },
         openSheet: function(e) {
             console.log("Polymer OpenSheet");
+            page.redirect('/teste');
         }
     });
 </script>

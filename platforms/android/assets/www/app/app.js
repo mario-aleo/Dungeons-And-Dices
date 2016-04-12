@@ -1,105 +1,29 @@
-"use strict";
+(function(document) {
+  'use strict';
+    
+  var app = document.querySelector('#app');
 
-angular.module("ngapp", [ "ui.router", "ngCordova", "ngStorage" ])
+  // Sets app default base URL
+  app.baseUrl = '/';
+  if (window.location.port === '') {  // if production
+    // Uncomment app.baseURL below and
+    // set app.baseURL to '/your-pathname/' if running from folder in production
+    // app.baseUrl = '/polymer-starter-kit/';
+  }
 
-.run(function($rootScope, $state, $localstorage){
-    document.addEventListener("deviceready", function () {
-        window.plugins.orientationLock.lock("portrait");
-    }, false);
-    
-    document.addEventListener("backbutton", function (e) {
-        if($state.is('init')){
-            navigator.app.exitApp();
-        }  else{
-            e.preventDefault();
-        }
-    }, false);
-        
-    if(typeof $localstorage.DungeonsDices == 'undefined')
-    {
-        
-    }
-    
-    $rootScope.BaseWeapon = {
-        name: null,
-        description: null,
-        type: null,
-        damage: null,
-        effect: null,
-        skill: null
-    };
-    
-    $rootScope.BaseAmmo = {
-        name: null,
-        description: null,
-        type: null,
-        damage: null,
-        effect: null,
-        skill: null
-    };
-    
-    $rootScope.BaseArmor = {
-        name: null,
-        description: null,
-        type: null,
-        slot: null,
-        defense: null,
-        weight: null,
-        effect: null,
-        skill: null
-    };
-    
-    $rootScope.BaseEffect = {
-        name: null,
-        description: null,
-        type: null,
-        effectAllys: false,
-        abilityEffectList: [] // List Must Be From Sheet
-    };
-});
+  // Listen for template bound event to know when bindings
+  // have resolved and content has been stamped to the page
+  app.addEventListener('dom-change', function() {
+    // console.log('Our app is ready to rock!');
+  });
 
-/*
-    # Information Table
+  // See https://github.com/Polymer/polymer/issues/1381
+  window.addEventListener('WebComponentsReady', function() {
+    // imports are loaded and elements have been registered
+  });
 
-        ## Weapon Type
-            01- One-Hand Sword
-            02- One-Hand Mace
-            03- One-Hand Axe
-            04- Dagger
-            05- Fist Weapon
-            06- Wand
-            07- Thrown Weapon
-            08- Off-Hand
-            09- Two-Hand Sword
-            10- Two-Hand Mace
-            11- Two-Hand Axe
-            12- Polearm
-            13- Bow
-            14- Crossbow
-            13- Staff
-            
-        ## Ammo Type
-            01- Bow Arrow
-            02- Crossbow Arrow
-            03- Thrown Weapon Ammo
-            
-        ## Armor Slot
-            01- Head
-            02- Shoulder
-            03- Chest
-            04- Back (Only Cloth)
-            05- Wrist
-            06- Hands
-            07- Waist
-            08- Legs
-            09- Feet
-            10- Neck
-            11- Trinkets
-            12- Finger
-            
-        ## Armor Type
-            01- Cloth
-            02- Leather
-            03- Mail
-            04- Plate
-*/
+  app.closeDrawer = function() {
+    app.$.paperDrawerPanel.closeDrawer();
+  };
+
+})(document);

@@ -13,11 +13,17 @@
             }
         </style>
         
+        <iron-localstorage
+        name="localstorageSheetList"
+        value="{{sheetList}}"
+        on-iron-localstorage-load-empty="initializeDefaultValue"
+        ></iron-localstorage>
+        
         <template is="dom-repeat" items="{{ sheetList }}">    
             <sheet-card personagem="{{ item.name }}" level="{{ item.level }}" classe="{{ item.class }}" raca="{{ item.race }}" sistema="{{ item.system }}"></sheet-card>
         </template>
 
-        <a data-route="teste" href="{{baseUrl}}teste"><paper-fab class="add-sheet" noink icon="add"></paper-fab></a>
+        <a data-route="teste" href="/teste"><paper-fab class="add-sheet" noink icon="add"></paper-fab></a>
     </template>
 </dom-module>
     
@@ -26,29 +32,32 @@
         is: "sheet-list",
         properties: {
             sheetList: {
-                type: Array,
-                value: [
-                    {
-                        name: "Marad",
-                        class: "Paladino",
-                        race: "Draenei",
-                        level: 100,
-                        system: "WoWTable"
-                    },
-                    {
-                        name: "Bilbo",
-                        class: "Ladino",
-                        race: "Hobbit",
-                        level: 10,
-                        system: "LotR RPG"
-                    }
-                ]
+                type: Array
             }
         },
         ready: function(e){
         },
         addSheet: function(e){
-            console.log("Test");
+            console.log("Test Add Sheet");
+        },
+        initializeDefaultValue: function() {
+            console.log("Test Sheet List");
+            this.sheetList = [
+                {
+                    name: "Marad",
+                    class: "Paladino",
+                    race: "Draenei",
+                    level: 100,
+                    system: "WoWTable"
+                },
+                {
+                    name: "Bilbo",
+                    class: "Ladino",
+                    race: "Hobbit",
+                    level: 10,
+                    system: "LotR RPG"
+                }
+            ]
         }
     });
 </script>

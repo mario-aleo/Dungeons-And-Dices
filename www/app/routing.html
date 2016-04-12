@@ -19,12 +19,12 @@
       next();
     });  
       
-    page('/', function() {
+    page('/home', function() {
       app.route = 'home';
     });
 
     page(app.baseUrl, function() {
-      app.route = 'teste';
+      app.route = 'home';
     });
 
     page('/teste', function() {
