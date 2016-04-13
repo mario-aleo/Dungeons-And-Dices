@@ -10,11 +10,20 @@
             }
             
             paper-tabs, paper-toolbar {
-                background-color: #F5F5F5;
-                color: #03A9F4;
+                background-color: #9E9E9E;
+                color: #FFFFFF;
             }
             
+            paper-card {
+                margin-top: 16px; 
+                width: 80%;
+            }
             
+            .card-content-row {
+                 @apply(--layout-horizontal);
+                 margin-top: -1em;
+                 margin-bottom: -1em;
+            }
         </style>
         
         <iron-localstorage
@@ -82,16 +91,35 @@
             <paper-tab>Status</paper-tab>
             <paper-tab>Recursos</paper-tab>
             <paper-tab>Defenses</paper-tab>
-            <paper-tab>Attacks</paper-tab>
             <paper-tab>Skills</paper-tab>
         </paper-tabs>
 
         <iron-pages selected="{{selected}}">
-            <div>Basico</div>
+            <div>
+                <p>Basico</p>
+                <paper-card on-click="openSheet">
+                    <div class="card-content">
+                        <div class="card-content-row">
+                            <paper-input is="iron-input" bind-value="{{}}" label="Nome"></paper-input>
+                        </div>
+                        <div class="card-content-row">
+                            <paper-input is="iron-input" bind-value="{{}}" label="Classe"></paper-input>
+                        </div>
+                        <div class="card-content-row">
+                            <paper-input is="iron-input" bind-value="{{}}" label="Raça"></paper-input>
+                        </div>
+                        <div class="card-content-row">
+                            <paper-input is="iron-input" bind-value="{{}}" label="Level"></paper-input>
+                        </div>
+                        <div class="card-content-row">
+                            <paper-input is="iron-input" bind-value="{{}}" label="Sistema"></paper-input>
+                        </div>
+                    </div>
+                </paper-card>
+            </div>
             <div>Status</div>
             <div>Recursos</div>
             <div>Defenses</div>
-            <div>Attacks</div>
             <div>Skills</div>
         </iron-pages>
     </template>

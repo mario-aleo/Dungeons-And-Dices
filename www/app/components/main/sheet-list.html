@@ -8,8 +8,13 @@
             }
             
             .add-sheet {
-                float: right;
-                margin: 16px;
+                position: fixed;
+                bottom: 16px;
+                right: 16px;
+            }
+            
+            #space {
+                height: 64px;
             }
         </style>
         
@@ -22,6 +27,8 @@
         <template is="dom-repeat" items="{{ sheetList }}">    
             <sheet-card personagem="{{ item.name }}" level="{{ item.level }}" classe="{{ item.class }}" raca="{{ item.race }}" sistema="{{ item.system }}"></sheet-card>
         </template>
+        
+        <div id="space"></div>
 
         <paper-fab class="add-sheet" noink icon="add" on-click="createSheet"></paper-fab>
     </template>
