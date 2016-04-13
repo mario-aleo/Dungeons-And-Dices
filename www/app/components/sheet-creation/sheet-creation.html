@@ -102,6 +102,90 @@
                 persistBonus: 0, 
                 volatileBonus: 0
             }
+        },
+        initializeDefaultBaseResources: function() {
+            console.log("LocalStorage Base Resources");
+            this.baseResources = {
+                value: 0, 
+                baseValue: 0, 
+                statusBase: null, 
+                statusBaseModifier: 0, 
+                levelModifier: 0, 
+                persistBonus: 0, 
+                volatileBonus: 0
+            }
+        },
+        initializeDefaultBaseDefenses: function() {
+            console.log("LocalStorage Base Defenses");
+            this.baseDefenses = {
+                value: 0, 
+                baseValue: 0, 
+                statusBase: null, 
+                statusBaseModifier: 0, 
+                levelModifier: 0, 
+                persistBonus: 0, 
+                volatileBonus: 0
+            }
+        },
+        initializeDefaultBaseAttacks: function() {
+            console.log("LocalStorage Base Attacks");
+            this.baseAttacks = {
+                AttackValue: 0, 
+                DamageValue: 0, 
+                baseAttack: 0, 
+                attackStatusBase: null, 
+                attackStatusBaseModifier: 0, 
+                attackLevelModifier: 0, 
+                attackpersistBonus: 0, 
+                attackVolatileBonus: 0, 
+                baseDamage: 0, 
+                damageStatusBase: null, 
+                damageStatusBaseModifier: 0, 
+                damageLevelModifier: 0, 
+                damagepersistBonus: 0, 
+                damageVolatileBonus: 0
+            }
+        },
+        initializeDefaultBaseSkills: function() {
+            console.log("LocalStorage Base Skills");
+            this.baseSkills = {
+                value: 0, 
+                baseValue: 0, 
+                statusBase: null, 
+                statusBaseModifier: 0, 
+                levelModifier: 0, 
+                persistBonus: 0, 
+                volatileBonus: 0
+            }
+        },
+        initializeDefaultBaseEquipmentEffects: function() {
+            console.log("LocalStorage Base Equipments Effects");
+            this.baseEquipmentsEffects = {
+                value: 0, 
+                affect: null
+            }
+        },
+        initializeDefaultBaseWeapon: function() {
+            console.log("LocalStorage Base Weapon");
+            this.baseWeapon = {
+                type: 0, 
+                attack: 0, 
+                damage: 0
+            }
+        },
+        initializeDefaultBasePersistBonus: function() {
+            console.log("LocalStorage Base Persist Bonus");
+            this.basePersistBonus = {
+                value: 0, 
+                affect: null
+            }
+        },
+        initializeDefaultBaseVolatileBonus: function() {
+            console.log("LocalStorage Base Volatile Bonus");
+            this.baseVolatileBonus = {
+                value: 0, 
+                affect: null
+            }
         }
     });
 </script>
