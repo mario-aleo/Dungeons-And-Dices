@@ -23,7 +23,7 @@
             <sheet-card personagem="{{ item.name }}" level="{{ item.level }}" classe="{{ item.class }}" raca="{{ item.race }}" sistema="{{ item.system }}"></sheet-card>
         </template>
 
-        <a data-route="teste" href="/teste"><paper-fab class="add-sheet" noink icon="add"></paper-fab></a>
+        <paper-fab class="add-sheet" noink icon="add" on-click="createSheet"></paper-fab>
     </template>
 </dom-module>
     
@@ -36,12 +36,10 @@
             }
         },
         ready: function(e){
-        },
-        addSheet: function(e){
-            console.log("Test Add Sheet");
+            console.log("Sheet List Loaded");
         },
         initializeDefaultValue: function() {
-            console.log("Test Sheet List");
+            console.log("LocalStorage Default Sheet List");
             this.sheetList = [
                 {
                     name: "Marad",
@@ -58,6 +56,10 @@
                     system: "LotR RPG"
                 }
             ]
+        },
+        createSheet: function(e){
+            console.log("Polymer CreateSheet");
+            page.redirect('/sheetCreation');
         }
     });
 </script>

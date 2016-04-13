@@ -69,9 +69,12 @@
                 value: ""
             },
         },
+        ready: function(e){
+            console.log("Sheet List Card Loaded");
+        },
         openSheet: function(e) {
             console.log("Polymer OpenSheet");
-            page.redirect('/teste');
+            page.redirect('/sheetDetail');
         }
     });
 </script>
