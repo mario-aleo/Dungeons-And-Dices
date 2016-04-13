@@ -5,12 +5,16 @@
         <style>
             :host {
                 width: 100%;
+                
+                --paper-tabs-selection-bar-color: #03A9F4;
             }
             
-            .add-sheet {
-                float: right;
-                margin: 16px;
+            paper-tabs, paper-toolbar {
+                background-color: #F5F5F5;
+                color: #03A9F4;
             }
+            
+            
         </style>
         
         <iron-localstorage
@@ -25,9 +29,71 @@
         on-iron-localstorage-load-empty="initializeDefaultBaseStatus"
         ></iron-localstorage>
         
-        <!-- Elements -->
+        <iron-localstorage
+        name="baseResources"
+        value="{{baseResources}}"
+        on-iron-localstorage-load-empty="initializeDefaultBaseResources"
+        ></iron-localstorage>
+        
+        <iron-localstorage
+        name="baseDefenses"
+        value="{{baseDefenses}}"
+        on-iron-localstorage-load-empty="initializeDefaultBaseDefenses"
+        ></iron-localstorage>
+        
+        <iron-localstorage
+        name="baseAttacks"
+        value="{{baseAttacks}}"
+        on-iron-localstorage-load-empty="initializeDefaultBaseAttacks"
+        ></iron-localstorage>
+        
+        <iron-localstorage
+        name="baseSkills"
+        value="{{baseSkills}}"
+        on-iron-localstorage-load-empty="initializeDefaultBaseSkills"
+        ></iron-localstorage>
+        
+        <iron-localstorage
+        name="baseStatus"
+        value="{{baseStatus}}"
+        on-iron-localstorage-load-empty="initializeDefaultBaseStatus"
+        ></iron-localstorage>
+        
+        <iron-localstorage
+        name="baseStatus"
+        value="{{baseStatus}}"
+        on-iron-localstorage-load-empty="initializeDefaultBaseStatus"
+        ></iron-localstorage>
+        
+        <iron-localstorage
+        name="baseStatus"
+        value="{{baseStatus}}"
+        on-iron-localstorage-load-empty="initializeDefaultBaseStatus"
+        ></iron-localstorage>
+        
+        <iron-localstorage
+        name="baseStatus"
+        value="{{baseStatus}}"
+        on-iron-localstorage-load-empty="initializeDefaultBaseStatus"
+        ></iron-localstorage>
+        
+        <paper-tabs selected="{{selected}}" noink scrollable>
+            <paper-tab>Basico</paper-tab>
+            <paper-tab>Status</paper-tab>
+            <paper-tab>Recursos</paper-tab>
+            <paper-tab>Defenses</paper-tab>
+            <paper-tab>Attacks</paper-tab>
+            <paper-tab>Skills</paper-tab>
+        </paper-tabs>
 
-        <paper-fab class="add-sheet" noink icon="add" on-click="createSheet"></paper-fab>
+        <iron-pages selected="{{selected}}">
+            <div>Basico</div>
+            <div>Status</div>
+            <div>Recursos</div>
+            <div>Defenses</div>
+            <div>Attacks</div>
+            <div>Skills</div>
+        </iron-pages>
     </template>
 </dom-module>
     
@@ -35,10 +101,38 @@
     Polymer({
         is: "sheet-creation",
         properties: {
+            selected: {
+                type: String,
+                value: "0"
+            },
             baseSheet: {
                 type: Object
             },
             baseStatus: {
+                type: Object
+            },
+            baseResources: {
+                type: Object
+            },
+            baseDefenses: {
+                type: Object
+            },
+            baseAttacks: {
+                type: Object
+            },
+            baseSkills: {
+                type: Object
+            },
+            baseEquipmentsEffects: {
+                type: Object
+            },
+            baseWeapon: {
+                type: Object
+            },
+            basePersistBonus: {
+                type: Object
+            },
+            baseVolatileBonus: {
                 type: Object
             }
         },
