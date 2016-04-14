@@ -6,36 +6,11 @@
             :host {
                 width: 100%;
                 --paper-tabs-selection-bar-color: #03A9F4;
-                --paper-input-container-focus-color: #03A9F4;
             }
             
             paper-tabs, paper-toolbar {
                 background-color: #9E9E9E;
                 color: #FFFFFF;
-            }
-            
-            .creation-tabs {
-                width: 100%;
-                @apply(--layout-vertical);
-            }
-            
-            .card-container {
-                width: 100%;
-                @apply(--layout-horizontal);
-                @apply(--layout-center-justified);
-            }
-            
-            paper-card {
-                margin-top: 16px; 
-                width: 80%;
-            }
-            
-            .card-content-row {
-                @apply(--layout-horizontal);
-            }
-            
-            paper-input {
-                
             }
         </style>
         
@@ -54,38 +29,7 @@
         </paper-tabs>
 
         <iron-pages selected="{{selected}}">
-            <div class="creation-tabs">
-                <div class="card-container">
-                    <paper-card heading="Básico">
-                        <div class="card-content">
-                            <paper-input-container>
-                                <label>Nome</label>
-                                <input is="iron-input" bind-value="{{newSheet.name}}"> 
-                            </paper-input-container>
-
-                            <paper-input-container>
-                                <label>Classe</label>
-                                <input is="iron-input" bind-value="{{newSheet.class}}"> 
-                            </paper-input-container>
-
-                            <paper-input-container>
-                                <label>Raça</label>
-                                <input is="iron-input" bind-value="{{newSheet.race}}"> 
-                            </paper-input-container>
-
-                            <paper-input-container>
-                                <label>Level</label>
-                                <input is="iron-input" bind-value="{{newSheet.level}}"> 
-                            </paper-input-container>
-
-                            <paper-input-container>
-                                <label>Sistema</label>
-                                <input is="iron-input" bind-value="{{newSheet.system}}"> 
-                            </paper-input-container>
-                        </div>
-                    </paper-card>
-                </div>
-            </div>
+            <basic-tab sheetObject="{{newSheet}}"></basic-tab>
             <div>Status</div>
             <div>Recursos</div>
             <div>Defenses</div>
