@@ -27,63 +27,9 @@
         </style>
         
         <iron-localstorage
-        name="baseSheet"
-        value="{{baseSheet}}"
-        on-iron-localstorage-load-empty="initializeDefaultBaseSheet"
-        ></iron-localstorage>
-        
-        <iron-localstorage
-        name="baseStatus"
-        value="{{baseStatus}}"
-        on-iron-localstorage-load-empty="initializeDefaultBaseStatus"
-        ></iron-localstorage>
-        
-        <iron-localstorage
-        name="baseResources"
-        value="{{baseResources}}"
-        on-iron-localstorage-load-empty="initializeDefaultBaseResources"
-        ></iron-localstorage>
-        
-        <iron-localstorage
-        name="baseDefenses"
-        value="{{baseDefenses}}"
-        on-iron-localstorage-load-empty="initializeDefaultBaseDefenses"
-        ></iron-localstorage>
-        
-        <iron-localstorage
-        name="baseAttacks"
-        value="{{baseAttacks}}"
-        on-iron-localstorage-load-empty="initializeDefaultBaseAttacks"
-        ></iron-localstorage>
-        
-        <iron-localstorage
-        name="baseSkills"
-        value="{{baseSkills}}"
-        on-iron-localstorage-load-empty="initializeDefaultBaseSkills"
-        ></iron-localstorage>
-        
-        <iron-localstorage
-        name="baseStatus"
-        value="{{baseStatus}}"
-        on-iron-localstorage-load-empty="initializeDefaultBaseStatus"
-        ></iron-localstorage>
-        
-        <iron-localstorage
-        name="baseStatus"
-        value="{{baseStatus}}"
-        on-iron-localstorage-load-empty="initializeDefaultBaseStatus"
-        ></iron-localstorage>
-        
-        <iron-localstorage
-        name="baseStatus"
-        value="{{baseStatus}}"
-        on-iron-localstorage-load-empty="initializeDefaultBaseStatus"
-        ></iron-localstorage>
-        
-        <iron-localstorage
-        name="baseStatus"
-        value="{{baseStatus}}"
-        on-iron-localstorage-load-empty="initializeDefaultBaseStatus"
+        name="localstorageSheetList"
+        value="{{sheetList}}"
+        on-iron-localstorage-load-empty="initializeDefaultSheetList"
         ></iron-localstorage>
         
         <paper-tabs selected="{{selected}}" noink scrollable>
@@ -100,19 +46,19 @@
                 <paper-card on-click="openSheet">
                     <div class="card-content">
                         <div class="card-content-row">
-                            <paper-input is="iron-input" bind-value="{{}}" label="Nome"></paper-input>
+                            <paper-input is="iron-input" bind-value="{{newSheet.name}}" label="Nome"></paper-input>
                         </div>
                         <div class="card-content-row">
-                            <paper-input is="iron-input" bind-value="{{}}" label="Classe"></paper-input>
+                            <paper-input is="iron-input" bind-value="{{newSheet.class}}" label="Classe"></paper-input>
                         </div>
                         <div class="card-content-row">
-                            <paper-input is="iron-input" bind-value="{{}}" label="Raça"></paper-input>
+                            <paper-input is="iron-input" bind-value="{{newSheet.race}}" label="Raça"></paper-input>
                         </div>
                         <div class="card-content-row">
-                            <paper-input is="iron-input" bind-value="{{}}" label="Level"></paper-input>
+                            <paper-input is="iron-input" bind-value="{{newSheet.level}}" label="Level"></paper-input>
                         </div>
                         <div class="card-content-row">
-                            <paper-input is="iron-input" bind-value="{{}}" label="Sistema"></paper-input>
+                            <paper-input is="iron-input" bind-value="{{newSheet.system}}" label="Sistema"></paper-input>
                         </div>
                     </div>
                 </paper-card>
@@ -133,181 +79,59 @@
                 type: String,
                 value: "0"
             },
-            baseSheet: {
-                type: Object
+            sheetList: {
+                type: Array
             },
-            baseStatus: {
-                type: Object
-            },
-            baseResources: {
-                type: Object
-            },
-            baseDefenses: {
-                type: Object
-            },
-            baseAttacks: {
-                type: Object
-            },
-            baseSkills: {
-                type: Object
-            },
-            baseEquipmentsEffects: {
-                type: Object
-            },
-            baseWeapon: {
-                type: Object
-            },
-            basePersistBonus: {
-                type: Object
-            },
-            baseVolatileBonus: {
-                type: Object
-            }
+            newSheet: {
+                type: Object,
+                value: {
+                    name: "",
+                    class: "",
+                    race: "",
+                    level: 1,
+                    system: "",
+                    status: {},
+                    // *vit: { value: SUM, *baseValue: 10, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
+                    resources: {},
+                    // *hp: { value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
+                    defenses: {},
+                    // *armor: { value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
+                    attacks: {},
+                    // *attackName: { AttackValue: SUM, DamageValue: SUM, *baseAttack: 10, *attackStatusBase: Vit, *attackStatusBaseModifier: 1, *attackLevelModifier: 0, attackpersistBonus: 0, attackVolatileBonus: 0, *baseDamage: 10, *damageStatusBase: Vit, *damageStatusBaseModifier: 1, *damageLevelModifier: 0, damagepersistBonus: 0, damageVolatileBonus: 0 }, ...
+                    skills: {},
+                    // *skillName: { value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
+                    equipments: {
+                        head: {},
+                        // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                        chest: {},
+                        // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                        legs: {},
+                        // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                        feet: {},
+                        // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                        hands: {},
+                        // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                        cloak: {},
+                        // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                        waist: {},
+                        // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                        wrist: {},
+                        // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                        trinkets: {},
+                        // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }, ...
+                        weapon: {},
+                        // *equipmentName: { *type: 1, *attack: 10, *damage: 10, effect1: { *value: 10, *affect: Armor }, ... }
+                        shield: {}
+                        // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                    },
+                    persistBonus: {},
+                    // bonusName: { *value: 10, *affect: Vit }, ...  Sample: Equipment Bonus 
+                    volatileBonus: {}
+                    // *bonusName: { *value: 10, *affect: Vit }, ...  Sample: Potion Bonus 
+                }
         },
         ready: function(e){
             console.log("Sheet Creation Loaded");
-        },
-        initializeDefaultBaseSheet: function() {
-            console.log("LocalStorage Base Sheet");
-            this.baseSheet = {
-                name: "",
-                class: "",
-                race: "",
-                level: 1,
-                system: "",
-                status: {},
-                // *vit: { value: SUM, *baseValue: 10, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
-                resources: {},
-                // *hp: { value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
-                defenses: {},
-                // *armor: { value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
-                attacks: {},
-                // *attackName: { AttackValue: SUM, DamageValue: SUM, *baseAttack: 10, *attackStatusBase: Vit, *attackStatusBaseModifier: 1, *attackLevelModifier: 0, attackpersistBonus: 0, attackVolatileBonus: 0, *baseDamage: 10, *damageStatusBase: Vit, *damageStatusBaseModifier: 1, *damageLevelModifier: 0, damagepersistBonus: 0, damageVolatileBonus: 0 }, ...
-                skills: {},
-                // *skillName: { value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
-                equipments: {
-                    head: {},
-                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                    chest: {},
-                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                    legs: {},
-                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                    feet: {},
-                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                    hands: {},
-                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                    cloak: {},
-                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                    waist: {},
-                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                    wrist: {},
-                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                    trinkets: {},
-                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }, ...
-                    weapon: {},
-                    // *equipmentName: { *type: 1, *attack: 10, *damage: 10, effect1: { *value: 10, *affect: Armor }, ... }
-                    shield: {}
-                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                },
-                persistBonus: {},
-                // bonusName: { *value: 10, *affect: Vit }, ... /* Sample: Equipment Bonus */
-                volatileBonus: {}
-                // *bonusName: { *value: 10, *affect: Vit }, ... /* Sample: Potion Bonus */
-            }
-        },
-        initializeDefaultBaseStatus: function() {
-            console.log("LocalStorage Base Status");
-            this.baseStatus = {
-                value: 0, 
-                baseValue: 0, 
-                levelModifier: 0, 
-                persistBonus: 0, 
-                volatileBonus: 0
-            }
-        },
-        initializeDefaultBaseResources: function() {
-            console.log("LocalStorage Base Resources");
-            this.baseResources = {
-                value: 0, 
-                baseValue: 0, 
-                statusBase: null, 
-                statusBaseModifier: 0, 
-                levelModifier: 0, 
-                persistBonus: 0, 
-                volatileBonus: 0
-            }
-        },
-        initializeDefaultBaseDefenses: function() {
-            console.log("LocalStorage Base Defenses");
-            this.baseDefenses = {
-                value: 0, 
-                baseValue: 0, 
-                statusBase: null, 
-                statusBaseModifier: 0, 
-                levelModifier: 0, 
-                persistBonus: 0, 
-                volatileBonus: 0
-            }
-        },
-        initializeDefaultBaseAttacks: function() {
-            console.log("LocalStorage Base Attacks");
-            this.baseAttacks = {
-                AttackValue: 0, 
-                DamageValue: 0, 
-                baseAttack: 0, 
-                attackStatusBase: null, 
-                attackStatusBaseModifier: 0, 
-                attackLevelModifier: 0, 
-                attackpersistBonus: 0, 
-                attackVolatileBonus: 0, 
-                baseDamage: 0, 
-                damageStatusBase: null, 
-                damageStatusBaseModifier: 0, 
-                damageLevelModifier: 0, 
-                damagepersistBonus: 0, 
-                damageVolatileBonus: 0
-            }
-        },
-        initializeDefaultBaseSkills: function() {
-            console.log("LocalStorage Base Skills");
-            this.baseSkills = {
-                value: 0, 
-                baseValue: 0, 
-                statusBase: null, 
-                statusBaseModifier: 0, 
-                levelModifier: 0, 
-                persistBonus: 0, 
-                volatileBonus: 0
-            }
-        },
-        initializeDefaultBaseEquipmentEffects: function() {
-            console.log("LocalStorage Base Equipments Effects");
-            this.baseEquipmentsEffects = {
-                value: 0, 
-                affect: null
-            }
-        },
-        initializeDefaultBaseWeapon: function() {
-            console.log("LocalStorage Base Weapon");
-            this.baseWeapon = {
-                type: 0, 
-                attack: 0, 
-                damage: 0
-            }
-        },
-        initializeDefaultBasePersistBonus: function() {
-            console.log("LocalStorage Base Persist Bonus");
-            this.basePersistBonus = {
-                value: 0, 
-                affect: null
-            }
-        },
-        initializeDefaultBaseVolatileBonus: function() {
-            console.log("LocalStorage Base Volatile Bonus");
-            this.baseVolatileBonus = {
-                value: 0, 
-                affect: null
-            }
         }
     });
 </script>
