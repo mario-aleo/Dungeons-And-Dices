@@ -5,6 +5,7 @@
         <style>
             :host {
                 width: 100%;
+                height: 100%;
                 --paper-tabs-selection-bar-color: #03A9F4;
             }
             
@@ -17,7 +18,12 @@
         <iron-localstorage
         name="localstorageSheetList"
         value="{{sheetList}}"
-        on-iron-localstorage-load-empty="initializeDefaultSheetList"
+        ></iron-localstorage>
+        
+        <iron-localstorage
+        name="localstorageBaseSheet"
+        value="{{baseSheet}}"
+        on-iron-localstorage-load-empty="initializeDefaultBaseSheet"
         ></iron-localstorage>
         
         <paper-tabs selected="{{selected}}" noink scrollable>
@@ -29,7 +35,7 @@
         </paper-tabs>
 
         <iron-pages selected="{{selected}}">
-            <basic-tab sheetObject="{{newSheet}}"></basic-tab>
+            <basic-tab name="{{newSheet.name}}" job="{{newSheet.job}}" race="{{newSheet.race}}" level="{{newSheet.level}}" system="{{newSheet.system}}"></basic-tab>
             <div>Status</div>
             <div>Recursos</div>
             <div>Defenses</div>
@@ -49,57 +55,77 @@
             sheetList: {
                 type: Array
             },
+            baseSheet: {
+                type: Object,
+                observer: '_baseSheetChanged'
+            },
             newSheet: {
                 type: Object,
-                value: {
-                    name: "",
-                    class: "",
-                    race: "",
-                    level: 1,
-                    system: "",
-                    status: {},
-                    // *vit: { value: SUM, *baseValue: 10, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
-                    resources: {},
-                    // *hp: { value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
-                    defenses: {},
-                    // *armor: { value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
-                    attacks: {},
-                    // *attackName: { AttackValue: SUM, DamageValue: SUM, *baseAttack: 10, *attackStatusBase: Vit, *attackStatusBaseModifier: 1, *attackLevelModifier: 0, attackpersistBonus: 0, attackVolatileBonus: 0, *baseDamage: 10, *damageStatusBase: Vit, *damageStatusBaseModifier: 1, *damageLevelModifier: 0, damagepersistBonus: 0, damageVolatileBonus: 0 }, ...
-                    skills: {},
-                    // *skillName: { value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
-                    equipments: {
-                        head: {},
-                        // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                        chest: {},
-                        // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                        legs: {},
-                        // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                        feet: {},
-                        // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                        hands: {},
-                        // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                        cloak: {},
-                        // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                        waist: {},
-                        // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                        wrist: {},
-                        // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                        trinkets: {},
-                        // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }, ...
-                        weapon: {},
-                        // *equipmentName: { *type: 1, *attack: 10, *damage: 10, effect1: { *value: 10, *affect: Armor }, ... }
-                        shield: {}
-                        // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                    },
-                    persistBonus: {},
-                    // bonusName: { *value: 10, *affect: Vit }, ...  Sample: Equipment Bonus 
-                    volatileBonus: {}
-                    // *bonusName: { *value: 10, *affect: Vit }, ...  Sample: Potion Bonus 
-                }
+                observer: '_newSheetChanged'
             }
         },
         ready: function(e){
             console.log("Sheet Creation Loaded");
+        },
+        attributeChanged: function(e){
+            console.log("Sheet Creation Changed");
+        },
+        _baseSheetChanged: function(e){
+            console.log(this.baseSheet);
+            if(typeof this.newSheet == undefined){
+                this.newSheet = Object.create(this.baseSheet);
+                console.log(this.baseSheet);
+            }
+        },
+        _newSheetChanged: function(e){
+            console.log(this.newSheet);
+        },
+        initializeDefaultBaseSheet: function(e){
+            this.baseSheet = {
+                name: "",
+                job: "",
+                race: "",
+                level: 1,
+                system: "",
+                status: {},
+                // *vit: { value: SUM, *baseValue: 10, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
+                resources: {},
+                // *hp: { value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
+                defenses: {},
+                // *armor: { value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
+                attacks: {},
+                // *attackName: { AttackValue: SUM, DamageValue: SUM, *baseAttack: 10, *attackStatusBase: Vit, *attackStatusBaseModifier: 1, *attackLevelModifier: 0, attackpersistBonus: 0, attackVolatileBonus: 0, *baseDamage: 10, *damageStatusBase: Vit, *damageStatusBaseModifier: 1, *damageLevelModifier: 0, damagepersistBonus: 0, damageVolatileBonus: 0 }, ...
+                skills: {},
+                // *skillName: { value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
+                equipments: {
+                    head: {},
+                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                    chest: {},
+                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                    legs: {},
+                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                    feet: {},
+                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                    hands: {},
+                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                    cloak: {},
+                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                    waist: {},
+                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                    wrist: {},
+                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                    trinkets: {},
+                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }, ...
+                    weapon: {},
+                    // *equipmentName: { *type: 1, *attack: 10, *damage: 10, effect1: { *value: 10, *affect: Armor }, ... }
+                    shield: {}
+                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                },
+                persistBonus: {},
+                // bonusName: { *value: 10, *affect: Vit }, ...  Sample: Equipment Bonus 
+                volatileBonus: {}
+                // *bonusName: { *value: 10, *affect: Vit }, ...  Sample: Potion Bonus
+            }
         }
     });
 </script>
