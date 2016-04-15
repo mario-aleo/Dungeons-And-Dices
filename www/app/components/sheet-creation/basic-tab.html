@@ -16,27 +16,27 @@
         
         <paper-input-container>
             <label>Nome</label>
-            <input is="iron-input" bind-value="{{sheetObject.name}}"> 
+            <input is="iron-input" bind-value="{{name}}"> 
         </paper-input-container>
 
         <paper-input-container>
             <label>Classe</label>
-            <input is="iron-input" bind-value="{{sheetObject.class}}"> 
+            <input is="iron-input" bind-value="{{job}}"> 
         </paper-input-container>
 
         <paper-input-container>
             <label>Raça</label>
-            <input is="iron-input" bind-value="{{sheetObject.race}}"> 
+            <input is="iron-input" bind-value="{{race}}"> 
         </paper-input-container>
 
         <paper-input-container>
             <label>Level</label>
-            <input is="iron-input" bind-value="{{sheetObject.level}}"> 
+            <input is="iron-input" bind-value="{{level}}"> 
         </paper-input-container>
 
         <paper-input-container>
             <label>Sistema</label>
-            <input is="iron-input" bind-value="{{sheetObject.system}}"> 
+            <input is="iron-input" bind-value="{{system}}"> 
         </paper-input-container>
     </template>
 </dom-module>
@@ -45,12 +45,28 @@
     Polymer({
         is: "basic-tab",
         properties: {
-            sheetObject: {
-                type: Object
+            name: {
+                type: String
+            },
+            job: {
+                type: String
+            },
+            race: {
+                type: String
+            },
+            level: {
+                type: Number
+            },
+            system: {
+                type: String
             }
         },
         ready: function(e){
             console.log("Basic Tab");
+            console.log(this.sheetObject);
+        },
+        _sheetObjectChanged: function(e){
+            console.log(this.sheetObject);
         }
     });
 </script>
