@@ -11,7 +11,6 @@
             }
         </style>
         
-        
         <h3>Basico</h3>
         
         <paper-input-container>
@@ -46,27 +45,29 @@
         is: "basic-tab",
         properties: {
             name: {
-                type: String
+                type: String,
+                notify: true,
+                reflectToAttribute: true
             },
             job: {
-                type: String
+                type: String,
+                notify: true
             },
             race: {
-                type: String
+                type: String,
+                notify: true
             },
             level: {
-                type: Number
+                type: Number,
+                notify: true
             },
             system: {
-                type: String
+                type: String,
+                notify: true
             }
         },
         ready: function(e){
             console.log("Basic Tab");
-            console.log(this.sheetObject);
-        },
-        _sheetObjectChanged: function(e){
-            console.log(this.sheetObject);
         }
     });
 </script>

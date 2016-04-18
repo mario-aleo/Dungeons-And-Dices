@@ -36,7 +36,12 @@
 
         <iron-pages selected="{{selected}}">
             <basic-tab name="{{newSheet.name}}" job="{{newSheet.job}}" race="{{newSheet.race}}" level="{{newSheet.level}}" system="{{newSheet.system}}"></basic-tab>
-            <div>Status</div>
+            <div>Status 
+                <paper-input-container>
+                    <label>Nome</label>
+                    <input is="iron-input" bind-value="{{newSheet.name}}"> 
+                </paper-input-container>
+            </div>
             <div>Recursos</div>
             <div>Defenses</div>
             <div>Skills</div>
@@ -60,24 +65,25 @@
                 observer: '_baseSheetChanged'
             },
             newSheet: {
-                type: Object,
-                observer: '_newSheetChanged'
+                type: Object
             }
         },
+        observers: [
+            '_modelUpdated(newSheet.name, newSheet.job, newSheet.race, newSheet.level, newSheet.system)'
+        ],
         ready: function(e){
             console.log("Sheet Creation Loaded");
         },
-        attributeChanged: function(e){
-            console.log("Sheet Creation Changed");
-        },
         _baseSheetChanged: function(e){
+            console.log('Base Sheet');
             console.log(this.baseSheet);
-            if(typeof this.newSheet == undefined){
-                this.newSheet = Object.create(this.baseSheet);
-                console.log(this.baseSheet);
+            if(typeof this.newSheet == 'undefined'){
+                this.newSheet = Object.assign({}, this.baseSheet);
+                console.log('New Sheet');
+                console.log(this.newSheet);
             }
         },
-        _newSheetChanged: function(e){
+        _modelUpdated: function(e){
             console.log(this.newSheet);
         },
         initializeDefaultBaseSheet: function(e){
@@ -85,7 +91,7 @@
                 name: "",
                 job: "",
                 race: "",
-                level: 1,
+                level: "1",
                 system: "",
                 status: {},
                 // *vit: { value: SUM, *baseValue: 10, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
