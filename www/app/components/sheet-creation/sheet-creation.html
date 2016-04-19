@@ -5,11 +5,13 @@
         <style>
             :host {
                 width: 100%;
-                height: 100%;
                 --paper-tabs-selection-bar-color: #03A9F4;
             }
             
             paper-tabs, paper-toolbar {
+                width: 100%;
+                z-index: 1;
+                position: fixed;
                 background-color: #9E9E9E;
                 color: #FFFFFF;
             }
@@ -17,16 +19,16 @@
         
         <iron-localstorage
         name="localstorageSheetList"
-        value="{{sheetList}}"
+        value="{{ sheetList }}"
         ></iron-localstorage>
         
         <iron-localstorage
         name="localstorageBaseSheet"
-        value="{{baseSheet}}"
+        value="{{ baseSheet }}"
         on-iron-localstorage-load-empty="initializeDefaultBaseSheet"
         ></iron-localstorage>
         
-        <paper-tabs selected="{{selected}}" noink scrollable>
+        <paper-tabs selected="{{ selected }}" noink scrollable>
             <paper-tab>Basico</paper-tab>
             <paper-tab>Status</paper-tab>
             <paper-tab>Recursos</paper-tab>
@@ -34,17 +36,18 @@
             <paper-tab>Skills</paper-tab>
         </paper-tabs>
 
-        <iron-pages selected="{{selected}}">
-            <basic-tab name="{{newSheet.name}}" job="{{newSheet.job}}" race="{{newSheet.race}}" level="{{newSheet.level}}" system="{{newSheet.system}}"></basic-tab>
-            <div>Status 
-                <paper-input-container>
-                    <label>Nome</label>
-                    <input is="iron-input" bind-value="{{newSheet.name}}"> 
-                </paper-input-container>
-            </div>
-            <div>Recursos</div>
+        <iron-pages selected="{{ selected }}">
+            
+            <basic-tab name="{{ newSheet.name }}" job="{{ newSheet.job }}" race="{{ newSheet.race }}" level="{{ newSheet.level }}" system="{{ newSheet.system }}"></basic-tab>
+            
+            <status-tab status-list="{{ newSheet.statusList }}"></status-tab>
+            
+            <resources-tab resources-list="{{ newSheet.resourcesList }}"></resources-tab>
+            
             <div>Defenses</div>
+            
             <div>Skills</div>
+            
         </iron-pages>
     </template>
 </dom-module>
@@ -69,13 +72,13 @@
             }
         },
         observers: [
-            '_modelUpdated(newSheet.name, newSheet.job, newSheet.race, newSheet.level, newSheet.system)'
+            '_modelUpdated(newSheet.*)'
         ],
         ready: function(e){
             console.log("Sheet Creation Loaded");
         },
         _baseSheetChanged: function(e){
-            console.log('Base Sheet');
+            console.log('Base Sheet Changed');
             console.log(this.baseSheet);
             if(typeof this.newSheet == 'undefined'){
                 this.newSheet = Object.assign({}, this.baseSheet);
@@ -84,6 +87,7 @@
             }
         },
         _modelUpdated: function(e){
+            console.log('Model Update');
             console.log(this.newSheet);
         },
         initializeDefaultBaseSheet: function(e){
@@ -93,16 +97,36 @@
                 race: "",
                 level: "1",
                 system: "",
-                status: {},
-                // *vit: { value: SUM, *baseValue: 10, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
-                resources: {},
-                // *hp: { value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
-                defenses: {},
-                // *armor: { value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
-                attacks: {},
-                // *attackName: { AttackValue: SUM, DamageValue: SUM, *baseAttack: 10, *attackStatusBase: Vit, *attackStatusBaseModifier: 1, *attackLevelModifier: 0, attackpersistBonus: 0, attackVolatileBonus: 0, *baseDamage: 10, *damageStatusBase: Vit, *damageStatusBaseModifier: 1, *damageLevelModifier: 0, damagepersistBonus: 0, damageVolatileBonus: 0 }, ...
-                skills: {},
-                // *skillName: { value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
+                statusList: [
+                    {
+                        name: "",
+                        value: 0,
+                        baseValue: 0,
+                        levelModifier: 0,
+                        persistBonus: 0,
+                        volatileBonus: 0
+                    }
+                ],
+                // { *name: "vit", value: SUM, *baseValue: 10, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
+                resourcesList: [
+                    {
+                        name: "",
+                        value: 0,
+                        baseValue: 0,
+                        statusBase:  null, 
+                        statusBaseModifier: 0,
+                        levelModifier: 0,
+                        persistBonus: 0,
+                        volatileBonus: 0
+                    }
+                ],
+                // { *name: "hp", value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
+                defensesList: [],
+                // { *name: "armor", value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
+                attacksList: [],
+                // { *name: "attackName", AttackValue: SUM, DamageValue: SUM, *baseAttack: 10, *attackStatusBase: Vit, *attackStatusBaseModifier: 1, *attackLevelModifier: 0, attackpersistBonus: 0, attackVolatileBonus: 0, *baseDamage: 10, *damageStatusBase: Vit, *damageStatusBaseModifier: 1, *damageLevelModifier: 0, damagepersistBonus: 0, damageVolatileBonus: 0 }, ...
+                skillsList: [],
+                // { *name: "skillName", value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
                 equipments: {
                     head: {},
                     // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
@@ -127,10 +151,10 @@
                     shield: {}
                     // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
                 },
-                persistBonus: {},
-                // bonusName: { *value: 10, *affect: Vit }, ...  Sample: Equipment Bonus 
-                volatileBonus: {}
-                // *bonusName: { *value: 10, *affect: Vit }, ...  Sample: Potion Bonus
+                persistBonusList: [],
+                // { name: "bonusName", *value: 10, *affect: Vit }, ...  Kind of: Equipment Bonus 
+                volatileBonusList: []
+                // { *name: "bonusName", *value: 10, *affect: Vit }, ...  Kind of: Potion Bonus
             }
         }
     });

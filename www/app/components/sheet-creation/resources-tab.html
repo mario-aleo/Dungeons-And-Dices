@@ -1,0 +1,62 @@
+<!--link href="../assets/bower_components/polymer/polymer.html" rel="import"-->
+
+<dom-module id="resources-tab">  
+    <template>
+        <style>
+            :host {
+                width: 90%;
+                margin: auto;
+                @apply(--layout-vertical);
+            }
+            
+            #add-resources {
+                position: fixed;
+                bottom: 16px;
+                right: 16px;
+            }
+            
+            #space {
+                height: 64px;
+            }
+        </style>
+        
+        <h3>Status</h3>
+        
+        <template is="dom-repeat" items="{{ resourcesList }}">    
+            <resources-card name="{{ item.name }}" value="{{ item.value }}" base-value="{{ item.baseValue }}" status-base="{{ item.statusBase }}" status-base-modifier="{{ item.statusBaseModifier }}" level-modifier="{{ item.levelModifier }}" persist-bonus="{{ item.persistBonus }}" volatile-bonus="{{ item.volatileBonus }} "></resources-card>
+        </template>
+        
+        <div id="space"></div>
+        
+        <paper-fab id="add-resources" noink icon="add" on-click="newResources"></paper-fab>
+    </template>
+</dom-module>
+    
+<script>
+    Polymer({
+        is: "resources-tab",
+        properties: {
+            resourcesList: {
+                type: Array,
+                notify: true,
+                reflectToAttribute: true
+            }
+        },
+        ready: function(e){
+            console.log("Resources Tab Loaded");
+        },
+        newResources: function(e){
+            console.log("Resources Card Add");
+            this.push("resourcesList", {
+                name: "",
+                value: 0,
+                baseValue: 0,
+                statusBase: "",
+                statusBaseModifier: 0,
+                levelModifier: 0,
+                persistBonus: 0,
+                volatileBonus: 0
+            });
+        }
+    });
+</script>

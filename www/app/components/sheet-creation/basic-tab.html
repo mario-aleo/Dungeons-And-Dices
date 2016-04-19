@@ -51,23 +51,27 @@
             },
             job: {
                 type: String,
-                notify: true
+                notify: true,
+                reflectToAttribute: true
             },
             race: {
                 type: String,
-                notify: true
+                notify: true,
+                reflectToAttribute: true
             },
             level: {
                 type: Number,
-                notify: true
+                notify: true,
+                reflectToAttribute: true
             },
             system: {
                 type: String,
-                notify: true
+                notify: true,
+                reflectToAttribute: true
             }
         },
         ready: function(e){
-            console.log("Basic Tab");
+            console.log("Basic Tab Loaded");
         }
     });
 </script>
