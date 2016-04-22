@@ -10,7 +10,7 @@
             
             paper-tabs, paper-toolbar {
                 width: 100%;
-                z-index: 1;
+                z-index: 0;
                 position: fixed;
                 background-color: #9E9E9E;
                 color: #FFFFFF;
@@ -42,7 +42,7 @@
             
             <status-tab status-list="{{ newSheet.statusList }}"></status-tab>
             
-            <resources-tab resources-list="{{ newSheet.resourcesList }}"></resources-tab>
+            <resources-tab resources-list="{{ newSheet.resourcesList }}" status-list="{{ newSheet.statusList }}"></resources-tab>
             
             <div>Defenses</div>
             
@@ -79,11 +79,10 @@
         },
         _baseSheetChanged: function(e){
             console.log('Base Sheet Changed');
-            console.log(this.baseSheet);
             if(typeof this.newSheet == 'undefined'){
+                //this.newSheet = Object.create(this.baseSheet);
                 this.newSheet = Object.assign({}, this.baseSheet);
-                console.log('New Sheet');
-                console.log(this.newSheet);
+                console.log('New Sheet Assigned as Base Sheet');
             }
         },
         _modelUpdated: function(e){
