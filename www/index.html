@@ -14,9 +14,6 @@
         
         <link rel="import" href="assets/css/elements.html">
         
-        <!-- Routes -->
-        <link rel="import" href="app/routing.html">
-        
         <!-- Custom Elements -->
         <link rel="import" href="app/components/main/sheet-card.html">
         <link rel="import" href="app/components/main/sheet-list.html">
@@ -32,12 +29,24 @@
         
         <title>Dungeons & Dices</title>
     </head>
-
+    
+    
     <body unresolved>
-        <template is="dom-bind" id="app">
+        
+        <template is="dom-bind" 
+                  id="app">
+            
+            <carbon-location use-hash-as-path 
+                         route="{{route}}"></carbon-location>
+
+            <carbon-route route="{{route}}"
+                          pattern="/:page"
+                          data="{{dataRoute}}"></carbon-route>
+            
             <paper-drawer-panel id="paperDrawerPanel">
                 <!-- Drawer Scroll Header Panel -->
-                <paper-header-panel drawer fixed>
+                <paper-header-panel drawer 
+                                    fixed>
 
                     <!-- Drawer Toolbar -->
                     <paper-toolbar id="drawerToolbar">
@@ -46,18 +55,25 @@
 
                     <!-- Drawer Content -->
                     <paper-menu>
-                        <a href="/home">
-                            <iron-icon icon="home"></iron-icon>
-                            <span>Sheet List</span>
-                        </a>
+                        <iron-selector attr-for-selected="data-route" 
+                                       selected="{{dataRoute.page}}">
+                            <a data-route="home" 
+                               href="#/home">
+                                <iron-icon icon="home"></iron-icon>
+                                <span>Sheet List</span>
+                            </a>
+                        </iron-selector>
                     </paper-menu>
                 </paper-header-panel>
 
                 <!-- Main Area -->
-                <paper-scroll-header-panel fixed main>
+                <paper-scroll-header-panel fixed 
+                                           main>
                     <!-- Main Toolbar -->
                     <paper-toolbar id="mainToolbar">
-                        <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
+                        <paper-icon-button id="paperToggle" 
+                                           icon="menu" 
+                                           paper-drawer-toggle></paper-icon-button>
 
                         <!-- Application name -->
                         <div class="app-name">Dungeons & Dices</div>
@@ -65,7 +81,8 @@
                     </paper-toolbar>
 
                     <!-- Main Content -->
-                    <iron-pages attr-for-selected="data-route" selected="{{route}}">
+                    <iron-pages attr-for-selected="data-route" 
+                                selected="{{dataRoute.page}}">
                         <section data-route="home">
                             <sheet-list></sheet-list>
                         </section>
