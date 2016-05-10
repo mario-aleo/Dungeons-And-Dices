@@ -18,19 +18,27 @@
             }
         </style>
         
-        <iron-localstorage
-        name="localstorageSheetList"
-        value="{{sheetList}}"
-        on-iron-localstorage-load-empty="initializeDefaultValue"
-        ></iron-localstorage>
+        <carbon-route route="{{route}}"></carbon-route>
         
-        <template is="dom-repeat" items="{{ sheetList }}">    
-            <sheet-card personagem="{{ item.name }}" level="{{ item.level }}" classe="{{ item.class }}" raca="{{ item.race }}" sistema="{{ item.system }}"></sheet-card>
+        <iron-localstorage name="localstorageSheetList" 
+                           value="{{sheetList}}"
+                           on-iron-localstorage-load-empty="initializeDefaultValue"></iron-localstorage>
+        
+        <template is="dom-repeat" 
+                  items="{{ sheetList }}">    
+            <sheet-card personagem="{{ item.name }}" 
+                        level="{{ item.level }}" 
+                        classe="{{ item.class }}" 
+                        raca="{{ item.race }}" 
+                        sistema="{{ item.system }}"></sheet-card>
         </template>
         
         <div id="space"></div>
 
-        <paper-fab id="add-sheet" noink icon="add" on-click="createSheet"></paper-fab>
+        <paper-fab noink 
+                   icon="add" 
+                   id="add-sheet" 
+                   on-click="createSheet"></paper-fab>
     </template>
 </dom-module>
     
@@ -40,6 +48,11 @@
         properties: {
             sheetList: {
                 type: Array
+            },
+            routeData: {
+                type: Object,
+                notify: true,
+                reflectToAttribute: true
             }
         },
         ready: function(e){
@@ -65,8 +78,9 @@
             ]
         },
         createSheet: function(e){
-            console.log("Polymer CreateSheet");
-            page.redirect('/sheetCreation');
+            console.log("Route Polymer to CreateSheet");
+            this.set('route.path', '/sheetCreation');
+            this.routeData = 'sheetCreation';
         }
     });
 </script>

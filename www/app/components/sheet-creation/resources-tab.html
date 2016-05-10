@@ -22,13 +22,24 @@
         
         <h3>Status</h3>
         
-        <template is="dom-repeat" items="{{ resourcesList }}">    
-            <resources-card name="{{ item.name }}" value="{{ item.value }}" base-value="{{ item.baseValue }}" status-base="{{ item.statusBase }}" status-base-modifier="{{ item.statusBaseModifier }}" level-modifier="{{ item.levelModifier }}" persist-bonus="{{ item.persistBonus }}" volatile-bonus="{{ item.volatileBonus }} "></resources-card>
+        <template is="dom-repeat" 
+                  items="{{ resourcesList }}">
+            <resources-card name="{{ item.name }}" 
+                            value="{{ item.value }}" 
+                            base-value="{{ item.baseValue }}" 
+                            status-base="{{ item.statusBase }}" 
+                            status-base-modifier="{{ item.statusBaseModifier }}" 
+                            level-modifier="{{ item.levelModifier }}" 
+                            persist-bonus="{{ item.persistBonus }}" 
+                            volatile-bonus="{{ item.volatileBonus }}"></resources-card>
         </template>
         
         <div id="space"></div>
         
-        <paper-fab id="add-resources" noink icon="add" on-click="newResources"></paper-fab>
+        <paper-fab noink
+                   icon="add"
+                   id="add-resources"
+                   on-click="newResources"></paper-fab>
     </template>
 </dom-module>
     
@@ -37,6 +48,11 @@
         is: "resources-tab",
         properties: {
             resourcesList: {
+                type: Array,
+                notify: true,
+                reflectToAttribute: true
+            },
+            statusList: {
                 type: Array,
                 notify: true,
                 reflectToAttribute: true

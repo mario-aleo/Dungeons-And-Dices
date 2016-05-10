@@ -24,27 +24,42 @@
             <div class="card-content">
                 <paper-input-container>
                     <label>Nome</label>
-                    <input is="iron-input" bind-value="{{ name }}"> 
+                    <input is="iron-input" 
+                           bind-value="{{ name }}"> 
                 </paper-input-container>
                 
                 <paper-input-container>
                     <label>Valor Inicial</label>
-                    <input is="iron-input" bind-value="{{ baseValue }}"> 
+                    <input is="iron-input" 
+                           bind-value="{{ baseValue }}"> 
                 </paper-input-container>
                 
-                <!--paper-input-container>
-                    <label>Valor Inicial</label>
-                    <input is="iron-input" bind-value="{{ baseValue }}"> 
-                </paper-input-container-->
+                <!-- <paper-dropdown-menu>
+                    <paper-listbox class="dropdown-content">
+                        <template is="dom-repeat" items="{{ statusList }}">
+                            <paper-item>{{item.name}}</paper-item>
+                        </template>
+                    </paper-listbox>
+                </paper-dropdown-menu> -->
+                
+                <paper-dropdown-menu>
+                    <paper-listbox class="dropdown-content">
+                        <paper-item>Test 1</paper-item>
+                        <paper-item>Test 2</paper-item>
+                        <paper-item>Test 3</paper-item>
+                    </paper-listbox>
+                </paper-dropdown-menu>
                 
                 <paper-input-container>
                     <label>Modificador por Ponto de Status</label>
-                    <input is="iron-input" bind-value="{{ statusBaseModifier }}"> 
+                    <input is="iron-input" 
+                           bind-value="{{ statusBaseModifier }}"> 
                 </paper-input-container>
                 
                 <paper-input-container>
                     <label>Modificador por Nivel</label>
-                    <input is="iron-input" bind-value="{{ levelModifier }}"> 
+                    <input is="iron-input" 
+                           bind-value="{{ levelModifier }}"> 
                 </paper-input-container>
             </div>
         </paper-card>
@@ -102,10 +117,22 @@
                 value: "0",
                 notify: true,
                 reflectToAttribute: true
+            },
+            statusList: {
+                type: Array,
+                value: [
+                    {name: "Test 1"}, {name: "Test 2"}, {name: "Test 3"}
+                ]
             }
         },
+        observers: [
+            '_onUpdate(statusList.*)'
+        ],
         ready: function(e){
             console.log("Resources Card Loaded");
+        },
+        _onUpdate: function(e){
+            console.log(this.statusList);
         }
     });
 </script>

@@ -22,13 +22,22 @@
         
         <h3>Status</h3>
         
-        <template is="dom-repeat" items="{{ statusList }}">    
-            <status-card name="{{ item.name }}" value="{{ item.value }}" base-value="{{ item.baseValue }}" level-modifier="{{ item.levelModifier }}" persist-bonus="{{ item.persistBonus }}" volatile-bonus="{{ item.volatileBonus }} "></status-card>
+        <template is="dom-repeat" 
+                  items="{{ statusList }}">    
+            <status-card name="{{ item.name }}" 
+                         value="{{ item.value }}" 
+                         base-value="{{ item.baseValue }}" 
+                         level-modifier="{{ item.levelModifier }}" 
+                         persist-bonus="{{ item.persistBonus }}" 
+                         volatile-bonus="{{ item.volatileBonus }}"></status-card>
         </template>
         
         <div id="space"></div>
         
-        <paper-fab id="add-status" noink icon="add" on-click="newStatus"></paper-fab>
+        <paper-fab noink 
+                   icon="add" 
+                   id="add-status" 
+                   on-click="newStatus"></paper-fab>
     </template>
 </dom-module>
     
