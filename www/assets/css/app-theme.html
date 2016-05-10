@@ -124,6 +124,22 @@
         right: 1em;
         bottom: 1em;
     }
+  
+    paper-card{
+        width: calc(98.66% - 16px);
+        margin: 16px auto;
+    }
+    
+    .card-content-row {
+         @apply(--layout-horizontal);
+         @apply(--layout-justified);
+         margin-top: -1em;
+         margin-bottom: -1em;
+    }
+    
+    .card-action-icon-button {
+        color: var(--accent-color);
+    }
     
     a {
         text-decoration: none;
@@ -137,6 +153,18 @@
     @media (max-width: 600px) {
         #drawer .paper-toolbar {
             margin-left: 16px;
+        }
+
+        paper-card {
+            --menu-container-display: none;
+            width: calc(97.33% - 32px);
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+        
+        paper-card{
+            width: calc(97.33% - 32px);
+            margin: 16px auto;
         }
     }
 
@@ -156,6 +184,11 @@
             margin-bottom: 32px;
             padding-left: 30px;
             padding-right: 30px;
+        }
+        
+        paper-card{
+            width: calc(98% - 46px);
+            margin: 16px auto;
         }
     }
     
