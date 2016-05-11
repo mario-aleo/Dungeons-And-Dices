@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html ng-app="ngapp">
+<html>
     <head>
         <meta charset="utf-8">
         <meta name="format-detection" content="telephone=no">
@@ -9,12 +9,13 @@
         <link rel="stylesheet" href="assets/css/main.css">
 
         <script src="assets/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-        
+
         <link rel="import" href="assets/bower_components/polymer/polymer.html">
-        
+
         <link rel="import" href="assets/css/elements.html">
-        
-        <!-- Custom Elements -->
+
+        <!-- Custom Elements (Later they'll be on elements.html) -->
+        <link rel="import" href="app/dungeons-dices.html">
         <link rel="import" href="app/components/main/sheet-card.html">
         <link rel="import" href="app/components/main/sheet-list.html">
         <link rel="import" href="app/components/sheet-creation/sheet-creation.html">
@@ -26,78 +27,11 @@
 
         <!-- Cordova -->
         <!--script src="cordova.js"></script-->
-        
+
         <title>DungeonsDices</title>
     </head>
-    
-    
+
     <body unresolved>
-        
-        <template is="dom-bind" 
-                  id="app">
-            
-            <carbon-location use-hash-as-path 
-                         route="{{route}}"></carbon-location>
-
-            <carbon-route route="{{route}}"
-                          pattern="/:page"
-                          data="{{dataRoute}}"></carbon-route>
-            
-            <paper-drawer-panel id="paperDrawerPanel">
-                <!-- Drawer Scroll Header Panel -->
-                <paper-header-panel drawer 
-                                    fixed>
-
-                    <!-- Drawer Toolbar -->
-                    <paper-toolbar id="drawerToolbar">
-                        <span class="menu-name">Side Menu</span>
-                    </paper-toolbar>
-
-                    <!-- Drawer Content -->
-                    <paper-menu>
-                        <iron-selector attr-for-selected="data-route" 
-                                       selected="{{dataRoute.page}}">
-                            <a data-route="home" 
-                               href="#/home">
-                                <iron-icon icon="home"></iron-icon>
-                                <span>Sheet List</span>
-                            </a>
-                        </iron-selector>
-                    </paper-menu>
-                </paper-header-panel>
-
-                <!-- Main Area -->
-                <paper-scroll-header-panel fixed 
-                                           main>
-                    <!-- Main Toolbar -->
-                    <paper-toolbar id="mainToolbar">
-                        <paper-icon-button id="paperToggle" 
-                                           icon="menu" 
-                                           paper-drawer-toggle></paper-icon-button>
-
-                        <!-- Application name -->
-                        <div class="app-name">Dungeons & Dices</div>
-                        <img src="assets/img/dices.png" />
-                    </paper-toolbar>
-
-                    <!-- Main Content -->
-                    <iron-pages attr-for-selected="data-route" 
-                                selected="{{dataRoute.page}}">
-                        <section data-route="home">
-                            <sheet-list></sheet-list>
-                        </section>
-                        <section data-route="sheetDetail">
-                            <h1>sheetDetail</h1>
-                        </section>
-                        <section data-route="sheetCreation">
-                            <sheet-creation></sheet-creation>
-                        </section>
-                    </iron-pages>
-
-                </paper-scroll-header-panel>
-            </paper-drawer-panel>
-        </template>
-        
-        <script src="app/app.js"></script>
+        <dungeons-dices></dungeons-dices>
     </body>
 </html>

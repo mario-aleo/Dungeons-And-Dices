@@ -1,0 +1,164 @@
+<!--link href="../assets/bower_components/polymer/polymer.html" rel="import"-->
+
+<dom-module id="dungeons-dices">
+    <template>
+        <style>
+            :root {
+                --primary-text-color: #212121;
+                --primary-background-color: #ffffff;
+                --secondary-text-color: #727272;
+                --disabled-text-color: #9b9b9b;
+                --divider-color: #B6B6B6;
+                --primary-color: #9E9E9E;
+                --light-primary-color: #F5F5F5;
+                --dark-primary-color: #616161;
+                --accent-color: #03A9F4;
+                --light-accent-color: #ff80ab;
+                --dark-accent-color: #f50057;
+
+                /* paper-drawer-panel */
+                --drawer-menu-color: #ffffff;
+                --drawer-border-color: 1px solid #ccc;
+                --drawer-toolbar-border-color: 1px solid rgba(0, 0, 0, 0.22);
+
+                /* paper-menu */
+                --paper-menu-background-color: #fff;
+                --menu-link-color: #111111;
+            }
+
+            #drawerToolbar {
+                color: var(--secondary-text-color);
+                background-color: var(--drawer-menu-color);
+                border-bottom: var(--drawer-toolbar-border-color);
+            }
+
+            #drawerToolbar .menu-name {
+                @apply(--paper-font-title);
+            }
+
+            #mainToolbar {
+                @apply(--layout-horizontal);
+                @apply(--layout-center);
+            }
+
+            #mainToolbar #paperToggle {
+                margin-right: 12px;
+            }
+            
+            .app-name {
+                @apply(--paper-font-title);
+                margin-right: 0.5em;
+            }
+
+            paper-menu {
+                --paper-menu-selected-item: {
+                color: var(--accent-color);
+                }
+
+                --paper-menu-focused-item-after: {
+                    color: var(--accent-color);
+                background: var(--primary-color);
+                }
+            }
+
+            paper-menu iron-icon {
+                margin-right: 33px;
+                opacity: 0.54;
+            }
+
+            paper-menu a {
+                @apply(--layout-horizontal);
+                @apply(--layout-center);
+
+                text-decoration: none;
+                color: var(--accent-color);
+                font-family: 'Roboto', 'Noto', sans-serif;
+                -webkit-font-smoothing: antialiased;
+                text-rendering: optimizeLegibility;
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 24px;
+                min-height: 48px;
+                padding: 0 16px;
+            }
+        </style>
+
+        <carbon-location use-hash-as-path
+                     route="{{route}}"></carbon-location>
+
+        <carbon-route route="{{route}}"
+                      pattern="/:page"
+                      data="{{dataRoute}}"></carbon-route>
+
+        <paper-drawer-panel id="paperDrawerPanel">
+            <!-- Drawer Scroll Header Panel -->
+            <paper-header-panel drawer
+                                fixed>
+
+                <!-- Drawer Toolbar -->
+                <paper-toolbar id="drawerToolbar">
+                    <span class="menu-name">Side Menu</span>
+                </paper-toolbar>
+
+                <!-- Drawer Content -->
+                <paper-menu>
+                    <iron-selector attr-for-selected="data-route"
+                                   selected="{{dataRoute.page}}">
+                        <a data-route="home"
+                           href="#/home">
+                            <iron-icon icon="home"></iron-icon>
+                            <span>Sheet List</span>
+                        </a>
+                    </iron-selector>
+                </paper-menu>
+            </paper-header-panel>
+
+            <!-- Main Area -->
+            <paper-scroll-header-panel fixed
+                                       main>
+                <!-- Main Toolbar -->
+                <paper-toolbar id="mainToolbar">
+                    <paper-icon-button id="paperToggle"
+                                       icon="menu"
+                                       paper-drawer-toggle></paper-icon-button>
+
+                    <!-- Application name -->
+                    <div class="app-name">Dungeons & Dices</div>
+                    <img src="../assets/img/dices.png" />
+                </paper-toolbar>
+
+                <!-- Main Content -->
+                <iron-pages attr-for-selected="data-route"
+                            selected="{{dataRoute.page}}">
+                    <section data-route="home">
+                        <sheet-list route={{route}} page={{dataRoute.page}}></sheet-list>
+                    </section>
+                    <section data-route="sheetDetail">
+                        <h1>sheetDetail</h1>
+                    </section>
+                    <section data-route="sheetCreation">
+                        <sheet-creation></sheet-creation>
+                    </section>
+                </iron-pages>
+
+              </paper-scroll-header-panel>
+        </paper-drawer-panel>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: "dungeons-dices",
+        properties: {
+        },
+        ready: function(e){
+          console.log("Dungeons 'n Dices Loaded");
+        },
+        attached: function(e){
+          console.log("Route to Sheet List");
+          if(!this.route.path){
+              this.set('route.path', '/home')
+          }
+        }
+    });
+</script>

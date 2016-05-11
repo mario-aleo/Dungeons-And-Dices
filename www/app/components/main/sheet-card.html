@@ -8,12 +8,12 @@
                 @apply(--layout-horizontal);
                 @apply(--layout-center-justified);
             }
-            
+
             paper-card {
-                margin-top: 16px; 
+                margin-top: 16px;
                 width: 80%;
             }
-            
+
             .card-content-row {
                  @apply(--layout-horizontal);
                  @apply(--layout-justified);
@@ -21,7 +21,7 @@
                  margin-bottom: -1em;
             }
         </style>
-        
+
         <paper-card on-click="openSheet">
             <div class="card-content">
                 <div class="card-content-row">
@@ -43,7 +43,7 @@
         </paper-card>
     </template>
 </dom-module>
-    
+
 <script>
     Polymer({
         is: "sheet-card",
@@ -74,7 +74,6 @@
         },
         openSheet: function(e) {
             console.log("Polymer OpenSheet");
-            page.redirect('/sheetDetail');
         }
     });
 </script>

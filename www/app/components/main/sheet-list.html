@@ -1,47 +1,45 @@
 <!--link href="../../../assets/bower_components/polymer/polymer.html" rel="import"-->
 
-<dom-module id="sheet-list">  
+<dom-module id="sheet-list">
     <template>
         <style>
             :host {
                 width: 100%;
             }
-            
+
             #add-sheet {
                 position: fixed;
                 bottom: 16px;
                 right: 16px;
             }
-            
+
             #space {
                 height: 64px;
             }
         </style>
-        
-        <carbon-route route="{{route}}"></carbon-route>
-        
-        <iron-localstorage name="localstorageSheetList" 
+
+        <iron-localstorage name="localstorageSheetList"
                            value="{{sheetList}}"
                            on-iron-localstorage-load-empty="initializeDefaultValue"></iron-localstorage>
-        
-        <template is="dom-repeat" 
-                  items="{{ sheetList }}">    
-            <sheet-card personagem="{{ item.name }}" 
-                        level="{{ item.level }}" 
-                        classe="{{ item.class }}" 
-                        raca="{{ item.race }}" 
+
+        <template is="dom-repeat"
+                  items="{{ sheetList }}">
+            <sheet-card personagem="{{ item.name }}"
+                        level="{{ item.level }}"
+                        classe="{{ item.class }}"
+                        raca="{{ item.race }}"
                         sistema="{{ item.system }}"></sheet-card>
         </template>
-        
+
         <div id="space"></div>
 
-        <paper-fab noink 
-                   icon="add" 
-                   id="add-sheet" 
+        <paper-fab noink
+                   icon="add"
+                   id="add-sheet"
                    on-click="createSheet"></paper-fab>
     </template>
 </dom-module>
-    
+
 <script>
     Polymer({
         is: "sheet-list",
@@ -78,9 +76,9 @@
             ]
         },
         createSheet: function(e){
-            console.log("Route Polymer to CreateSheet");
+            console.log("Route to CreateSheet");
             this.set('route.path', '/sheetCreation');
-            this.routeData = 'sheetCreation';
+            this.page = 'sheetCreation';
         }
     });
 </script>
