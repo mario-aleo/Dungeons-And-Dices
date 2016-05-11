@@ -9,63 +9,67 @@
                 @apply(--layout-center-justified);
                 --paper-input-container-focus-color: #03A9F4;
             }
-            
+
             paper-card {
-                margin-top: 16px; 
+                margin-top: 16px;
                 width: 100%;
             }
-            
+
             .card-content {
                 padding-bottom: 32px;
             }
         </style>
-        
+
         <paper-card>
             <div class="card-content">
                 <paper-input-container>
                     <label>Nome</label>
-                    <input is="iron-input" 
-                           bind-value="{{ name }}"> 
+                    <input is="iron-input"
+                           bind-value="{{ name }}">
                 </paper-input-container>
-                
+
                 <paper-input-container>
                     <label>Valor Inicial</label>
-                    <input is="iron-input" 
-                           bind-value="{{ baseValue }}"> 
+                    <input is="iron-input"
+                           bind-value="{{ baseValue }}">
                 </paper-input-container>
-                
-                <!-- <paper-dropdown-menu>
-                    <paper-listbox class="dropdown-content">
+
+                <paper-dropdown-menu label="Status Modificador">
+                    <paper-listbox class="dropdown-content"
+                                   attr-for-selected="status-name"
+                                   selected="{{ statusBase }}">
                         <template is="dom-repeat" items="{{ statusList }}">
-                            <paper-item>{{item.name}}</paper-item>
+                            <paper-item status-name="{{ item.name }}">{{ item.name }}</paper-item>
                         </template>
                     </paper-listbox>
-                </paper-dropdown-menu> -->
-                
-                <paper-dropdown-menu>
-                    <paper-listbox class="dropdown-content">
-                        <paper-item>Test 1</paper-item>
-                        <paper-item>Test 2</paper-item>
-                        <paper-item>Test 3</paper-item>
-                    </paper-listbox>
                 </paper-dropdown-menu>
-                
+
+                <!-- <paper-dropdown-menu>
+                    <paper-listbox class="dropdown-content"
+                                   attr-for-selected="status-name"
+                                   selected="{{statusBase}}">
+                        <paper-item status-name="Test 1">Test 1</paper-item>
+                        <paper-item status-name="Test 2">Test 2</paper-item>
+                        <paper-item status-name="Test 3">Test 3</paper-item>
+                    </paper-listbox>
+                </paper-dropdown-menu> -->
+
                 <paper-input-container>
                     <label>Modificador por Ponto de Status</label>
-                    <input is="iron-input" 
-                           bind-value="{{ statusBaseModifier }}"> 
+                    <input is="iron-input"
+                           bind-value="{{ statusBaseModifier }}">
                 </paper-input-container>
-                
+
                 <paper-input-container>
                     <label>Modificador por Nivel</label>
-                    <input is="iron-input" 
-                           bind-value="{{ levelModifier }}"> 
+                    <input is="iron-input"
+                           bind-value="{{ levelModifier }}">
                 </paper-input-container>
             </div>
         </paper-card>
     </template>
 </dom-module>
-    
+
 <script>
     Polymer({
         is: "resources-card",
