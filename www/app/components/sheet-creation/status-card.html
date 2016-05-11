@@ -9,48 +9,48 @@
                 @apply(--layout-center-justified);
                 --paper-input-container-focus-color: #03A9F4;
             }
-            
+
             paper-card {
-                margin-top: 16px; 
+                margin-top: 16px;
                 width: 100%;
             }
-            
+
             .card-content {
                 padding-bottom: 32px;
             }
         </style>
-        
+
         <paper-card>
             <div class="card-content">
                 <paper-input-container>
                     <label>Nome</label>
-                    <input is="iron-input" 
-                           bind-value="{{ name }}"> 
+                    <input is="iron-input"
+                           bind-value="{{ name }}">
                 </paper-input-container>
-                
+
                 <paper-input-container>
                     <label>Valor Inicial</label>
                     <input is="iron-input"
-                           bind-value="{{ baseValue }}"> 
+                           bind-value="{{ baseValue }}">
                 </paper-input-container>
-                
+
                 <paper-input-container>
                     <label>Modificador por Nivel</label>
                     <input is="iron-input"
-                           bind-value="{{ levelModifier }}"> 
+                           bind-value="{{ levelModifier }}">
                 </paper-input-container>
             </div>
         </paper-card>
     </template>
 </dom-module>
-    
+
 <script>
     Polymer({
         is: "status-card",
         properties: {
             name: {
                 type: String,
-                value: "",
+                value: "Str/Dex/Int/...",
                 notify: true,
                 reflectToAttribute: true
             },
@@ -62,13 +62,13 @@
             },
             baseValue: {
                 type: String,
-                value: "",
+                value: "0",
                 notify: true,
                 reflectToAttribute: true
             },
             levelModifier: {
                 type: String,
-                value: "",
+                value: "0.5",
                 notify: true,
                 reflectToAttribute: true
             },
