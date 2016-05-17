@@ -44,7 +44,7 @@
             #mainToolbar #paperToggle {
                 margin-right: 12px;
             }
-            
+
             .app-name {
                 @apply(--paper-font-title);
                 margin-right: 0.5em;
@@ -81,6 +81,11 @@
                 min-height: 48px;
                 padding: 0 16px;
             }
+
+            iron-pages {
+                overflow-y: auto;
+                height: calc(100vh - 56px);
+            }
         </style>
 
         <carbon-location use-hash-as-path
@@ -114,7 +119,7 @@
             </paper-header-panel>
 
             <!-- Main Area -->
-            <paper-scroll-header-panel fixed
+            <paper-header-panel fixed
                                        main>
                 <!-- Main Toolbar -->
                 <paper-toolbar id="mainToolbar">
@@ -141,7 +146,7 @@
                     </section>
                 </iron-pages>
 
-              </paper-scroll-header-panel>
+              </paper-header-panel>
         </paper-drawer-panel>
     </template>
 </dom-module>
