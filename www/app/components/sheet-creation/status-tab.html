@@ -1,6 +1,6 @@
 <!--link href="../assets/bower_components/polymer/polymer.html" rel="import"-->
 
-<dom-module id="status-tab">  
+<dom-module id="status-tab">
     <template>
         <style>
             :host {
@@ -8,39 +8,39 @@
                 margin: auto;
                 @apply(--layout-vertical);
             }
-            
+
             #add-status {
                 position: fixed;
                 bottom: 16px;
                 right: 16px;
             }
-            
+
             #space {
                 height: 64px;
             }
         </style>
-        
+
         <h3>Status</h3>
-        
-        <template is="dom-repeat" 
-                  items="{{ statusList }}">    
-            <status-card name="{{ item.name }}" 
-                         value="{{ item.value }}" 
-                         base-value="{{ item.baseValue }}" 
-                         level-modifier="{{ item.levelModifier }}" 
-                         persist-bonus="{{ item.persistBonus }}" 
+
+        <template is="dom-repeat"
+                  items="{{ statusList }}">
+            <status-card name="{{ item.name }}"
+                         value="{{ item.value }}"
+                         base-value="{{ item.baseValue }}"
+                         level-modifier="{{ item.levelModifier }}"
+                         persist-bonus="{{ item.persistBonus }}"
                          volatile-bonus="{{ item.volatileBonus }}"></status-card>
         </template>
-        
+
         <div id="space"></div>
-        
-        <paper-fab noink 
-                   icon="add" 
-                   id="add-status" 
+
+        <paper-fab noink
+                   icon="add"
+                   id="add-status"
                    on-click="newStatus"></paper-fab>
     </template>
 </dom-module>
-    
+
 <script>
     Polymer({
         is: "status-tab",
@@ -57,14 +57,13 @@
         newStatus: function(e){
             console.log("Status Card Add");
             this.push("statusList", {
-                name: "",
-                value: 0, 
-                baseValue: 0, 
-                levelModifier: 0, 
-                persistBonus: 0, 
+                name: "Str/Dex/Int/...",
+                value: 0,
+                baseValue: 0,
+                levelModifier: 0,
+                persistBonus: 0,
                 volatileBonus: 0
             });
-            console.log(this.statusList);
         }
     });
 </script>

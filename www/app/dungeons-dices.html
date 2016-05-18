@@ -89,7 +89,7 @@
         </style>
 
         <carbon-location use-hash-as-path
-                     route="{{route}}"></carbon-location>
+                         route="{{route}}"></carbon-location>
 
         <carbon-route route="{{route}}"
                       pattern="/:page"
@@ -110,7 +110,8 @@
                     <iron-selector attr-for-selected="data-route"
                                    selected="{{dataRoute.page}}">
                         <a data-route="home"
-                           href="#/home">
+                           href="#/home"
+                           on-click="sideNavRouteWillChange">
                             <iron-icon icon="home"></iron-icon>
                             <span>Sheet List</span>
                         </a>
@@ -155,15 +156,29 @@
     Polymer({
         is: "dungeons-dices",
         properties: {
+            route: {
+                type: String
+                /*,
+                observer: '_routeChanged'*/
+            }
         },
         ready: function(e){
-          console.log("Dungeons 'n Dices Loaded");
+            console.log("Dungeons 'n Dices Loaded");
         },
         attached: function(e){
-          console.log("Route to Sheet List");
-          if(!this.route.path){
-              this.set('route.path', '/home')
+            console.log("Route to Sheet List");
+            if(!this.route.path){
+                this.set('route.path', '/home')
           }
+        },
+        sideNavRouteWillChange: function(e){
+            console.log('SideNav: Route Will Chage');
+            document.querySelector('#paperDrawerPanel').closeDrawer();
         }
+        /*,
+        _routeChanged: function(e){
+            console.log('Route Changed');
+            document.querySelector('#paperDrawerPanel').closeDrawer();
+        }*/
     });
 </script>
