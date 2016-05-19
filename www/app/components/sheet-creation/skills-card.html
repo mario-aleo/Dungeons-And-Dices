@@ -1,0 +1,121 @@
+<!--link href="../../../assets/bower_components/polymer/polymer.html" rel="import"-->
+
+<dom-module id="skills-card">
+    <template>
+        <style>
+            :host {
+                width: 100%;
+                @apply(--layout-horizontal);
+                @apply(--layout-center-justified);
+                --paper-input-container-focus-color: #03A9F4;
+            }
+
+            paper-card {
+                margin-top: 16px;
+                width: 100%;
+            }
+
+            .card-content {
+                padding-bottom: 32px;
+            }
+        </style>
+
+        <paper-card>
+            <div class="card-content">
+                <paper-input-container>
+                    <label>Nome</label>
+                    <input is="iron-input"
+                           bind-value="{{ name }}">
+                </paper-input-container>
+
+                <paper-input-container>
+                    <label>Valor Inicial</label>
+                    <input is="iron-input"
+                           bind-value="{{ baseValue }}">
+                </paper-input-container>
+
+                <paper-dropdown-menu label="Status Modificador">
+                    <paper-listbox class="dropdown-content"
+                                   attr-for-selected="status-name"
+                                   selected="{{ statusBase }}">
+                        <template is="dom-repeat" items="{{ statusList }}">
+                            <paper-item status-name="{{ item.name }}">{{ item.name }}</paper-item>
+                        </template>
+                    </paper-listbox>
+                </paper-dropdown-menu>
+
+                <paper-input-container>
+                    <label>Modificador por Ponto de Status</label>
+                    <input is="iron-input"
+                           bind-value="{{ statusBaseModifier }}">
+                </paper-input-container>
+
+                <paper-input-container>
+                    <label>Modificador por Nivel</label>
+                    <input is="iron-input"
+                           bind-value="{{ levelModifier }}">
+                </paper-input-container>
+            </div>
+        </paper-card>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: "skills-card",
+        properties: {
+            name: {
+                type: String,
+                notify: true,
+                reflectToAttribute: true
+            },
+            value: {
+                type: String,
+                notify: true,
+                reflectToAttribute: true
+            },
+            baseValue: {
+                type: String,
+                notify: true,
+                reflectToAttribute: true
+            },
+            statusBase: {
+                type: String,
+                notify: true,
+                reflectToAttribute: true
+            },
+            statusBaseModifier: {
+                type: String,
+                notify: true,
+                reflectToAttribute: true
+            },
+            levelModifier: {
+                type: String,
+                notify: true,
+                reflectToAttribute: true
+            },
+            persistBonus: {
+                type: String,
+                notify: true,
+                reflectToAttribute: true
+            },
+            volatileBonus: {
+                type: String,
+                notify: true,
+                reflectToAttribute: true
+            },
+            statusList: {
+                type: Array
+            }
+        },
+        observers: [
+            '_onUpdate(statusList.*)'
+        ],
+        ready: function(e){
+            console.log("Skills Card Loaded");
+        },
+        _onUpdate: function(e){
+            console.log(this.statusList);
+        }
+    });
+</script>
