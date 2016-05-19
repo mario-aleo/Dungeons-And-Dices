@@ -52,7 +52,8 @@
             <resources-tab resources-list="{{ newSheet.resourcesList }}"
                            status-list="{{ newSheet.statusList }}"></resources-tab>
 
-            <div>Defenses</div>
+            <defenses-tab defenses-list="{{ newSheet.defensesList }}"
+                           status-list="{{ newSheet.statusList }}"></defenses-tab>
 
             <div>Skills</div>
 
@@ -128,7 +129,18 @@
                     }
                 ],
                 // { *name: "hp", value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
-                defensesList: [],
+                defensesList: [
+                    {
+                        name: "Armor",
+                        value: 0,
+                        baseValue: 0,
+                        statusBase: null,
+                        statusBaseModifier: 1,
+                        levelModifier: 0.5,
+                        persistBonus: 0,
+                        volatileBonus: 0
+                    }
+                ],
                 // { *name: "armor", value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
                 attacksList: [],
                 // { *name: "attackName", AttackValue: SUM, DamageValue: SUM, *baseAttack: 10, *attackStatusBase: Vit, *attackStatusBaseModifier: 1, *attackLevelModifier: 0, attackpersistBonus: 0, attackVolatileBonus: 0, *baseDamage: 10, *damageStatusBase: Vit, *damageStatusBaseModifier: 1, *damageLevelModifier: 0, damagepersistBonus: 0, damageVolatileBonus: 0 }, ...
