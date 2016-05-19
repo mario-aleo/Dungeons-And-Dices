@@ -55,7 +55,8 @@
             <defenses-tab defenses-list="{{ newSheet.defensesList }}"
                            status-list="{{ newSheet.statusList }}"></defenses-tab>
 
-            <div>Skills</div>
+            <skills-tab skills-list="{{ newSheet.skillsList }}"
+                        status-list="{{ newSheet.statusList }}"></skills-tab>
 
         </iron-pages>
     </template>
@@ -131,9 +132,9 @@
                 // { *name: "hp", value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
                 defensesList: [
                     {
-                        name: "Armor",
+                        name: "Armor/Magic Resistence/...",
                         value: 0,
-                        baseValue: 0,
+                        baseValue: 10,
                         statusBase: null,
                         statusBaseModifier: 1,
                         levelModifier: 0.5,
@@ -144,7 +145,18 @@
                 // { *name: "armor", value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
                 attacksList: [],
                 // { *name: "attackName", AttackValue: SUM, DamageValue: SUM, *baseAttack: 10, *attackStatusBase: Vit, *attackStatusBaseModifier: 1, *attackLevelModifier: 0, attackpersistBonus: 0, attackVolatileBonus: 0, *baseDamage: 10, *damageStatusBase: Vit, *damageStatusBaseModifier: 1, *damageLevelModifier: 0, damagepersistBonus: 0, damageVolatileBonus: 0 }, ...
-                skillsList: [],
+                skillsList: [
+                    {
+                        name: "Diplomacy/Heal...",
+                        value: 0,
+                        baseValue: 10,
+                        statusBase: null,
+                        statusBaseModifier: 1,
+                        levelModifier: 0.5,
+                        persistBonus: 0,
+                        volatileBonus: 0
+                    }
+                ],
                 // { *name: "skillName", value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
                 equipments: {
                     head: {},
