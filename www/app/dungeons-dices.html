@@ -95,6 +95,18 @@
                       pattern="/:page"
                       data="{{dataRoute}}"></carbon-route>
 
+        <iron-localstorage name="localstorageSheetList"
+                           value="{{ sheetList }}"
+                           on-iron-localstorage-load-empty="initializeDefaultValue"></iron-localstorage>
+
+        <iron-localstorage name="localstorageBaseSheet"
+                           value="{{ baseSheet }}"
+                           on-iron-localstorage-load-empty="initializeDefaultBaseSheet"></iron-localstorage>
+
+        <iron-localstorage name="localstorageCreatingSheet"
+                           value="{{ creatingSheet }}"
+                           on-iron-localstorage-load-empty="initializeDefaultCreatingSheet"></iron-localstorage>
+
         <paper-drawer-panel id="paperDrawerPanel">
             <!-- Drawer Scroll Header Panel -->
             <paper-header-panel drawer
@@ -137,13 +149,17 @@
                 <iron-pages attr-for-selected="data-route"
                             selected="{{dataRoute.page}}">
                     <section data-route="home">
-                        <sheet-list route={{route}} page={{dataRoute.page}}></sheet-list>
+                        <sheet-list route={{route}}
+                                    page={{dataRoute.page}}
+                                    sheet-list={{sheetList}}></sheet-list>
                     </section>
                     <section data-route="sheetDetail">
                         <h1>sheetDetail</h1>
                     </section>
                     <section data-route="sheetCreation">
-                        <sheet-creation></sheet-creation>
+                        <sheet-creation sheet-list={{sheetList}}
+                                        base-sheet={{baseSheet}}
+                                        creating-sheet={{creatingSheet}}></sheet-creation>
                     </section>
                 </iron-pages>
 
@@ -158,22 +174,144 @@
         properties: {
             route: {
                 type: String
-                /*,
-                observer: '_routeChanged'*/
             }
         },
         ready: function(e){
             console.log("Dungeons 'n Dices Loaded");
+            this.addEventListener('saveSheetListRequest', this.saveSheetList);
+            this.addEventListener('clearCreatingSheetRequest', this.clearCreatingSheet);
+        },
+        saveSheetList: function(e){
+            this.set('sheetList', null);
+            this.sheetList = e.detail.newList;
+        },
+        clearCreatingSheet: function(e){
+            this.creatingSheet = Object.assign({}, this.baseSheet);
         },
         attached: function(e){
             console.log("Route to Sheet List");
             if(!this.route.path){
-                this.set('route.path', '/home')
+                this.set('route.path', '/home');
           }
         },
         sideNavRouteWillChange: function(e){
             console.log('SideNav: Route Will Chage');
             document.querySelector('#paperDrawerPanel').closeDrawer();
+        },
+        initializeDefaultValue: function() {
+            console.log("LocalStorage Default Sheet List");
+            this.sheetList = [
+                {
+                    name: "Marad",
+                    class: "Paladino",
+                    race: "Draenei",
+                    level: 100,
+                    system: "WoWTable"
+                },
+                {
+                    name: "Bilbo",
+                    class: "Ladino",
+                    race: "Hobbit",
+                    level: 10,
+                    system: "LotR RPG"
+                }
+            ];
+        },
+        initializeDefaultBaseSheet: function(e){
+            this.baseSheet = {
+                name: "",
+                job: "",
+                race: "",
+                level: "1",
+                system: "",
+                statusList: [
+                    {
+                        name: "Str/Dex/Int/...",
+                        value: 0,
+                        baseValue: 0,
+                        levelModifier: 0,
+                        persistBonus: 0,
+                        volatileBonus: 0
+                    }
+                ],
+                // { *name: "vit", value: SUM, *baseValue: 10, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
+                resourcesList: [
+                    {
+                        name: "HP/MP/...",
+                        value: 0,
+                        baseValue: 0,
+                        statusBase:  null,
+                        statusBaseModifier: 1,
+                        levelModifier: 0.5,
+                        persistBonus: 0,
+                        volatileBonus: 0
+                    }
+                ],
+                // { *name: "hp", value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
+                defensesList: [
+                    {
+                        name: "Armor/Magic Resistence/...",
+                        value: 0,
+                        baseValue: 10,
+                        statusBase: null,
+                        statusBaseModifier: 1,
+                        levelModifier: 0.5,
+                        persistBonus: 0,
+                        volatileBonus: 0
+                    }
+                ],
+                // { *name: "armor", value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
+                attacksList: [],
+                // { *name: "attackName", AttackValue: SUM, DamageValue: SUM, *baseAttack: 10, *attackStatusBase: Vit, *attackStatusBaseModifier: 1, *attackLevelModifier: 0, attackpersistBonus: 0, attackVolatileBonus: 0, *baseDamage: 10, *damageStatusBase: Vit, *damageStatusBaseModifier: 1, *damageLevelModifier: 0, damagepersistBonus: 0, damageVolatileBonus: 0 }, ...
+                skillsList: [
+                    {
+                        name: "Diplomacy/Heal...",
+                        value: 0,
+                        baseValue: 10,
+                        statusBase: null,
+                        statusBaseModifier: 1,
+                        levelModifier: 0.5,
+                        persistBonus: 0,
+                        volatileBonus: 0
+                    }
+                ],
+                // { *name: "skillName", value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
+                equipments: {
+                    head: {},
+                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                    chest: {},
+                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                    legs: {},
+                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                    feet: {},
+                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                    hands: {},
+                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                    cloak: {},
+                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                    waist: {},
+                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                    wrist: {},
+                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                    trinkets: {},
+                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }, ...
+                    weapon: {},
+                    // *equipmentName: { *type: 1, *attack: 10, *damage: 10, effect1: { *value: 10, *affect: Armor }, ... }
+                    shield: {}
+                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
+                },
+                persistBonusList: [],
+                // { name: "bonusName", *value: 10, *affect: Vit }, ...  Kind of: Equipment Bonus
+                volatileBonusList: []
+                // { *name: "bonusName", *value: 10, *affect: Vit }, ...  Kind of: Potion Bonus
+            }
+        },
+        initializeDefaultCreatingSheet: function(e){
+            if((typeof this.creatingSheet == 'undefined' || this.creatingSheet == null)  && this.baseSheet != null){
+                //this.creatingSheet = Object.create(this.baseSheet);
+                this.creatingSheet = Object.assign({}, this.baseSheet);
+                console.log('Creating Sheet Assigned as Base Sheet');
+            }
         }
         /*,
         _routeChanged: function(e){

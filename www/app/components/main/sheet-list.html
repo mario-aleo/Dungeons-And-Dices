@@ -18,9 +18,9 @@
             }
         </style>
 
-        <iron-localstorage name="localstorageSheetList"
+        <!--iron-localstorage name="localstorageSheetList"
                            value="{{sheetList}}"
-                           on-iron-localstorage-load-empty="initializeDefaultValue"></iron-localstorage>
+                           on-iron-localstorage-load-empty="initializeDefaultValue"></iron-localstorage-->
 
         <template is="dom-repeat"
                   items="{{ sheetList }}">
@@ -44,41 +44,15 @@
     Polymer({
         is: "sheet-list",
         properties: {
-            sheetList: {
-                type: Array
-            },
-            routeData: {
-                type: Object,
-                notify: true,
-                reflectToAttribute: true
-            }
         },
         ready: function(e){
             console.log("Sheet List Loaded");
-        },
-        initializeDefaultValue: function() {
-            console.log("LocalStorage Default Sheet List");
-            this.sheetList = [
-                {
-                    name: "Marad",
-                    class: "Paladino",
-                    race: "Draenei",
-                    level: 100,
-                    system: "WoWTable"
-                },
-                {
-                    name: "Bilbo",
-                    class: "Ladino",
-                    race: "Hobbit",
-                    level: 10,
-                    system: "LotR RPG"
-                }
-            ]
         },
         createSheet: function(e){
             console.log("Route to CreateSheet");
             this.set('route.path', '/sheetCreation');
             this.page = 'sheetCreation';
+            console.log(Polymer);
         }
     });
 </script>
