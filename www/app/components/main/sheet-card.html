@@ -49,31 +49,30 @@
         is: "sheet-card",
         properties: {
             personagem: {
-                type: String,
-                value: ""
+                type: String
             },
             level: {
-                type: String,
-                value: ""
+                type: String
             },
             classe: {
-                type: String,
-                value: ""
+                type: String
             },
             raca: {
-                type: String,
-                value: ""
+                type: String
             },
             sistema: {
-                type: String,
-                value: ""
+                type: String
             },
+            sheet: {
+                type: Object
+            }
         },
         ready: function(e){
             console.log("Sheet List Card Loaded");
         },
         openSheet: function(e) {
             console.log("Polymer OpenSheet");
+            console.log(this.sheet);
         }
     });
 </script>

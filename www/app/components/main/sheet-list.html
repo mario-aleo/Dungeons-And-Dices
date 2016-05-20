@@ -26,9 +26,10 @@
                   items="{{ sheetList }}">
             <sheet-card personagem="{{ item.name }}"
                         level="{{ item.level }}"
-                        classe="{{ item.class }}"
+                        classe="{{ item.job }}"
                         raca="{{ item.race }}"
-                        sistema="{{ item.system }}"></sheet-card>
+                        sistema="{{ item.system }}"
+                        sheet="{{ item }}"></sheet-card>
         </template>
 
         <div id="space"></div>

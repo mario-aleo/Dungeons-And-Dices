@@ -24,35 +24,21 @@
                 position: fixed;
                 right: 16px;
                 top: 120px;
+                z-index: 1;
             }
 
             @media (min-width: 490px) and (max-width: 600px) {
                 #save-sheet {
-                    position: fixed;
-                    right: 16px;
                     top: 80px;
                 }
             }
 
             @media (min-width: 740px) {
                 #save-sheet {
-                    position: fixed;
-                    right: 16px;
                     top: 80px;
                 }
             }
         </style>
-
-        <!--iron-localstorage name="localstorageSheetList"
-                           value="{{ sheetList }}"></iron-localstorage-->
-
-        <!--iron-localstorage name="localstorageBaseSheet"
-                           value="{{ baseSheet }}"
-                           on-iron-localstorage-load-empty="initializeDefaultBaseSheet"></iron-localstorage>
-
-        <iron-localstorage name="localstorageCreatingSheet"
-                           value="{{ creatingSheet }}"
-                           on-iron-localstorage-load-empty="initializeDefaultCreatingSheet"></iron-localstorage-->
 
         <paper-fab noink
                    icon="save"
@@ -121,7 +107,7 @@
             // SUM Status = baseValue + (levelModifier * level)
             this.creatingSheet.statusList.forEach(
                 function(status, index){
-                    status.value = parseInt(status.baseValue) + (parseInt(status.levelModifier) * parseInt(scAtt.creatingSheet.level));
+                    status.value = parseInt(status.baseValue) + (parseFloat(status.levelModifier) * parseInt(scAtt.creatingSheet.level));
                 }
             );
 
@@ -136,7 +122,7 @@
                         ).indexOf(resource.statusBase)
                     ].value;
 
-                    resource.value = parseInt(resource.baseValue) + (parseInt(resource.statusBaseModifier) * parseInt(baseStatusValue)) + (parseInt(resource.levelModifier) * parseInt(scAtt.creatingSheet.level));
+                    resource.value = parseInt(resource.baseValue) + (parseFloat(resource.statusBaseModifier) * parseInt(baseStatusValue)) + (parseFloat(resource.levelModifier) * parseInt(scAtt.creatingSheet.level));
                 }
             );
 
@@ -151,7 +137,7 @@
                         ).indexOf(defense.statusBase)
                     ].value;
 
-                    defense.value = parseInt(defense.baseValue) + (parseInt(defense.statusBaseModifier) * parseInt(baseStatusValue)) + (parseInt(defense.levelModifier) * parseInt(scAtt.creatingSheet.level));
+                    defense.value = parseInt(defense.baseValue) + (parseFloat(defense.statusBaseModifier) * parseInt(baseStatusValue)) + (parseFloat(defense.levelModifier) * parseInt(scAtt.creatingSheet.level));
                 }
             );
 
@@ -166,7 +152,7 @@
                         ).indexOf(skill.statusBase)
                     ].value;
 
-                    skill.value = parseInt(skill.baseValue) + (parseInt(skill.statusBaseModifier) * parseInt(baseStatusValue)) + (parseInt(skill.levelModifier) * parseInt(scAtt.creatingSheet.level));
+                    skill.value = parseInt(skill.baseValue) + (parseFloat(skill.statusBaseModifier) * parseInt(baseStatusValue)) + (parseFloat(skill.levelModifier) * parseInt(scAtt.creatingSheet.level));
                 }
             );
 
