@@ -47,7 +47,7 @@
 
         <paper-tabs noink
                     scrollable
-                    selected="{{ selected }}">
+                    selected="{{ tabSelected }}">
             <paper-tab>Basico</paper-tab>
             <paper-tab>Status</paper-tab>
             <paper-tab>Recursos</paper-tab>
@@ -55,7 +55,7 @@
             <paper-tab>Skills</paper-tab>
         </paper-tabs>
 
-        <iron-pages selected="{{ selected }}"
+        <iron-pages selected="{{ tabSelected }}"
                     class="tabs-pages">
 
             <basic-tab name="{{ creatingSheet.name }}"
@@ -83,9 +83,20 @@
     Polymer({
         is: "sheet-creation",
         properties: {
-            selected: {
+            tabSelected: {
                 type: String,
                 value: "0"
+            },
+            sheetList: {
+                type: Array,
+                notify: true,
+                reflectToAttribute: true
+            },
+            baseSheet: {
+                type: Object
+            },
+            creatingSheet: {
+                type: Object
             }
         },
         observers: [
@@ -114,51 +125,64 @@
             // SUM Resource = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
             this.creatingSheet.resourcesList.forEach(
                 function(resource, index){
-                    var baseStatusValue = scAtt.creatingSheet.statusList[
-                        scAtt.creatingSheet.statusList.map(
-                            function(obj) {
-                                return obj.name;
-                            }
-                        ).indexOf(resource.statusBase)
-                    ].value;
-
-                    resource.value = parseInt(resource.baseValue) + (parseFloat(resource.statusBaseModifier) * parseInt(baseStatusValue)) + (parseFloat(resource.levelModifier) * parseInt(scAtt.creatingSheet.level));
+                    if(resource.statusBase != "None"){
+                        var baseStatusValue = scAtt.creatingSheet.statusList[
+                            scAtt.creatingSheet.statusList.map(
+                                function(obj) {
+                                    return obj.name;
+                                }
+                            ).indexOf(resource.statusBase)
+                        ].value;
+                        resource.value = parseInt(resource.baseValue) + (parseFloat(resource.statusBaseModifier) * parseInt(baseStatusValue)) + (parseFloat(resource.levelModifier) * parseInt(scAtt.creatingSheet.level));
+                    } else{
+                        resource.value = parseInt(resource.baseValue) + (parseFloat(resource.levelModifier) * parseInt(scAtt.creatingSheet.level));
+                    }
                 }
             );
 
             // SUM Defense = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
             this.creatingSheet.defensesList.forEach(
                 function(defense, index){
-                    var baseStatusValue = scAtt.creatingSheet.statusList[
-                        scAtt.creatingSheet.statusList.map(
-                            function(obj) {
-                                return obj.name;
-                            }
-                        ).indexOf(defense.statusBase)
-                    ].value;
+                    if(defense.statusBase != "None"){
+                        var baseStatusValue = scAtt.creatingSheet.statusList[
+                            scAtt.creatingSheet.statusList.map(
+                                function(obj) {
+                                    return obj.name;
+                                }
+                            ).indexOf(defense.statusBase)
+                        ].value;
 
-                    defense.value = parseInt(defense.baseValue) + (parseFloat(defense.statusBaseModifier) * parseInt(baseStatusValue)) + (parseFloat(defense.levelModifier) * parseInt(scAtt.creatingSheet.level));
+                        defense.value = parseInt(defense.baseValue) + (parseFloat(defense.statusBaseModifier) * parseInt(baseStatusValue)) + (parseFloat(defense.levelModifier) * parseInt(scAtt.creatingSheet.level));
+                    } else{
+                        defense.value = parseInt(defense.baseValue) + (parseFloat(defense.levelModifier) * parseInt(scAtt.creatingSheet.level));
+                    }
                 }
             );
 
             // SUM Skill = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
             this.creatingSheet.skillsList.forEach(
                 function(skill, index){
-                    var baseStatusValue = scAtt.creatingSheet.statusList[
-                        scAtt.creatingSheet.statusList.map(
-                            function(obj) {
-                                return obj.name;
-                            }
-                        ).indexOf(skill.statusBase)
-                    ].value;
+                    if(skill.statusBase != "None"){
+                        var baseStatusValue = scAtt.creatingSheet.statusList[
+                            scAtt.creatingSheet.statusList.map(
+                                function(obj) {
+                                    return obj.name;
+                                }
+                            ).indexOf(skill.statusBase)
+                        ].value;
 
-                    skill.value = parseInt(skill.baseValue) + (parseFloat(skill.statusBaseModifier) * parseInt(baseStatusValue)) + (parseFloat(skill.levelModifier) * parseInt(scAtt.creatingSheet.level));
+                        skill.value = parseInt(skill.baseValue) + (parseFloat(skill.statusBaseModifier) * parseInt(baseStatusValue)) + (parseFloat(skill.levelModifier) * parseInt(scAtt.creatingSheet.level));
+                    } else{
+                        skill.value = parseInt(skill.baseValue) + (parseFloat(skill.levelModifier) * parseInt(scAtt.creatingSheet.level));
+                    }
                 }
             );
 
-            this.sheetList.push( scAtt.creatingSheet );
-            this.fire('saveSheetListRequest', { newList: scAtt.sheetList });
-            this.fire('clearCreatingSheetRequest');
+            this.sheetList.sheetList.push(scAtt.creatingSheet);
+            console.log(this.sheetList);
+            //this.sheetList.push( scAtt.creatingSheet );
+            //this.fire('saveSheetListRequest', { newSheet: scAtt.creatingSheet });
+            //this.fire('clearCreatingSheetRequest');
 
             console.log('Sheet Saved');
         }

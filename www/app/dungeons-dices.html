@@ -149,17 +149,17 @@
                 <iron-pages attr-for-selected="data-route"
                             selected="{{dataRoute.page}}">
                     <section data-route="home">
-                        <sheet-list route={{route}}
-                                    page={{dataRoute.page}}
-                                    sheet-list={{sheetList}}></sheet-list>
+                        <sheet-list route="{{route}}"
+                                    page="{{dataRoute.page}}"
+                                    sheet-list="{{sheetList.sheetList}}"></sheet-list>
                     </section>
                     <section data-route="sheetDetail">
                         <h1>sheetDetail</h1>
                     </section>
                     <section data-route="sheetCreation">
-                        <sheet-creation sheet-list={{sheetList}}
-                                        base-sheet={{baseSheet}}
-                                        creating-sheet={{creatingSheet}}></sheet-creation>
+                        <sheet-creation sheet-list="{{sheetList}}"
+                                        base-sheet="{{baseSheet}}"
+                                        creating-sheet="{{creatingSheet}}"></sheet-creation>
                     </section>
                 </iron-pages>
 
@@ -174,8 +174,20 @@
         properties: {
             route: {
                 type: String
+            },
+            sheetList: {
+                type: Object
+            },
+            baseSheet: {
+                type: Object
+            },
+            creatingSheet: {
+                type: Object
             }
         },
+        observers: [
+            '_sheetListUpdated(sheetList.*)'
+        ],
         ready: function(e){
             console.log("Dungeons 'n Dices Loaded");
             this.addEventListener('saveSheetListRequest', this.saveSheetList);
@@ -188,11 +200,15 @@
         clearCreatingSheet: function(e){
             this.creatingSheet = Object.assign({}, this.baseSheet);
         },
+        _sheetListUpdated: function(e){
+            console.log('SheetList Update');
+            console.log(this.sheetList);
+        },
         attached: function(e){
             console.log("Route to Sheet List");
             if(!this.route.path){
                 this.set('route.path', '/home');
-          }
+            }
         },
         sideNavRouteWillChange: function(e){
             console.log('SideNav: Route Will Chage');
@@ -200,22 +216,25 @@
         },
         initializeDefaultValue: function() {
             console.log("LocalStorage Default Sheet List");
-            this.sheetList = [
-                {
-                    name: "Marad",
-                    job: "Paladino",
-                    race: "Draenei",
-                    level: 100,
-                    system: "WoWTable"
-                },
-                {
-                    name: "Bilbo",
-                    job: "Ladino",
-                    race: "Hobbit",
-                    level: 10,
-                    system: "LotR RPG"
-                }
-            ];
+            this.sheetList =
+            {
+                sheetList: [
+                    {
+                        name: "Marad",
+                        job: "Paladino",
+                        race: "Draenei",
+                        level: 100,
+                        system: "WoWTable"
+                    },
+                    {
+                        name: "Bilbo",
+                        job: "Ladino",
+                        race: "Hobbit",
+                        level: 10,
+                        system: "LotR RPG"
+                    }
+                ]
+            };
         },
         initializeDefaultBaseSheet: function(e){
             this.baseSheet = {
@@ -240,7 +259,7 @@
                         name: "HP/MP/...",
                         value: 0,
                         baseValue: 0,
-                        statusBase:  null,
+                        statusBase:  "None",
                         statusBaseModifier: 1,
                         levelModifier: 0.5,
                         persistBonus: 0,
@@ -253,7 +272,7 @@
                         name: "Armor/Magic Resistence/...",
                         value: 0,
                         baseValue: 10,
-                        statusBase: null,
+                        statusBase: "None",
                         statusBaseModifier: 1,
                         levelModifier: 0.5,
                         persistBonus: 0,
@@ -268,7 +287,7 @@
                         name: "Diplomacy/Heal...",
                         value: 0,
                         baseValue: 10,
-                        statusBase: null,
+                        statusBase: "None",
                         statusBaseModifier: 1,
                         levelModifier: 0.5,
                         persistBonus: 0,
@@ -313,10 +332,5 @@
                 console.log('Creating Sheet Assigned as Base Sheet');
             }
         }
-        /*,
-        _routeChanged: function(e){
-            console.log('Route Changed');
-            document.querySelector('#paperDrawerPanel').closeDrawer();
-        }*/
     });
 </script>

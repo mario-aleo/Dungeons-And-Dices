@@ -7,6 +7,17 @@
                 width: 100%;
             }
 
+            #div-empty {
+                width: 80%;
+                margin: 16px auto;
+                @apply(--layout-vertical);
+                @apply(--layout-center);
+            }
+
+            #text-empty {
+                color: var(--dark-primary-color)
+            }
+
             #add-sheet {
                 position: fixed;
                 bottom: 16px;
@@ -18,10 +29,6 @@
             }
         </style>
 
-        <!--iron-localstorage name="localstorageSheetList"
-                           value="{{sheetList}}"
-                           on-iron-localstorage-load-empty="initializeDefaultValue"></iron-localstorage-->
-
         <template is="dom-repeat"
                   items="{{ sheetList }}">
             <sheet-card personagem="{{ item.name }}"
@@ -30,6 +37,14 @@
                         raca="{{ item.race }}"
                         sistema="{{ item.system }}"
                         sheet="{{ item }}"></sheet-card>
+        </template>
+
+        <template is="dom-if"
+                  if="{{ !sheetList }}"
+                  restamep="true">
+            <div id="div-empty">
+                <h2 id="text-empty">Nothing Here :(</h2>
+            </div>
         </template>
 
         <div id="space"></div>
@@ -45,6 +60,15 @@
     Polymer({
         is: "sheet-list",
         properties: {
+            route: {
+                type: String
+            },
+            page: {
+                type: String
+            },
+            sheetList: {
+                type: Object
+            }
         },
         ready: function(e){
             console.log("Sheet List Loaded");
@@ -53,7 +77,6 @@
             console.log("Route to CreateSheet");
             this.set('route.path', '/sheetCreation');
             this.page = 'sheetCreation';
-            console.log(Polymer);
         }
     });
 </script>

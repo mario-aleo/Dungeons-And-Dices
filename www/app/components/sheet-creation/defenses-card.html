@@ -38,6 +38,7 @@
                     <paper-listbox class="dropdown-content"
                                    attr-for-selected="status-name"
                                    selected="{{ statusBase }}">
+                        <paper-item status-name="None">None</paper-item>
                         <template is="dom-repeat" items="{{ statusList }}">
                             <paper-item status-name="{{ item.name }}">{{ item.name }}</paper-item>
                         </template>
@@ -81,6 +82,7 @@
             },
             statusBase: {
                 type: String,
+                value: "None",
                 notify: true,
                 reflectToAttribute: true
             },
