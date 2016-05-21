@@ -88,9 +88,7 @@
                 value: "0"
             },
             sheetList: {
-                type: Array,
-                notify: true,
-                reflectToAttribute: true
+                type: Array
             },
             baseSheet: {
                 type: Object
@@ -178,11 +176,8 @@
                 }
             );
 
-            this.sheetList.sheetList.push(scAtt.creatingSheet);
-            console.log(this.sheetList);
-            //this.sheetList.push( scAtt.creatingSheet );
-            //this.fire('saveSheetListRequest', { newSheet: scAtt.creatingSheet });
-            //this.fire('clearCreatingSheetRequest');
+            this.push("sheetList", this.creatingSheet);
+            this.creatingSheet = Object.assign({}, this.baseSheet);
 
             console.log('Sheet Saved');
         }

@@ -40,8 +40,7 @@
         </template>
 
         <template is="dom-if"
-                  if="{{ !sheetList }}"
-                  restamep="true">
+                  if="{{ hasSheet }}">
             <div id="div-empty">
                 <h2 id="text-empty">Nothing Here :(</h2>
             </div>
@@ -67,11 +66,23 @@
                 type: String
             },
             sheetList: {
-                type: Object
+                type: Array,
+                observer: "_sheetListUpdate"
+            },
+            hasSheet: {
+                type: Boolean,
+                value: false
             }
         },
         ready: function(e){
             console.log("Sheet List Loaded");
+        },
+        _sheetListUpdate: function(e){
+            if(typeof this.sheetList == 'undefined' || this.sheetList.length == 0){
+                this.hasSheet = true;
+            } else{
+                this.hasSheet = false;
+            }
         },
         createSheet: function(e){
             console.log("Route to CreateSheet");

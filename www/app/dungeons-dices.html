@@ -97,7 +97,7 @@
 
         <iron-localstorage name="localstorageSheetList"
                            value="{{ sheetList }}"
-                           on-iron-localstorage-load-empty="initializeDefaultValue"></iron-localstorage>
+                           on-iron-localstorage-load-empty="initializeDefaultSheetList"></iron-localstorage>
 
         <iron-localstorage name="localstorageBaseSheet"
                            value="{{ baseSheet }}"
@@ -151,13 +151,13 @@
                     <section data-route="home">
                         <sheet-list route="{{route}}"
                                     page="{{dataRoute.page}}"
-                                    sheet-list="{{sheetList.sheetList}}"></sheet-list>
+                                    sheet-list="{{sheetList.list}}"></sheet-list>
                     </section>
                     <section data-route="sheetDetail">
                         <h1>sheetDetail</h1>
                     </section>
                     <section data-route="sheetCreation">
-                        <sheet-creation sheet-list="{{sheetList}}"
+                        <sheet-creation sheet-list="{{sheetList.list}}"
                                         base-sheet="{{baseSheet}}"
                                         creating-sheet="{{creatingSheet}}"></sheet-creation>
                     </section>
@@ -185,24 +185,8 @@
                 type: Object
             }
         },
-        observers: [
-            '_sheetListUpdated(sheetList.*)'
-        ],
         ready: function(e){
             console.log("Dungeons 'n Dices Loaded");
-            this.addEventListener('saveSheetListRequest', this.saveSheetList);
-            this.addEventListener('clearCreatingSheetRequest', this.clearCreatingSheet);
-        },
-        saveSheetList: function(e){
-            this.set('sheetList', null);
-            this.sheetList = e.detail.newList;
-        },
-        clearCreatingSheet: function(e){
-            this.creatingSheet = Object.assign({}, this.baseSheet);
-        },
-        _sheetListUpdated: function(e){
-            console.log('SheetList Update');
-            console.log(this.sheetList);
         },
         attached: function(e){
             console.log("Route to Sheet List");
@@ -214,26 +198,9 @@
             console.log('SideNav: Route Will Chage');
             document.querySelector('#paperDrawerPanel').closeDrawer();
         },
-        initializeDefaultValue: function() {
-            console.log("LocalStorage Default Sheet List");
-            this.sheetList =
-            {
-                sheetList: [
-                    {
-                        name: "Marad",
-                        job: "Paladino",
-                        race: "Draenei",
-                        level: 100,
-                        system: "WoWTable"
-                    },
-                    {
-                        name: "Bilbo",
-                        job: "Ladino",
-                        race: "Hobbit",
-                        level: 10,
-                        system: "LotR RPG"
-                    }
-                ]
+        initializeDefaultSheetList: function() {
+            this.sheetList = {
+                list: []
             };
         },
         initializeDefaultBaseSheet: function(e){
