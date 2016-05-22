@@ -30,7 +30,7 @@
         </style>
 
         <template is="dom-repeat"
-                  items="{{ sheetList }}">
+                  items="{{ sheetList.list }}">
             <sheet-card personagem="{{ item.name }}"
                         level="{{ item.level }}"
                         classe="{{ item.job }}"
@@ -66,19 +66,23 @@
                 type: String
             },
             sheetList: {
-                type: Array,
-                observer: "_sheetListUpdate"
+                type: Object,
+                notify: true,
+                reflectToAttribute: true
             },
             hasSheet: {
                 type: Boolean,
                 value: false
             }
         },
+        observers: [
+            '_sheetListUpdate(sheetList.*)'
+        ],
         ready: function(e){
             console.log("Sheet List Loaded");
         },
         _sheetListUpdate: function(e){
-            if(typeof this.sheetList == 'undefined' || this.sheetList.length == 0){
+            if(typeof this.sheetList.list == null || this.sheetList.list.length == 0){
                 this.hasSheet = true;
             } else{
                 this.hasSheet = false;

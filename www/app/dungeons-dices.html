@@ -151,13 +151,15 @@
                     <section data-route="home">
                         <sheet-list route="{{route}}"
                                     page="{{dataRoute.page}}"
-                                    sheet-list="{{sheetList.list}}"></sheet-list>
+                                    sheet-list="{{sheetList}}"></sheet-list>
                     </section>
                     <section data-route="sheetDetail">
                         <h1>sheetDetail</h1>
                     </section>
                     <section data-route="sheetCreation">
-                        <sheet-creation sheet-list="{{sheetList.list}}"
+                        <sheet-creation route="{{route}}"
+                                        page="{{dataRoute.page}}"
+                                        sheet-list="{{sheetList.list}}"
                                         base-sheet="{{baseSheet}}"
                                         creating-sheet="{{creatingSheet}}"></sheet-creation>
                     </section>
@@ -198,7 +200,7 @@
             console.log('SideNav: Route Will Chage');
             document.querySelector('#paperDrawerPanel').closeDrawer();
         },
-        initializeDefaultSheetList: function() {
+        initializeDefaultSheetList: function(e) {
             this.sheetList = {
                 list: []
             };

@@ -87,14 +87,24 @@
                 type: String,
                 value: "0"
             },
+            route: {
+                type: String
+            },
+            page: {
+                type: String
+            },
             sheetList: {
-                type: Array
+                type: Array,
+                notify: true,
+                reflectToAttribute: true
             },
             baseSheet: {
                 type: Object
             },
             creatingSheet: {
-                type: Object
+                type: Object,
+                notify: true,
+                reflectToAttribute: true
             }
         },
         observers: [
@@ -110,17 +120,15 @@
         saveSheet: function(e){
             console.log('Saving Sheet');
             // Need to Verify  Each Status, Resource, Defense and Skill and SUM
-
             var scAtt = this;
-
             // SUM Status = baseValue + (levelModifier * level)
             this.creatingSheet.statusList.forEach(
                 function(status, index){
                     status.value = parseInt(status.baseValue) + (parseFloat(status.levelModifier) * parseInt(scAtt.creatingSheet.level));
                 }
             );
-
             // SUM Resource = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
+            // or if statusBase == None => SUM Resource = baseValue + (levelModifier * level)
             this.creatingSheet.resourcesList.forEach(
                 function(resource, index){
                     if(resource.statusBase != "None"){
@@ -137,8 +145,8 @@
                     }
                 }
             );
-
             // SUM Defense = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
+            // or if statusBase == None => SUM Defense = baseValue + (levelModifier * level)
             this.creatingSheet.defensesList.forEach(
                 function(defense, index){
                     if(defense.statusBase != "None"){
@@ -156,8 +164,8 @@
                     }
                 }
             );
-
             // SUM Skill = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
+            // or if statusBase == None => SUM Skill = baseValue + (levelModifier * level)
             this.creatingSheet.skillsList.forEach(
                 function(skill, index){
                     if(skill.statusBase != "None"){
@@ -175,11 +183,13 @@
                     }
                 }
             );
-
+            // Pushing to SheetList and Cleaning the CreatingSheet
             this.push("sheetList", this.creatingSheet);
-            this.creatingSheet = Object.assign({}, this.baseSheet);
-
+            this.set("creatingSheet", this.baseSheet);
             console.log('Sheet Saved');
+            console.log("Route to SheetList");
+            this.set('route.path', '/home');
+            this.page = 'home';
         }
     });
 </script>
