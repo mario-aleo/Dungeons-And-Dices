@@ -1,0 +1,77 @@
+<!--link href="../assets/bower_components/polymer/polymer.html" rel="import"-->
+
+<dom-module id="defenses-tab">
+    <template>
+        <style>
+            :host {
+                width: 90%;
+                margin: auto;
+                @apply(--layout-vertical);
+            }
+
+            #add-defenses {
+                position: fixed;
+                bottom: 16px;
+                right: 16px;
+            }
+
+            #space {
+                height: 64px;
+            }
+        </style>
+
+        <template is="dom-repeat"
+                  items="{{ defensesList }}">
+            <defenses-card name="{{ item.name }}"
+                           value="{{ item.value }}"
+						   base-value="{{ item.baseValue }}"
+						   status-base="{{ item.statusBase }}"
+						   status-base-modifier="{{ item.statusBaseModifier }}"
+						   level-modifier="{{ item.levelModifier }}"
+						   persist-bonus="{{ item.persistBonus }}"
+						   volatile-bonus="{{ item.volatileBonus }}"
+						   status-list="{{ statusList }}"></defenses-card>
+        </template>
+
+        <div id="space"></div>
+
+        <paper-fab noink
+                   icon="add"
+                   id="add-defenses"
+                   on-click="newDefenses"></paper-fab>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: "defenses-tab",
+        properties: {
+            defensesList: {
+                type: Array,
+                notify: true,
+                reflectToAttribute: true
+            },
+            statusList: {
+                type: Array,
+                notify: true,
+                reflectToAttribute: true
+            }
+        },
+        ready: function(e){
+            console.log("Defenses Tab Loaded");
+        },
+        newDefenses: function(e){
+            console.log("Defenses Card Add");
+            this.push("defensesList", {
+				name: "Armor",
+				value: 0,
+				baseValue: 0,
+				statusBase: "None",
+				statusBaseModifier: 1,
+				levelModifier: 0.5,
+				persistBonus: 0,
+				volatileBonus: 0
+			});
+        }
+    });
+</script>

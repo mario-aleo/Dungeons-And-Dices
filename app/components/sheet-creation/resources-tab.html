@@ -1,0 +1,77 @@
+<!--link href="../assets/bower_components/polymer/polymer.html" rel="import"-->
+
+<dom-module id="resources-tab">
+    <template>
+        <style>
+            :host {
+                width: 90%;
+                margin: auto;
+                @apply(--layout-vertical);
+            }
+
+            #add-resources {
+                position: fixed;
+                bottom: 16px;
+                right: 16px;
+            }
+
+            #space {
+                height: 64px;
+            }
+        </style>
+
+        <template is="dom-repeat"
+                  items="{{ resourcesList }}">
+            <resources-card name="{{ item.name }}"
+                            value="{{ item.value }}"
+                            base-value="{{ item.baseValue }}"
+                            status-base="{{ item.statusBase }}"
+                            status-base-modifier="{{ item.statusBaseModifier }}"
+                            level-modifier="{{ item.levelModifier }}"
+                            persist-bonus="{{ item.persistBonus }}"
+                            volatile-bonus="{{ item.volatileBonus }}"
+                            status-list="{{ statusList }}"></resources-card>
+        </template>
+
+        <div id="space"></div>
+
+        <paper-fab noink
+                   icon="add"
+                   id="add-resources"
+                   on-click="newResources"></paper-fab>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: "resources-tab",
+        properties: {
+            resourcesList: {
+                type: Array,
+                notify: true,
+                reflectToAttribute: true
+            },
+            statusList: {
+                type: Array,
+                notify: true,
+                reflectToAttribute: true
+            }
+        },
+        ready: function(e){
+            console.log("Resources Tab Loaded");
+        },
+        newResources: function(e){
+            console.log("Resources Card Add");
+            this.push("resourcesList", {
+                name: "HP/MP/...",
+                value: 0,
+                baseValue: 0,
+                statusBase: "None",
+                statusBaseModifier: 1,
+                levelModifier: 0.5,
+                persistBonus: 0,
+                volatileBonus: 0
+            });
+        }
+    });
+</script>

@@ -1,0 +1,67 @@
+<!--link href="../assets/bower_components/polymer/polymer.html" rel="import"-->
+
+<dom-module id="status-tab">
+    <template>
+        <style>
+            :host {
+                width: 90%;
+                margin: auto;
+                @apply(--layout-vertical);
+            }
+
+            #add-status {
+                position: fixed;
+                bottom: 16px;
+                right: 16px;
+            }
+
+            #space {
+                height: 64px;
+            }
+        </style>
+
+        <template is="dom-repeat"
+                  items="{{ statusList }}">
+            <status-card name="{{ item.name }}"
+                         value="{{ item.value }}"
+                         base-value="{{ item.baseValue }}"
+                         level-modifier="{{ item.levelModifier }}"
+                         persist-bonus="{{ item.persistBonus }}"
+                         volatile-bonus="{{ item.volatileBonus }}"></status-card>
+        </template>
+
+        <div id="space"></div>
+
+        <paper-fab noink
+                   icon="add"
+                   id="add-status"
+                   on-click="newStatus"></paper-fab>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: "status-tab",
+        properties: {
+            statusList: {
+                type: Array,
+                notify: true,
+                reflectToAttribute: true
+            }
+        },
+        ready: function(e){
+            console.log("Status Tab Loaded");
+        },
+        newStatus: function(e){
+            console.log("Status Card Add");
+            this.push("statusList", {
+                name: "Str/Dex/Int/...",
+                value: 0,
+                baseValue: 0,
+                levelModifier: 0,
+                persistBonus: 0,
+                volatileBonus: 0
+            });
+        }
+    });
+</script>
