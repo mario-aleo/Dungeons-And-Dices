@@ -8,13 +8,18 @@
             }
         </style>
 
+        <basic-card name="{{ sheet.name }}"
+                    job="{{ sheet.job }}"
+                    race="{{ sheet.race }}"
+                    level="{{ sheet.level }}"></basic-card>
+
         <resorceslist-card resorces-list="{{ sheet.resourcesList }}"></resorceslist-card>
 
-        <!-- Status List Card -->
+        <statuslist-card status-list="{{ sheet.statusList }}"></statuslist-card>
 
-        <!-- Defenses List Card -->
+        <defenseslist-card defenses-list="{{ sheet.defensesList }}"></defenseslist-card>
 
-        <!-- Skills List Card -->
+        <skillslist-card skills-list="{{ sheet.skillsList }}"></skillslist-card>
 
         <!-- Buff / Debuff List Card -->
     </template>
