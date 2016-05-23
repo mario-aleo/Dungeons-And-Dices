@@ -1,0 +1,35 @@
+<!--link href="../assets/bower_components/polymer/polymer.html" rel="import"-->
+
+<dom-module id="sheet-detail">
+    <template>
+        <style>
+            :host {
+                width: 100%;
+            }
+        </style>
+
+        <resorceslist-card resorces-list="{{ sheet.resourcesList }}"></resorceslist-card>
+
+        <!-- Status List Card -->
+
+        <!-- Defenses List Card -->
+
+        <!-- Skills List Card -->
+
+        <!-- Buff / Debuff List Card -->
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: "sheet-detail",
+        properties: {
+            sheet: {
+                type: Object
+            }
+        },
+        ready: function(e){
+            console.log("Sheet Detail Loaded");
+        }
+    });
+</script>

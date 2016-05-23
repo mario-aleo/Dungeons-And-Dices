@@ -65,14 +65,19 @@
             },
             sheet: {
                 type: Object
+            },
+            routeElement: {
+                type: Object
             }
         },
         ready: function(e){
             console.log("Sheet List Card Loaded");
+            this.routeElement = document.querySelector("dungeon-dices");
         },
-        openSheet: function(e) {
-            console.log("Polymer OpenSheet");
-            console.log(this.sheet);
+        openSheet: function(e){
+            document.querySelector("sheet-detail").set('sheet', this.sheet);
+            this.routeElement.set("route.path", "/sheetDetail");
+            this.routeElement.set("page", "sheetDetail");
         }
     });
 </script>

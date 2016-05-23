@@ -88,11 +88,11 @@
         </style>
 
         <app-location use-hash-as-path
-                         route="{{route}}"></app-location>
+                      route="{{ route }}"></app-location>
 
-        <app-route route="{{route}}"
-                      pattern="/:page"
-                      data="{{dataRoute}}"></app-route>
+        <app-route route="{{ route }}"
+                   pattern="/:page"
+                   data="{{ dataRoute }}"></app-route>
 
         <iron-localstorage name="localstorageSheetList"
                            value="{{ sheetList }}"
@@ -114,7 +114,7 @@
                 <!-- Drawer Content -->
                 <paper-menu>
                     <iron-selector attr-for-selected="data-route"
-                                   selected="{{dataRoute.page}}">
+                                   selected="{{ dataRoute.page }}">
                         <a data-route="home"
                            href="#/home"
                            on-click="sideNavRouteWillChange">
@@ -132,27 +132,23 @@
                                        icon="menu"
                                        on-click="toggleDrawer"></paper-icon-button>
                     <!-- Application name -->
-                    <div class="app-name">Dungeons & Dices</div>
+                    <div class="app-name">Dungeons 'n Dices</div>
                     <img src="../assets/img/dices.png" />
                 </app-toolbar>
                 <!-- Main Content -->
                 <iron-pages id="pagesMainContent"
                             attr-for-selected="data-route"
-                            selected="{{dataRoute.page}}">
+                            selected="{{ dataRoute.page }}">
                     <section data-route="home">
-                        <sheet-list route="{{route}}"
-                                    page="{{dataRoute.page}}"
-                                    sheet-list="{{sheetList}}"></sheet-list>
+                        <sheet-list sheet-list="{{ sheetList }}"></sheet-list>
                     </section>
                     <section data-route="sheetDetail">
-                        <h1>sheetDetail</h1>
+                        <sheet-detail></sheet-detail>
                     </section>
                     <section data-route="sheetCreation">
-                        <sheet-creation route="{{route}}"
-                                        page="{{dataRoute.page}}"
-                                        sheet-list="{{sheetList.list}}"
-                                        base-sheet="{{baseSheet}}"
-                                        creating-sheet="{{creatingSheet}}"></sheet-creation>
+                        <sheet-creation sheet-list="{{ sheetList.list }}"
+                                        base-sheet="{{ baseSheet }}"
+                                        creating-sheet="{{ creatingSheet }}"></sheet-creation>
                     </section>
                 </iron-pages>
             </app-header>
@@ -166,6 +162,12 @@
         is: "dungeon-dices",
         properties: {
             route: {
+                type: Object
+            },
+            page: {
+                type: String
+            },
+            tail: {
                 type: String
             },
             sheetList: {
@@ -183,7 +185,7 @@
         },
         attached: function(e){
             console.log("Route to Sheet List");
-            if(!this.route.path){
+            if(!this.route.path || this.route.path == '/sheetDetail'){
                 this.set('route.path', '/home');
             }
         },

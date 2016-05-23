@@ -59,12 +59,6 @@
     Polymer({
         is: "sheet-list",
         properties: {
-            route: {
-                type: String
-            },
-            page: {
-                type: String
-            },
             sheetList: {
                 type: Object,
                 notify: true,
@@ -73,13 +67,17 @@
             hasSheet: {
                 type: Boolean,
                 value: false
+            },
+            routeElement: {
+                type: Object
             }
         },
         observers: [
-            '_sheetListUpdate(sheetList.*)'
+            "_sheetListUpdate(sheetList.*)"
         ],
         ready: function(e){
             console.log("Sheet List Loaded");
+            this.routeElement = document.querySelector("dungeon-dices");
         },
         _sheetListUpdate: function(e){
             if(typeof this.sheetList.list == null || this.sheetList.list.length == 0){
@@ -90,8 +88,8 @@
         },
         createSheet: function(e){
             console.log("Route to CreateSheet");
-            this.set('route.path', '/sheetCreation');
-            this.page = 'sheetCreation';
+            this.routeElement.set("route.path", "/sheetCreation");
+            this.routeElement.set("page", "sheetCreation");
         }
     });
 </script>
