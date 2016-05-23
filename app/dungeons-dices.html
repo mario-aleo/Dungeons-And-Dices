@@ -1,6 +1,6 @@
 <!--link href="../assets/bower_components/polymer/polymer.html" rel="import"-->
 
-<dom-module id="dungeons-dices">
+<dom-module id="dungeon-dices">
     <template>
         <style>
             :root {
@@ -15,38 +15,17 @@
                 --accent-color: #03A9F4;
                 --light-accent-color: #ff80ab;
                 --dark-accent-color: #f50057;
-
-                --paper-fab-keyboard-focus-background: var(--accent-color);
-            }
-
-            #drawerToolbar {
-                background-color: var(--primary-color);
-            }
-
-            #mainToolbar {
-                @apply(--layout-horizontal);
-                @apply(--layout-center);
-                background-color: var(--primary-color);
-                color: white;
-            }
-
-            #mainToolbar #mainToggle {
-                margin-right: 16px;
-            }
-
-            .app-name {
-                @apply(--paper-font-title);
-                margin-right: 0.5em;
+                --paper-fab-keyboard-focus-background: #03A9F4;
             }
 
             paper-menu {
                 --paper-menu-selected-item: {
-                color: var(--accent-color);
+                    color: var(--accent-color);
                 }
 
                 --paper-menu-focused-item-after: {
                     color: var(--accent-color);
-                background: var(--primary-color);
+                    background: var(--primary-color);
                 }
             }
 
@@ -80,7 +59,27 @@
                 height: calc(100vh - 70px);
             }
 
-            @media (min-width: 640px) {
+            .app-name {
+                @apply(--paper-font-title);
+                margin-right: 0.5em;
+            }
+
+            #drawerToolbar {
+                background-color: var(--primary-color);
+            }
+
+            #mainToolbar {
+                @apply(--layout-horizontal);
+                @apply(--layout-center);
+                background-color: var(--primary-color);
+                color: white;
+            }
+
+            #mainToolbar #mainToggle {
+                margin-right: 16px;
+            }
+
+            @media (min-width: 641px) {
                 #mainToolbar #mainToggle {
                     display: none;
                 }
@@ -136,7 +135,8 @@
                     <img src="../assets/img/dices.png" />
                 </app-toolbar>
                 <!-- Main Content -->
-                <iron-pages attr-for-selected="data-route"
+                <iron-pages id="pagesMainContent"
+                            attr-for-selected="data-route"
                             selected="{{dataRoute.page}}">
                     <section data-route="home">
                         <sheet-list route="{{route}}"
@@ -162,7 +162,7 @@
 
 <script>
     Polymer({
-        is: "dungeons-dices",
+        is: "dungeon-dices",
         properties: {
             route: {
                 type: String
@@ -191,7 +191,9 @@
         },
         sideNavRouteWillChange: function(e){
             console.log('SideNav: Route Will Chage');
-            document.querySelector('app-drawer').toggle();
+            if(window.innerWidth < 641){
+                document.querySelector('app-drawer').toggle();
+            }
         },
         initializeDefaultSheetList: function(e) {
             this.sheetList = {

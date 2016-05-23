@@ -15,13 +15,13 @@
                 color: #FFFFFF;
             }
 
+            paper-button {
+                color: var(--accent-color);
+            }
+
             .tabs-pages {
                 height: calc(100vh - 120px);
                 overflow-y: auto;
-            }
-
-            .paper-fab-0.keyboard-focus {
-                background-color: var(--accent-color) !important;
             }
 
             #save-sheet {
@@ -29,6 +29,10 @@
                 right: 16px;
                 top: 120px;
                 z-index: 1;
+            }
+
+            #openSaveSheetDialog {
+                min-width: 240px;
             }
 
             @media (min-width: 490px) and (max-width: 600px) {
@@ -47,7 +51,7 @@
         <paper-fab noink
                    icon="save"
                    id="save-sheet"
-                   on-click="saveSheet"></paper-fab>
+                   on-click="openSaveSheetDialog"></paper-fab>
 
         <paper-tabs noink
                     scrollable
@@ -80,6 +84,19 @@
                         status-list="{{ creatingSheet.statusList }}"></skills-tab>
 
         </iron-pages>
+
+        <paper-dialog id="openSaveSheetDialog"
+                      fit-into="{{dialogFit}}">
+            <h2>Save New Sheet</h2>
+            <p>Do you want to save this new sheet? </p>
+            <p>Keep in mind that you can't add or remove anything later.</p>
+            <div class="buttons">
+                <paper-button dialog-dismiss>Decline</paper-button>
+                <paper-button dialog-confirm
+                              autofocus
+                              on-click="saveSheet">Accept</paper-button>
+            </div>
+        </paper-dialog>
     </template>
 </dom-module>
 
@@ -90,6 +107,9 @@
             tabSelected: {
                 type: String,
                 value: "0"
+            },
+            dialogFit: {
+                type: Object
             },
             route: {
                 type: String
@@ -117,9 +137,15 @@
         ready: function(e){
             console.log("Sheet Creation Loaded");
         },
+        attached: function(e){
+            this.dialogFit = document.querySelector("#pagesMainContent");
+        },
         _modelUpdated: function(e){
             console.log('Model Update');
             console.log(this.creatingSheet);
+        },
+        openSaveSheetDialog: function(e){
+            document.querySelector("#openSaveSheetDialog").open();
         },
         saveSheet: function(e){
             console.log('Saving Sheet');
