@@ -1,15 +1,18 @@
+
+
 {
     "name": "Dungeon 'n Dices",
-    "short_name": "Dungeon 'n Dices",
+    "scope": "./",
+    "start_url": "../index.html",
+    "display": "standalone",
+    "orientation": "portrait",
+    "theme_color": "#9E9E9E",
+    "background_color": "#03A9F4",
     "icons": [
         {
             "src": "../assets/img/dices_white.png",
             "sizes": "64x64",
             "type": "image/png"
-        }
-    ],
-    "start_url": "../index.html",
-    "display": "standalone",
-    "background_color": "#9E9E9E",
-    "theme_color": "#03A9F4"
+        },
+    ]
 }
