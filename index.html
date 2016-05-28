@@ -2,26 +2,35 @@
 
 <html>
     <head>
+
+        <script>
+            var host = "dungeon-n-dices.github.io";
+            if (host == window.location.host && window.location.protocol != "https:")
+            window.location.protocol = "https";
+        </script>
+
         <meta charset="utf-8">
         <meta name="format-detection" content="telephone=no">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <!-- FavIcon -->
-        <link rel="icon" type="image/png" href="assets/img/dices_white.png">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
 
         <!-- Web App -->
-        <link rel="manifest" href="worker/manifest.json">
+        <link rel="manifest" href="../manifest.json">
         <!-- Chrome -->
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="application-name" content="Dungeon 'n Dices">
-        <link rel="icon" sizes="64x64" href="assets/img/dices_white.png">
+        <link rel="icon" sizes="32x32" href="assets/img/favicon-32.png">
         <!-- iOS Web App -->
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <meta name="apple-mobile-web-app-title" content="Dungeon 'n Dices">
-        <link rel="apple-touch-icon" href="assets/img/dices_white.png">
+        <link rel="shortcut icon" href="assets/img/favicon-72.png">
+        <link rel="apple-touch-icon" href="assets/img/icon-48.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="assets/img/icon-72.png">
+        <link rel="apple-touch-icon" sizes="96x96" href="assets/img/icon-96.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="assets/img/icon-144.png">
+        <link rel="apple-touch-icon" sizes="192x192" href="assets/img/icon-192.png">
         <!-- Windows 10 Web App -->
-        <meta name="msapplication-TileImage" content="assets/img/dices_white.png">
+        <meta name="msapplication-TileImage" content="assets/img/icon-144.png">
         <meta name="msapplication-TileColor" content="#2F3BA2">
 
         <link rel="stylesheet" href="assets/css/main.css">
@@ -36,15 +45,8 @@
     </head>
 
     <body unresolved>
-        <platinum-sw-register auto-register
-                              skip-waiting
-                              clients-claim
-                              reload-on-install
-                              href="worker/sw-import.js">
-            <platinum-sw-cache default-cache-strategy="networkFirst"></platinum-sw-cache>
-        </platinum-sw-register>
 
         <dungeon-dices></dungeon-dices>
-        
+
     </body>
 </html>

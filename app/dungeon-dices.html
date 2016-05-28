@@ -76,8 +76,12 @@
                 color: white;
             }
 
-            #mainToolbar #mainToggle {
+            #mainToggle {
                 margin-right: 16px;
+            }
+
+            #mainIcon {
+                width: 36px;
             }
 
             @media (min-width: 641px) {
@@ -86,6 +90,15 @@
                 }
             }
         </style>
+
+        <platinum-sw-register auto-register
+                              skip-waiting
+                              clients-claim
+                              reload-on-install
+                              href="../sw-import.js"
+                              on-service-worker-error="ServiceWorkerError">
+            <platinum-sw-cache default-cache-strategy="networkFirst"></platinum-sw-cache>
+        </platinum-sw-register>
 
         <app-location use-hash-as-path
                       route="{{ route }}"></app-location>
@@ -133,7 +146,7 @@
                                        on-click="toggleDrawer"></paper-icon-button>
                     <!-- Application name -->
                     <div class="app-name">Dungeons 'n Dices</div>
-                    <img src="../assets/img/dices.png" />
+                    <img id="mainIcon" src="../assets/img/dices.svg" />
                 </app-toolbar>
                 <!-- Main Content -->
                 <iron-pages id="pagesMainContent"
@@ -298,6 +311,10 @@
                 this.creatingSheet = Object.assign({}, this.baseSheet);
                 console.log('Creating Sheet Assigned as Base Sheet');
             }
+        },
+        ServiceWorkerError: function(e){
+            console.log('Error: Service Worker Not Installed');
+            console.log(e);
         }
     });
 </script>
