@@ -85,7 +85,7 @@
             }
 
             @media (min-width: 641px) {
-                #mainToolbar #mainToggle {
+                #mainToggle {
                     display: none;
                 }
             }
@@ -95,8 +95,7 @@
                               skip-waiting
                               clients-claim
                               reload-on-install
-                              href="../sw-import.js"
-                              on-service-worker-error="ServiceWorkerError">
+                              href="../sw-import.js">
             <platinum-sw-cache default-cache-strategy="networkFirst"></platinum-sw-cache>
         </platinum-sw-register>
 
@@ -119,11 +118,11 @@
                            value="{{ creatingSheet }}"
                            on-iron-localstorage-load-empty="initializeDefaultCreatingSheet"></iron-localstorage>
 
-        <app-drawer-layout fullbleed>
-            <app-drawer swipe-open>
+        <paper-drawer-panel fullbleed>
+            <paper-header-panel drawer>
                 <!-- Drawer Toolbar -->
-                <app-toolbar id="drawerToolbar">
-                </app-toolbar>
+                <paper-toolbar id="drawerToolbar">
+                </paper-toolbar>
                 <!-- Drawer Content -->
                 <paper-menu>
                     <iron-selector attr-for-selected="data-route"
@@ -136,18 +135,18 @@
                         </a>
                     </iron-selector>
                 </paper-menu>
-            </app-drawer>
+            </paper-header-panel>
 
-            <app-header fixed>
+            <paper-header-panel main fixed>
                 <!-- Main Toolbar -->
-                <app-toolbar id="mainToolbar">
+                <paper-toolbar id="mainToolbar">
                     <paper-icon-button id="mainToggle"
                                        icon="menu"
-                                       on-click="toggleDrawer"></paper-icon-button>
+                                       paper-drawer-toggle></paper-icon-button>
                     <!-- Application name -->
                     <div class="app-name">Dungeons 'n Dices</div>
                     <img id="mainIcon" src="../assets/img/dices.svg" />
-                </app-toolbar>
+                </paper-toolbar>
                 <!-- Main Content -->
                 <iron-pages id="pagesMainContent"
                             attr-for-selected="data-route"
@@ -164,8 +163,8 @@
                                         creating-sheet="{{ creatingSheet }}"></sheet-creation>
                     </section>
                 </iron-pages>
-            </app-header>
-        </app-drawer-layout>
+            </paper-header-panel>
+        </paper-drawer-panel>
 
     </template>
 </dom-module>
@@ -202,14 +201,9 @@
                 this.set('route.path', '/home');
             }
         },
-        toggleDrawer: function(e){
-            document.querySelector('app-drawer').toggle();
-        },
         sideNavRouteWillChange: function(e){
             console.log('SideNav: Route Will Chage');
-            if(window.innerWidth < 641){
-                document.querySelector('app-drawer').toggle();
-            }
+            document.querySelector("paper-drawer-panel").closeDrawer()
         },
         initializeDefaultSheetList: function(e) {
             this.sheetList = {
@@ -311,10 +305,6 @@
                 this.creatingSheet = Object.assign({}, this.baseSheet);
                 console.log('Creating Sheet Assigned as Base Sheet');
             }
-        },
-        ServiceWorkerError: function(e){
-            console.log('Error: Service Worker Not Installed');
-            console.log(e);
         }
     });
 </script>
