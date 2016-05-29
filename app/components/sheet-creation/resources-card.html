@@ -12,7 +12,7 @@
 
             paper-card {
                 margin-top: 16px;
-                width: 100%;
+                width: 90%;
             }
 
             paper-dropdown-menu {
@@ -114,14 +114,8 @@
                 type: Array
             }
         },
-        observers: [
-            '_onUpdate(statusList.*)'
-        ],
         ready: function(e){
             console.log("Resources Card Loaded");
-        },
-        _onUpdate: function(e){
-            console.log(this.statusList);
         }
     });
 </script>

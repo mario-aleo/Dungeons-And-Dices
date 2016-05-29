@@ -4,8 +4,9 @@
     <template>
         <style>
             :host {
-                width: 90%;
+                width: 100%;
                 margin: auto;
+                overflow-x: hidden;
                 @apply(--layout-vertical);
             }
 
@@ -22,12 +23,15 @@
 
         <template is="dom-repeat"
                   items="{{ statusList }}">
-            <status-card name="{{ item.name }}"
-                         value="{{ item.value }}"
-                         base-value="{{ item.baseValue }}"
-                         level-modifier="{{ item.levelModifier }}"
-                         persist-bonus="{{ item.persistBonus }}"
-                         volatile-bonus="{{ item.volatileBonus }}"></status-card>
+            <iron-swipeable-container on-iron-swipe="cardSwipedAway">
+                <status-card index="{{ index }}"
+                             name="{{ item.name }}"
+                             value="{{ item.value }}"
+                             base-value="{{ item.baseValue }}"
+                             level-modifier="{{ item.levelModifier }}"
+                             persist-bonus="{{ item.persistBonus }}"
+                             volatile-bonus="{{ item.volatileBonus }}"></status-card>
+            </iron-swipeable-container>
         </template>
 
         <div id="space"></div>
@@ -51,6 +55,10 @@
         },
         ready: function(e){
             console.log("Status Tab Loaded");
+        },
+        cardSwipedAway: function(e){
+            console.log("Status Card Removed");
+            this.splice('statusList', e.detail.target.index, 1);
         },
         newStatus: function(e){
             console.log("Status Card Add");

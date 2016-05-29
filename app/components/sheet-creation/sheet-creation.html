@@ -133,19 +133,12 @@
                 type: Object
             }
         },
-        observers: [
-            "_modelUpdated(creatingSheet.*)"
-        ],
         ready: function(e){
             console.log("Sheet Creation Loaded");
             this.routeElement = document.querySelector("dungeon-dices");
         },
         attached: function(e){
             this.dialogFit = document.querySelector("#pagesMainContent");
-        },
-        _modelUpdated: function(e){
-            console.log("Model Update");
-            console.log(this.creatingSheet);
         },
         openSaveSheetDialog: function(e){
             document.querySelector("#openSaveSheetDialog").open();
