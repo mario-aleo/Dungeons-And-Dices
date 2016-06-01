@@ -23,18 +23,16 @@
 
         <template is="dom-repeat"
                   items="{{ resourcesList }}">
-            <iron-swipeable-container on-iron-swipe="cardSwipedAway">
-                <resources-card index="{{ index }}"
-                                name="{{ item.name }}"
-                                value="{{ item.value }}"
-                                base-value="{{ item.baseValue }}"
-                                status-base="{{ item.statusBase }}"
-                                status-base-modifier="{{ item.statusBaseModifier }}"
-                                level-modifier="{{ item.levelModifier }}"
-                                persist-bonus="{{ item.persistBonus }}"
-                                volatile-bonus="{{ item.volatileBonus }}"
-                                status-list="{{ statusList }}"></resources-card>
-            </iron-swipeable-container>
+            <resources-card index="{{ index }}"
+                            name="{{ item.name }}"
+                            value="{{ item.value }}"
+                            base-value="{{ item.baseValue }}"
+                            status-base="{{ item.statusBase }}"
+                            status-base-modifier="{{ item.statusBaseModifier }}"
+                            level-modifier="{{ item.levelModifier }}"
+                            persist-bonus="{{ item.persistBonus }}"
+                            volatile-bonus="{{ item.volatileBonus }}"
+                            status-list="{{ statusList }}"></resources-card>
         </template>
 
         <div id="space"></div>
@@ -63,10 +61,6 @@
         },
         ready: function(e){
             console.log("Resources Tab Loaded");
-        },
-        cardSwipedAway: function(e){
-            console.log("Resources Card Removed");
-            this.splice('resourcesList', e.detail.target.index, 1);
         },
         newResources: function(e){
             console.log("Resources Card Add");

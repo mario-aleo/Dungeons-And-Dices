@@ -66,18 +66,20 @@
             sheet: {
                 type: Object
             },
-            routeElement: {
+            route: {
                 type: Object
+            },
+            page: {
+                type: String
             }
         },
         ready: function(e){
             console.log("Sheet List Card Loaded");
-            this.routeElement = document.querySelector("dungeon-dices");
         },
         openSheet: function(e){
             document.querySelector("sheet-detail").set('sheet', this.sheet);
-            this.routeElement.set("route.path", "/sheetDetail");
-            this.routeElement.set("page", "sheetDetail");
+            this.set("route.path", "/sheetDetail");
+            this.set("page", "sheetDetail");
         }
     });
 </script>

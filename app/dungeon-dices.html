@@ -152,15 +152,13 @@
                             attr-for-selected="data-route"
                             selected="{{ dataRoute.page }}">
                     <section data-route="home">
-                        <sheet-list sheet-list="{{ sheetList }}"></sheet-list>
+                        <sheet-list></sheet-list>
                     </section>
                     <section data-route="sheetDetail">
                         <sheet-detail></sheet-detail>
                     </section>
                     <section data-route="sheetCreation">
-                        <sheet-creation sheet-list="{{ sheetList.list }}"
-                                        base-sheet="{{ baseSheet }}"
-                                        creating-sheet="{{ creatingSheet }}"></sheet-creation>
+                        <sheet-creation></sheet-creation>
                     </section>
                 </iron-pages>
             </paper-header-panel>
@@ -174,22 +172,24 @@
         is: "dungeon-dices",
         properties: {
             route: {
-                type: Object
+                type: Object,
+                notify: true
             },
             page: {
-                type: String
-            },
-            tail: {
-                type: String
+                type: String,
+                notify: true
             },
             sheetList: {
-                type: Object
+                type: Object,
+                notify: true
             },
             baseSheet: {
-                type: Object
+                type: Object,
+                notify: true
             },
             creatingSheet: {
-                type: Object
+                type: Object,
+                notify: true
             }
         },
         ready: function(e){

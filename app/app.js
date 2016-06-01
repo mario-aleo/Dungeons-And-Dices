@@ -1,25 +1,3 @@
-(function(document) {
-  'use strict';
-    
-  var app = document.querySelector('#app');
-
-  // Listen for template bound event to know when bindings
-  // have resolved and content has been stamped to the page
-  app.addEventListener('dom-change', function() {
-    // console.log('Our app is ready to rock!');
-  });
-
-  // See https://github.com/Polymer/polymer/issues/1381
-  window.addEventListener('WebComponentsReady', function() {
-    // imports are loaded and elements have been registered
-  });
-
-  app.closeDrawer = function() {
-    app.$.paperDrawerPanel.closeDrawer();
-  };
-
-})(document);
-
 /*
 baseSheet = {
     name: "",
@@ -62,8 +40,8 @@ baseSheet = {
         // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
     },
     persistBonus: {},
-    // bonusName: { *value: 10, *affect: Vit }, ...  Sample: Equipment Bonus 
+    // bonusName: { *value: 10, *affect: Vit }, ...  Sample: Equipment Bonus
     volatileBonus: {}
-    // *bonusName: { *value: 10, *affect: Vit }, ...  Sample: Potion Bonus 
+    // *bonusName: { *value: 10, *affect: Vit }, ...  Sample: Potion Bonus
 }
 */

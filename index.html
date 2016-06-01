@@ -1,23 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script>
-            var host = "dungeon-n-dices.github.io";
-            if (host == window.location.host && window.location.protocol != "https:")
-            window.location.protocol = "https";
-        </script>
-
         <meta charset="utf-8">
-        <meta name="format-detection" content="telephone=no">
+
+        <!-- Mobile -->
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
 
         <!-- Web App -->
         <link rel="manifest" href="../manifest.json">
-        <!-- Chrome -->
+
+        <!-- Chrome / Android -->
         <meta name="mobile-web-app-capable" content="yes">
-        <meta name="application-name" content="Dungeon 'n Dices">
         <link rel="icon" sizes="32x32" href="assets/img/favicon-32.png">
-        <!-- iOS Web App -->
+
+        <!-- Safari / iOS -->
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <meta name="apple-mobile-web-app-title" content="Dungeon 'n Dices">
@@ -27,19 +23,38 @@
         <link rel="apple-touch-icon" sizes="96x96" href="assets/img/icon-96.png">
         <link rel="apple-touch-icon" sizes="144x144" href="assets/img/icon-144.png">
         <link rel="apple-touch-icon" sizes="192x192" href="assets/img/icon-192.png">
-        <!-- Windows 10 Web App -->
+
+        <!-- Windows -->
         <meta name="msapplication-TileImage" content="assets/img/icon-144.png">
         <meta name="msapplication-TileColor" content="#2F3BA2">
 
-        <link rel="stylesheet" href="assets/css/main.css">
+        <script>
+            // HTTPS for Servic Worker
+            var host = "dungeon-n-dices.github.io";
+            if (host == window.location.host && window.location.protocol != "https:")
+            window.location.protocol = "https";
 
-        <script src="assets/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+            // Load Web Components when not supported
+            var webComponentsSupported = ("registerElement" in document
+                && 'import' in document.createElement("link")
+                && 'content' in document.createElement("template"));
+
+            if (!webComponentsSupported) {
+                var script = document.createElement("script");
+                script.src = "assets/bower_components/webcomponentsjs/webcomponents-lite.js";
+                document.head.appendChild(script);
+                console.log("WebComponents Loaded");
+            }
+        </script>
+
+        <link rel="stylesheet" href="assets/css/main.css">
 
         <link rel="import" href="assets/bower_components/polymer/polymer.html">
 
         <link rel="import" href="assets/css/elements.html">
 
         <title>Dungeon 'n Dices</title>
+        <meta name="description" content="The RPG Generic Sheet Organizer">
     </head>
 
     <body unresolved>

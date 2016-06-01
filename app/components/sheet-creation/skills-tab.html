@@ -23,18 +23,16 @@
 
         <template is="dom-repeat"
                   items="{{ skillsList }}">
-            <iron-swipeable-container on-iron-swipe="cardSwipedAway">
-                <skills-card index="{{ index }}"
-                             name="{{ item.name }}"
-                             value="{{ item.value }}"
-                             base-value="{{ item.baseValue }}"
-                             status-base="{{ item.statusBase }}"
-                             status-base-modifier="{{ item.statusBaseModifier }}"
-                             level-modifier="{{ item.levelModifier }}"
-                             persist-bonus="{{ item.persistBonus }}"
-                             volatile-bonus="{{ item.volatileBonus }}"
-                             status-list="{{ statusList }}"></skills-card>
-            </iron-swipeable-container>
+            <skills-card index="{{ index }}"
+                         name="{{ item.name }}"
+                         value="{{ item.value }}"
+                         base-value="{{ item.baseValue }}"
+                         status-base="{{ item.statusBase }}"
+                         status-base-modifier="{{ item.statusBaseModifier }}"
+                         level-modifier="{{ item.levelModifier }}"
+                         persist-bonus="{{ item.persistBonus }}"
+                         volatile-bonus="{{ item.volatileBonus }}"
+                         status-list="{{ statusList }}"></skills-card>
         </template>
 
         <div id="space"></div>
@@ -63,10 +61,6 @@
         },
         ready: function(e){
             console.log("Skills Tab Loaded");
-        },
-        cardSwipedAway: function(e){
-            console.log("Skills Card Removed");
-            this.splice('skillsList', e.detail.target.index, 1);
         },
         newSkills: function(e){
             console.log("Skills Card Add");

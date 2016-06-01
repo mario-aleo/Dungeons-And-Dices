@@ -7,6 +7,12 @@
                 width: 100%;
             }
 
+            paper-menu-button {
+                position: absolute;
+                right: 16px;
+                bottom: 16px;
+            }
+
             #space {
                 height: 64px;
             }
@@ -28,6 +34,19 @@
         <!-- Buff / Debuff List Card -->
 
         <div id="space"></div>
+
+        <paper-menu-button vertical-align="bottom"
+                           horizontal-align="right"
+                           horizontal-offset="6"
+                           vertical-offset="6">
+            <paper-fab noink
+                       icon="editor:mode-edit"
+                       class="dropdown-trigger"></paper-fab>
+            <paper-menu class="dropdown-content">
+                <paper-item>Level/Status</paper-item>
+                <paper-item>Buff/Debuff</paper-item>
+            </paper-menu>
+        </paper-menu-button>
     </template>
 </dom-module>
 

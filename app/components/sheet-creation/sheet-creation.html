@@ -47,6 +47,22 @@
             }
         </style>
 
+        <app-location use-hash-as-path
+                      route="{{ route }}"></app-location>
+
+        <app-route route="{{ route }}"
+                   pattern="/:page"
+                   data="{{ dataRoute }}"></app-route>
+
+        <iron-localstorage name="localstorageSheetList"
+                           value="{{ sheetList }}"></iron-localstorage>
+
+        <iron-localstorage name="localstorageBaseSheet"
+                           value="{{ baseSheet }}"></iron-localstorage>
+
+        <iron-localstorage name="localstorageCreatingSheet"
+                           value="{{ creatingSheet }}"></iron-localstorage>
+
         <paper-fab noink
                    icon="save"
                    id="save-sheet"
@@ -105,37 +121,36 @@
         properties: {
             tabSelected: {
                 type: String,
-                value: "0"
+                value: "0",
+                notify: true
             },
             dialogFit: {
-                type: Object
+                type: Object,
+                notify: true
             },
             route: {
-                type: String
+                type: Object,
+                notify: true
             },
             page: {
-                type: String
+                type: String,
+                notify: true
             },
             sheetList: {
-                type: Array,
-                notify: true,
-                reflectToAttribute: true
+                type: Object,
+                notify: true
             },
             baseSheet: {
-                type: Object
+                type: Object,
+                notify: true
             },
             creatingSheet: {
                 type: Object,
-                notify: true,
-                reflectToAttribute: true
-            },
-            routeElement: {
-                type: Object
+                notify: true
             }
         },
         ready: function(e){
             console.log("Sheet Creation Loaded");
-            this.routeElement = document.querySelector("dungeon-dices");
         },
         attached: function(e){
             this.dialogFit = document.querySelector("#pagesMainContent");
@@ -210,12 +225,13 @@
                 }
             );
             // Pushing to SheetList and Cleaning the CreatingSheet
-            this.push("sheetList", this.creatingSheet);
+            this.push("sheetList.list", this.creatingSheet);
             this.set("creatingSheet", this.baseSheet);
             console.log("Sheet Saved");
             console.log("Route to SheetList");
-            this.routeElement.set("route.path", "/home");
-            this.routeElement.set("page", "home");
+            document.querySelector("#sheetListLocalStorage").reload();
+            this.set("route.path", "/home");
+            this.set("page", "home");
         }
     });
 </script>

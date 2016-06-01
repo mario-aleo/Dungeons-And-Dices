@@ -22,6 +22,10 @@
             .card-content {
                 padding-bottom: 32px;
             }
+
+            .card-actions-button {
+                color: #F44336;
+            }
         </style>
 
         <paper-card>
@@ -61,6 +65,10 @@
                            bind-value="{{ levelModifier }}">
                 </paper-input-container>
             </div>
+            <div class="card-actions">
+                <paper-button class="card-actions-button"
+                              on-click="deleteCard">Delete</paper-button>
+            </div>
         </paper-card>
     </template>
 </dom-module>
@@ -69,6 +77,9 @@
     Polymer({
         is: "skills-card",
         properties: {
+            index: {
+                type: Number
+            },
             name: {
                 type: String,
                 notify: true,
@@ -116,6 +127,10 @@
         },
         ready: function(e){
             console.log("Skills Card Loaded");
+        },
+        deleteCard: function(e){
+            console.log("Skill Card Deleted");
+            document.querySelector("sheet-creation").splice('creatingSheet.skillsList', this.index, 1);
         }
     });
 </script>

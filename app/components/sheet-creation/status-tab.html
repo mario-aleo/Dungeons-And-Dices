@@ -23,15 +23,13 @@
 
         <template is="dom-repeat"
                   items="{{ statusList }}">
-            <iron-swipeable-container on-iron-swipe="cardSwipedAway">
-                <status-card index="{{ index }}"
-                             name="{{ item.name }}"
-                             value="{{ item.value }}"
-                             base-value="{{ item.baseValue }}"
-                             level-modifier="{{ item.levelModifier }}"
-                             persist-bonus="{{ item.persistBonus }}"
-                             volatile-bonus="{{ item.volatileBonus }}"></status-card>
-            </iron-swipeable-container>
+            <status-card index="{{ index }}"
+                         name="{{ item.name }}"
+                         value="{{ item.value }}"
+                         base-value="{{ item.baseValue }}"
+                         level-modifier="{{ item.levelModifier }}"
+                         persist-bonus="{{ item.persistBonus }}"
+                         volatile-bonus="{{ item.volatileBonus }}"></status-card>
         </template>
 
         <div id="space"></div>

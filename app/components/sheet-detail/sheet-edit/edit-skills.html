@@ -1,0 +1,29 @@
+<!--link href="../assets/bower_components/polymer/polymer.html" rel="import"-->
+
+<dom-module id="edit-skills">
+    <template>
+        <style>
+            :host {
+                width: 100%;
+            }
+        </style>
+
+        <!-- local DOM for your element -->
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: "edit-skills",
+        properties: {
+            skillsList: {
+                type: Array,
+                notify: true,
+                reflectToAttribute: true
+            }
+        },
+        ready: function(e){
+            console.log("Edit Skills Loaded");
+        }
+    });
+</script>

@@ -29,6 +29,17 @@
             }
         </style>
 
+        <app-location use-hash-as-path
+                      route="{{ route }}"></app-location>
+
+        <app-route route="{{ route }}"
+                   pattern="/:page"
+                   data="{{ dataRoute }}"></app-route>
+
+        <iron-localstorage id="sheetListLocalStorage"
+                           name="localstorageSheetList"
+                           value="{{ sheetList }}"></iron-localstorage>
+
         <template is="dom-repeat"
                   items="{{ sheetList.list }}">
             <sheet-card personagem="{{ item.name }}"
@@ -61,15 +72,20 @@
         properties: {
             sheetList: {
                 type: Object,
-                notify: true,
-                reflectToAttribute: true
+                notify: true
+            },
+            route: {
+                type: Object,
+                notify: true
+            },
+            page: {
+                type: String,
+                notify: true
             },
             hasSheet: {
                 type: Boolean,
-                value: false
-            },
-            routeElement: {
-                type: Object
+                value: false,
+                notify: true
             }
         },
         observers: [
@@ -77,7 +93,6 @@
         ],
         ready: function(e){
             console.log("Sheet List Loaded");
-            this.routeElement = document.querySelector("dungeon-dices");
         },
         _sheetListUpdate: function(e){
             if(typeof this.sheetList.list == null || this.sheetList.list.length == 0){
@@ -88,8 +103,8 @@
         },
         createSheet: function(e){
             console.log("Route to CreateSheet");
-            this.routeElement.set("route.path", "/sheetCreation");
-            this.routeElement.set("page", "sheetCreation");
+            this.set("route.path", "/sheetCreation");
+            this.set("page", "sheetCreation");
         }
     });
 </script>
