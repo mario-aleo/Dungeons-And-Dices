@@ -154,6 +154,7 @@
         },
         attached: function(e){
             this.dialogFit = document.querySelector("#pagesMainContent");
+            this.mainSheetList = document.querySelector("sheet-list");
         },
         openSaveSheetDialog: function(e){
             document.querySelector("#openSaveSheetDialog").open();
@@ -225,11 +226,11 @@
                 }
             );
             // Pushing to SheetList and Cleaning the CreatingSheet
-            this.push("sheetList.list", this.creatingSheet);
+            //this.push("sheetList.list", this.creatingSheet);
+            this.mainSheetList.push("sheetList.list", this.creatingSheet);
             this.set("creatingSheet", this.baseSheet);
             console.log("Sheet Saved");
             console.log("Route to SheetList");
-            document.querySelector("#sheetListLocalStorage").reload();
             this.set("route.path", "/home");
             this.set("page", "home");
         }
