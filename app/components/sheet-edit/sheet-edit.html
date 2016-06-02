@@ -1,0 +1,182 @@
+<!--link href="../../../assets/bower_components/polymer/polymer.html" rel="import"-->
+
+<dom-module id="sheet-edit">
+    <template>
+        <style>
+            :host {
+                width: 100%;
+            }
+
+            paper-tabs, paper-toolbar {
+                width: 100%;
+                z-index: 0;
+                background-color: #9E9E9E;
+                color: #FFFFFF;
+            }
+
+            paper-button {
+                color: var(--accent-color);
+            }
+
+            .tabs-pages {
+                height: calc(100vh - 120px);
+                overflow-y: auto;
+            }
+
+            #save-sheet {
+                position: absolute;
+                right: 16px;
+                top: 120px;
+                z-index: 1;
+            }
+
+            @media (min-width: 370px) and (max-width: 600px) {
+                #save-sheet {
+                    top: 80px;
+                }
+            }
+
+            @media (min-width: 630px) {
+                #save-sheet {
+                    top: 80px;
+                }
+            }
+        </style>
+
+        <app-location use-hash-as-path
+                      route="{{ route }}"></app-location>
+
+        <app-route route="{{ route }}"
+                   pattern="/:page"
+                   data="{{ dataRoute }}"></app-route>
+
+        <paper-fab noink
+                   icon="save"
+                   id="save-sheet"
+                   on-click="saveSheet"></paper-fab>
+
+        <paper-tabs noink
+                    scrollable
+                    selected="{{ tabSelected }}">
+            <paper-tab>Basic</paper-tab>
+            <paper-tab>Status</paper-tab>
+            <paper-tab>Skills</paper-tab>
+            <paper-tab>Bonus</paper-tab>
+        </paper-tabs>
+
+        <iron-pages selected="{{ tabSelected }}"
+                    class="tabs-pages">
+
+            <basic-edit-tab name="{{ sheet.name }}"
+                           job="{{ sheet.job }}"
+                           race="{{ sheet.race }}"
+                           level="{{ sheet.level }}"
+                           system="{{ sheet.system }}"></basic-edit-tab>
+
+            <status-edit-tab status-list="{{ sheet.statusList }}"></status-edit-tab>
+
+            <skills-edit-tab skills-list="{{ sheet.skillsList }}"
+                            status-list="{{ sheet.statusList }}"></skills-edit-tab>
+
+            <bonus-edit-tab skills-list="{{ sheet.skillsList }}"
+                           status-list="{{ sheet.statusList }}"></bonus-edit-tab>
+        </iron-pages>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: "sheet-edit",
+        properties: {
+            tabSelected: {
+                type: String,
+                value: "0",
+                notify: true
+            },
+            route: {
+                type: Object,
+                notify: true
+            },
+            sheet: {
+                type: Object,
+                notify: true
+            }
+        },
+        ready: function(e){
+            console.log("Sheet Edit Loaded");
+        },
+        attached: function(e){
+            this.mainSheetList = document.querySelector("sheet-list");
+        },
+        saveSheet: function(e){
+            console.log("Saving Sheet");
+            // Need to Verify  Each Status, Resource, Defense and Skill and SUM
+            // SUM Status = baseValue + (levelModifier * level) + n(volatileBonus) + n(persistBonus)
+            this.sheet.statusList.forEach(
+                function(status, index){
+                    var volatileBonusValue;
+                    Enumerable.From(this.sheet.volatileBonus)
+                              .Where(function (x) { return x.affect == status.name })
+                              .Select(function (x) { return x.value })
+                              .ToArray()
+                              .forEach(function (item) { volatileBonusValue = item + volatileBonusValue });
+                    var persistBonusValue;
+                    Enumerable.From(this.sheet.persistBonus)
+                              .Where(function (x) { return x.affect == status.name })
+                              .Select(function (x) { return x.value })
+                              .ToArray()
+                              .forEach(function (item) { persistBonusValue = item + persistBonusValue });
+                    status.value = parseInt(status.baseValue) + (parseFloat(status.levelModifier) * parseInt(this.sheet.level) + parseInt(volatileBonusValue) + parseInt(persistBonusValue));
+                }
+            );
+            // SUM Resource = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
+            // or if statusBase == None => SUM Resource = baseValue + (levelModifier * level)
+            this.sheet.resourcesList.forEach(
+                function(resource, index){
+                    if(resource.statusBase != "None"){
+                        var baseStatusValue = Enumerable.From(this.sheet.statusList)
+                                                        .Where(function (x) { return x.name == resource.statusBase })
+                                                        .Select(function (x) { return x.value })
+                                                        .ToString();
+                        resource.value = parseInt(parseInt(resource.baseValue) + (parseFloat(resource.statusBaseModifier) * parseInt(baseStatusValue)) + (parseFloat(resource.levelModifier) * parseInt(this.sheet.level)));
+                    } else{
+                        resource.value = parseInt(parseInt(resource.baseValue) + (parseFloat(resource.levelModifier) * parseInt(this.sheet.level)));
+                    }
+                }
+            );
+            // SUM Defense = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
+            // or if statusBase == None => SUM Defense = baseValue + (levelModifier * level)
+            this.sheet.defensesList.forEach(
+                function(defense, index){
+                    if(defense.statusBase != "None"){
+                        var baseStatusValue = Enumerable.From(this.sheet.statusList)
+                                                        .Where(function (x) { return x.name == defense.statusBase })
+                                                        .Select(function (x) { return x.value })
+                                                        .ToString();
+                        defense.value = parseInt(parseInt(defense.baseValue) + (parseFloat(defense.statusBaseModifier) * parseInt(baseStatusValue)) + (parseFloat(defense.levelModifier) * parseInt(this.sheet.level)));
+                    } else{
+                        defense.value = parseInt(parseInt(defense.baseValue) + (parseFloat(defense.levelModifier) * parseInt(this.sheet.level)));
+                    }
+                }
+            );
+            // SUM Skill = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
+            // or if statusBase == None => SUM Skill = baseValue + (levelModifier * level)
+            this.sheet.skillsList.forEach(
+                function(skill, index){
+                    if(skill.statusBase != "None"){
+                        var baseStatusValue = Enumerable.From(this.sheet.statusList)
+                                                        .Where(function (x) { return x.name == skill.statusBase })
+                                                        .Select(function (x) { return x.value })
+                                                        .ToString();
+                        skill.value = parseInt(parseInt(skill.baseValue) + (parseFloat(skill.statusBaseModifier) * parseInt(baseStatusValue)) + (parseFloat(skill.levelModifier) * parseInt(this.sheet.level)));
+                    } else{
+                        skill.value = parseInt(parseInt(skill.baseValue) + (parseFloat(skill.levelModifier) * parseInt(this.sheet.level)));
+                    }
+                }
+            );
+            console.log("Sheet Edition Saved");
+            console.log("Route to SheetList");
+            this.set("route.path", "/SheetList");
+        }
+    });
+</script>

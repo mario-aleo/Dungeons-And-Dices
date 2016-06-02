@@ -75,9 +75,6 @@
             },
             route: {
                 type: Object
-            },
-            page: {
-                type: String
             }
         },
         ready: function(e){
@@ -85,8 +82,8 @@
         },
         openSheet: function(e){
             document.querySelector("sheet-detail").set('sheet', this.sheet);
+            document.querySelector("sheet-edit").set('sheet', this.sheet);
             this.set("route.path", "/sheetDetail");
-            this.set("page", "sheetDetail");
         }
     });
 </script>

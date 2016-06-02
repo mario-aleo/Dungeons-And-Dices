@@ -127,11 +127,11 @@
                 <paper-menu>
                     <iron-selector attr-for-selected="data-route"
                                    selected="{{ dataRoute.page }}">
-                        <a data-route="home"
-                           href="#/home"
+                        <a data-route="sheetList"
+                           href="#/sheetList"
                            on-click="sideNavRouteWillChange">
                             <iron-icon icon="home"></iron-icon>
-                            <span>Home</span>
+                            <span>Sheet List</span>
                         </a>
                     </iron-selector>
                 </paper-menu>
@@ -151,7 +151,7 @@
                 <iron-pages id="pagesMainContent"
                             attr-for-selected="data-route"
                             selected="{{ dataRoute.page }}">
-                    <section data-route="home">
+                    <section data-route="sheetList">
                         <sheet-list></sheet-list>
                     </section>
                     <section data-route="sheetDetail">
@@ -159,6 +159,9 @@
                     </section>
                     <section data-route="sheetCreation">
                         <sheet-creation></sheet-creation>
+                    </section>
+                    <section data-route="sheetEdit">
+                        <sheet-edit></sheet-edit>
                     </section>
                 </iron-pages>
             </paper-header-panel>
@@ -173,10 +176,6 @@
         properties: {
             route: {
                 type: Object,
-                notify: true
-            },
-            page: {
-                type: String,
                 notify: true
             },
             sheetList: {
@@ -198,7 +197,7 @@
         attached: function(e){
             console.log("Route to Sheet List");
             if(!this.route.path || this.route.path == '/sheetDetail'){
-                this.set('route.path', '/home');
+                this.set('route.path', '/sheetList');
             }
         },
         sideNavRouteWillChange: function(e){

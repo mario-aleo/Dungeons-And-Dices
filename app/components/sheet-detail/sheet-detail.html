@@ -18,35 +18,34 @@
             }
         </style>
 
-        <basic-card name="{{ sheet.name }}"
-                    job="{{ sheet.job }}"
-                    race="{{ sheet.race }}"
-                    level="{{ sheet.level }}"></basic-card>
+        <app-location use-hash-as-path
+                      route="{{ route }}"></app-location>
 
-        <resorceslist-card resorces-list="{{ sheet.resourcesList }}"></resorceslist-card>
+        <app-route route="{{ route }}"
+                   pattern="/:page"
+                   data="{{ dataRoute }}"></app-route>
 
-        <statuslist-card status-list="{{ sheet.statusList }}"></statuslist-card>
+        <detail-basic-card name="{{ sheet.name }}"
+                           job="{{ sheet.job }}"
+                           race="{{ sheet.race }}"
+                           level="{{ sheet.level }}"></detail-basic-card>
 
-        <defenseslist-card defenses-list="{{ sheet.defensesList }}"></defenseslist-card>
+        <detail-resorces-card resorces-list="{{ sheet.resourcesList }}"></detail-resorces-card>
 
-        <skillslist-card skills-list="{{ sheet.skillsList }}"></skillslist-card>
+        <detail-status-card status-list="{{ sheet.statusList }}"></detail-status-card>
 
-        <!-- Buff / Debuff List Card -->
+        <detail-defenses-card defenses-list="{{ sheet.defensesList }}"></detail-defenses-card>
+
+        <detail-skills-card skills-list="{{ sheet.skillsList }}"></detail-skills-card>
+
+        <!-- Bonus List Card -->
 
         <div id="space"></div>
-
-        <paper-menu-button vertical-align="bottom"
-                           horizontal-align="right"
-                           horizontal-offset="6"
-                           vertical-offset="6">
-            <paper-fab noink
-                       icon="editor:mode-edit"
-                       class="dropdown-trigger"></paper-fab>
-            <paper-menu class="dropdown-content">
-                <paper-item>Level/Status</paper-item>
-                <paper-item>Buff/Debuff</paper-item>
-            </paper-menu>
-        </paper-menu-button>
+        
+        <paper-fab noink
+                   icon="editor:mode-edit"
+                   id="add-sheet"
+                   on-click="editSheet"></paper-fab>
     </template>
 </dom-module>
 
@@ -56,10 +55,18 @@
         properties: {
             sheet: {
                 type: Object
+            },
+            route: {
+                type: Object,
+                notify: true
             }
         },
         ready: function(e){
             console.log("Sheet Detail Loaded");
+        },
+        editSheet: function(e){
+            console.log("Route to SheetEdit");
+            this.set("route.path", "/sheetEdit");
         }
     });
 </script>

@@ -132,10 +132,6 @@
                 type: Object,
                 notify: true
             },
-            page: {
-                type: String,
-                notify: true
-            },
             sheetList: {
                 type: Object,
                 notify: true
@@ -162,11 +158,11 @@
         saveSheet: function(e){
             console.log("Saving Sheet");
             // Need to Verify  Each Status, Resource, Defense and Skill and SUM
-            var scAtt = this;
+            var element = this;
             // SUM Status = baseValue + (levelModifier * level)
             this.creatingSheet.statusList.forEach(
                 function(status, index){
-                    status.value = parseInt(status.baseValue) + (parseFloat(status.levelModifier) * parseInt(scAtt.creatingSheet.level));
+                    status.value = parseInt(status.baseValue) + (parseFloat(status.levelModifier) * parseInt(element.creatingSheet.level));
                 }
             );
             // SUM Resource = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
@@ -174,16 +170,13 @@
             this.creatingSheet.resourcesList.forEach(
                 function(resource, index){
                     if(resource.statusBase != "None"){
-                        var baseStatusValue = scAtt.creatingSheet.statusList[
-                            scAtt.creatingSheet.statusList.map(
-                                function(obj) {
-                                    return obj.name;
-                                }
-                            ).indexOf(resource.statusBase)
-                        ].value;
-                        resource.value = parseInt(parseInt(resource.baseValue) + (parseFloat(resource.statusBaseModifier) * parseInt(baseStatusValue)) + (parseFloat(resource.levelModifier) * parseInt(scAtt.creatingSheet.level)));
+                        var baseStatusValue = Enumerable.From(element.creatingSheet.statusList)
+                                                        .Where(function (x) { return x.name == resource.statusBase })
+                                                        .Select(function (x) { return x.value })
+                                                        .ToString();
+                        resource.value = parseInt(parseInt(resource.baseValue) + (parseFloat(resource.statusBaseModifier) * parseInt(baseStatusValue)) + (parseFloat(resource.levelModifier) * parseInt(element.creatingSheet.level)));
                     } else{
-                        resource.value = parseInt(parseInt(resource.baseValue) + (parseFloat(resource.levelModifier) * parseInt(scAtt.creatingSheet.level)));
+                        resource.value = parseInt(parseInt(resource.baseValue) + (parseFloat(resource.levelModifier) * parseInt(element.creatingSheet.level)));
                     }
                 }
             );
@@ -192,17 +185,13 @@
             this.creatingSheet.defensesList.forEach(
                 function(defense, index){
                     if(defense.statusBase != "None"){
-                        var baseStatusValue = scAtt.creatingSheet.statusList[
-                            scAtt.creatingSheet.statusList.map(
-                                function(obj) {
-                                    return obj.name;
-                                }
-                            ).indexOf(defense.statusBase)
-                        ].value;
-
-                        defense.value = parseInt(parseInt(defense.baseValue) + (parseFloat(defense.statusBaseModifier) * parseInt(baseStatusValue)) + (parseFloat(defense.levelModifier) * parseInt(scAtt.creatingSheet.level)));
+                        var baseStatusValue = Enumerable.From(element.creatingSheet.statusList)
+                                                        .Where(function (x) { return x.name == defense.statusBase })
+                                                        .Select(function (x) { return x.value })
+                                                        .ToString();
+                        defense.value = parseInt(parseInt(defense.baseValue) + (parseFloat(defense.statusBaseModifier) * parseInt(baseStatusValue)) + (parseFloat(defense.levelModifier) * parseInt(element.creatingSheet.level)));
                     } else{
-                        defense.value = parseInt(parseInt(defense.baseValue) + (parseFloat(defense.levelModifier) * parseInt(scAtt.creatingSheet.level)));
+                        defense.value = parseInt(parseInt(defense.baseValue) + (parseFloat(defense.levelModifier) * parseInt(element.creatingSheet.level)));
                     }
                 }
             );
@@ -211,28 +200,22 @@
             this.creatingSheet.skillsList.forEach(
                 function(skill, index){
                     if(skill.statusBase != "None"){
-                        var baseStatusValue = scAtt.creatingSheet.statusList[
-                            scAtt.creatingSheet.statusList.map(
-                                function(obj) {
-                                    return obj.name;
-                                }
-                            ).indexOf(skill.statusBase)
-                        ].value;
-
-                        skill.value = parseInt(parseInt(skill.baseValue) + (parseFloat(skill.statusBaseModifier) * parseInt(baseStatusValue)) + (parseFloat(skill.levelModifier) * parseInt(scAtt.creatingSheet.level)));
+                        var baseStatusValue = Enumerable.From(element.creatingSheet.statusList)
+                                                        .Where(function (x) { return x.name == skill.statusBase })
+                                                        .Select(function (x) { return x.value })
+                                                        .ToString();
+                        skill.value = parseInt(parseInt(skill.baseValue) + (parseFloat(skill.statusBaseModifier) * parseInt(baseStatusValue)) + (parseFloat(skill.levelModifier) * parseInt(element.creatingSheet.level)));
                     } else{
-                        skill.value = parseInt(parseInt(skill.baseValue) + (parseFloat(skill.levelModifier) * parseInt(scAtt.creatingSheet.level)));
+                        skill.value = parseInt(parseInt(skill.baseValue) + (parseFloat(skill.levelModifier) * parseInt(element.creatingSheet.level)));
                     }
                 }
             );
             // Pushing to SheetList and Cleaning the CreatingSheet
-            //this.push("sheetList.list", this.creatingSheet);
             this.mainSheetList.push("sheetList.list", this.creatingSheet);
             this.set("creatingSheet", this.baseSheet);
             console.log("Sheet Saved");
             console.log("Route to SheetList");
-            this.set("route.path", "/home");
-            this.set("page", "home");
+            this.set("route.path", "/sheetList");
         }
     });
 </script>

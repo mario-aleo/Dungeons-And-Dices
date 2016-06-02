@@ -1,6 +1,6 @@
 <!--link href="../assets/bower_components/polymer/polymer.html" rel="import"-->
 
-<dom-module id="skillslist-card">
+<dom-module id="bonuslist-card">
     <template>
         <style>
             :host {
@@ -22,12 +22,18 @@
             }
         </style>
 
-        <paper-card  heading="Skills">
+        <paper-card  heading="Buff / Debuff">
             <div class="card-content">
                 <template is="dom-repeat"
-                          items="{{ skillsList }}">
+                          items="{{ volatileBonusList }}">
                     <div class="card-content-row">
-                      <p>{{ item.name }}:</p><p>{{ item.value }}</p>
+                        <p>{{ item.name }}:</p><div><p>{{ item.affect }}</p> <p>{{ item.value }}</p></div>
+                    </div>
+                </template>
+                <template is="dom-repeat"
+                          items="{{ persistBonusList }}">
+                    <div class="card-content-row">
+                        <p>{{ item.name }}:</p><div><p>{{ item.affect }}</p> <p>{{ item.value }}</p></div>
                     </div>
                 </template>
             </div>
@@ -37,14 +43,17 @@
 
 <script>
     Polymer({
-        is: "skillslist-card",
+        is: "bonuslist-card",
         properties: {
-            skillsList: {
-                type: Object
-            }
+			volatileBonusList: {
+                type: Array
+            },
+			persistBonusList: {
+				type: Array
+			}
         },
         ready: function(e){
-            console.log("Skills List Card Loaded");
+            console.log("Buff List Card Loaded");
         }
     });
 </script>
