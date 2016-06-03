@@ -34,7 +34,7 @@
     "tag": "v1.0.6",
     "commit": "33d5864e0557212eb530dbac280bfc4b4d923880"
   },
-  "_source": "git://github.com/PolymerElements/iron-scroll-target-behavior.git",
+  "_source": "git://github.com/polymerelements/iron-scroll-target-behavior.git",
   "_target": "^1.0.0",
-  "_originalSource": "PolymerElements/iron-scroll-target-behavior"
+  "_originalSource": "polymerelements/iron-scroll-target-behavior"
 }
