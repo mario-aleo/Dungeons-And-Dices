@@ -1,0 +1,35 @@
+<link rel="import" href="../../../assets/bower_components/iron-localstorage/iron-localstorage.html">
+
+<dom-module id="newsheet-data">
+    <template>
+		<iron-localstorage name="DungeonNDicesNewSheet"
+                           value="{{ newSheet }}"
+                           on-iron-localstorage-load-empty="_initializeNewSheet"></iron-localstorage>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: "newsheet-data",
+
+        properties: {
+            newSheet: {
+                type: Object,
+                notify: true,
+                reflectToAttribute: true
+            }
+        },
+
+        ready: function(e){
+            console.log("Sheet List Data Loaded");
+        },
+
+        _initializeNewSheet: function(e){
+            if((typeof this.newSheet == 'undefined' || this.newSheet == null) && this.baseSheet != null){
+                //this.newSheet = Object.create(this.baseSheet);
+                this.newSheet = Object.assign({}, this.baseSheet);
+                console.log('Creating Sheet Assigned as Base Sheet');
+            }
+        }
+    });
+</script>

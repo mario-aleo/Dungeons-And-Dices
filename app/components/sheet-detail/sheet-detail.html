@@ -1,29 +1,30 @@
-<!--link href="../assets/bower_components/polymer/polymer.html" rel="import"-->
+<link rel="import" href="../../../assets/bower_components/paper-fab/paper-fab.html">
+
+<link rel="import" href="detail-basic-card.html">
+<link rel="import" href="detail-resources-card.html">
 
 <dom-module id="sheet-detail">
     <template>
         <style>
             :host {
+                display: none;
                 width: 100%;
             }
 
-            #edit-sheet {
+            :host([active]) {
+                display: block;
+            }
+
+            a {
                 position: absolute;
                 right: 16px;
                 bottom: 16px;
             }
 
-            #space {
+            div {
                 height: 64px;
             }
         </style>
-
-        <app-location use-hash-as-path
-                      route="{{ route }}"></app-location>
-
-        <app-route route="{{ route }}"
-                   pattern="/:page"
-                   data="{{ dataRoute }}"></app-route>
 
         <detail-basic-card name="{{ sheet.name }}"
                            job="{{ sheet.job }}"
@@ -41,32 +42,32 @@
         <!-- Bonus List Card -->
 
         <div id="space"></div>
-        
-        <paper-fab noink
-                   icon="editor:mode-edit"
-                   id="edit-sheet"
-                   on-click="editSheet"></paper-fab>
+
+        <a href="#/sheetEdit">
+            <paper-fab noink
+                       icon="editor:mode-edit"
+                       on-click="editSheet"></paper-fab>
+        </a>
     </template>
 </dom-module>
 
 <script>
     Polymer({
         is: "sheet-detail",
+
         properties: {
+            active: {
+                type: Boolean,
+                value: false,
+                reflectToAttribute: true
+            },
             sheet: {
                 type: Object
-            },
-            route: {
-                type: Object,
-                notify: true
             }
         },
+
         ready: function(e){
             console.log("Sheet Detail Loaded");
-        },
-        editSheet: function(e){
-            console.log("Route to SheetEdit");
-            this.set("route.path", "/sheetEdit");
         }
     });
 </script>

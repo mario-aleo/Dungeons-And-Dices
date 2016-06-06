@@ -1,4 +1,25 @@
-<!--link href="../assets/bower_components/polymer/polymer.html" rel="import"-->
+<link rel="import" href="../assets/bower_components/platinum-sw/platinum-sw-register.html">
+<link rel="import" href="../assets/bower_components/platinum-sw/platinum-sw-cache.html">
+
+<!-- LocalStorage -->
+<link rel="import" href="components/data/sheetlist-data.html">
+<link rel="import" href="components/data/basesheet-data.html">
+<link rel="import" href="components/data/newsheet-data.html">
+
+<link rel="import" href="../assets/bower_components/app-route/app-location.html">
+<link rel="import" href="../assets/bower_components/app-route/app-route.html">
+
+<link rel="import" href="../assets/bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../assets/bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../assets/bower_components/app-layout/app-toolbar/app-toolbar.html">
+
+<link rel="import" href="../assets/bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../assets/bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../assets/bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../assets/bower_components/iron-icons/iron-icons.html">
+
+<!-- Content-Pages Pre-Loading -->
+<link rel="import" href="components/content-pages.html">
 
 <dom-module id="dungeon-dices">
     <template>
@@ -17,6 +38,10 @@
                 --dark-accent-color: #f50057;
                 --paper-fab-keyboard-focus-background: #03A9F4;
                 --paper-tabs-selection-bar-color: #03A9F4;
+            }
+
+            app-drawer {
+                z-index: 1;
             }
 
             paper-menu {
@@ -55,39 +80,24 @@
                 outline: none;
             }
 
-            iron-pages {
-                overflow-y: auto;
-                height: calc(100vh - 70px);
-            }
-
-            .app-name {
-                @apply(--paper-font-title);
-                margin-right: 0.5em;
-            }
-
-            #drawerToolbar {
-                background-color: var(--primary-color);
-            }
-
-            #mainToolbar {
+            app-toolbar {
                 @apply(--layout-horizontal);
                 @apply(--layout-center);
                 background-color: var(--primary-color);
                 color: white;
             }
 
-            #mainToggle {
+            paper-icon-button {
                 margin-right: 16px;
             }
 
-            #mainIcon {
+            img {
                 width: 36px;
             }
 
-            @media (min-width: 641px) {
-                #mainToggle {
-                    display: none;
-                }
+            .app-name {
+                @apply(--paper-font-title);
+                margin-right: 0.5em;
             }
         </style>
 
@@ -104,206 +114,87 @@
 
         <app-route route="{{ route }}"
                    pattern="/:page"
-                   data="{{ dataRoute }}"></app-route>
+                   data="{{ dataRoute }}"
+                   tail="{{ routeTail }}"></app-route>
 
-        <iron-localstorage name="localstorageSheetList"
-                           value="{{ sheetList }}"
-                           on-iron-localstorage-load-empty="initializeDefaultSheetList"></iron-localstorage>
+        <sheetlist-data sheet-list="{{ sheetList }}"></sheetlist-data>
 
-        <iron-localstorage name="localstorageBaseSheet"
-                           value="{{ baseSheet }}"
-                           on-iron-localstorage-load-empty="initializeDefaultBaseSheet"></iron-localstorage>
+        <basesheet-data base-sheet="{{ baseSheet }}"></basesheet-data>
 
-        <iron-localstorage name="localstorageCreatingSheet"
-                           value="{{ creatingSheet }}"
-                           on-iron-localstorage-load-empty="initializeDefaultCreatingSheet"></iron-localstorage>
+        <newsheet-data new-sheet="{{ newSheet }}"
+                       base-Sheet="{{ baseSheet }}"></newsheet-data>
 
-        <paper-drawer-panel fullbleed>
-            <paper-header-panel drawer>
+        <app-drawer-layout fullbleed
+                           force-narrow="true">
+            <app-drawer opened="{{ isDrawerOpen }}"
+                        swipe-open>
                 <!-- Drawer Toolbar -->
-                <paper-toolbar id="drawerToolbar">
-                </paper-toolbar>
+                <app-toolbar></app-toolbar>
                 <!-- Drawer Content -->
                 <paper-menu>
                     <iron-selector attr-for-selected="data-route"
-                                   selected="{{ dataRoute.page }}">
+                                   selected="[[ dataRoute.page ]]">
                         <a data-route="sheetList"
                            href="#/sheetList"
-                           on-click="sideNavRouteWillChange">
+                           on-click="_sideNavRouteWillChange">
                             <iron-icon icon="home"></iron-icon>
                             <span>Sheet List</span>
                         </a>
                     </iron-selector>
                 </paper-menu>
-            </paper-header-panel>
+            </app-drawer>
 
-            <paper-header-panel main fixed>
-                <!-- Main Toolbar -->
-                <paper-toolbar id="mainToolbar">
-                    <paper-icon-button id="mainToggle"
-                                       icon="menu"
-                                       paper-drawer-toggle></paper-icon-button>
+            <!-- Main Toolbar -->
+            <app-header fixed>
+                <app-toolbar>
+                    <paper-icon-button icon="menu"
+                                       on-click="_toggleDrawer"></paper-icon-button>
                     <!-- Application name -->
                     <div class="app-name">Dungeons 'n Dices</div>
-                    <img id="mainIcon" src="../assets/img/dices.svg" />
-                </paper-toolbar>
-                <!-- Main Content -->
-                <iron-pages id="pagesMainContent"
-                            attr-for-selected="data-route"
-                            selected="{{ dataRoute.page }}">
-                    <section data-route="sheetList">
-                        <sheet-list></sheet-list>
-                    </section>
-                    <section data-route="sheetDetail">
-                        <sheet-detail></sheet-detail>
-                    </section>
-                    <section data-route="sheetCreation">
-                        <sheet-creation></sheet-creation>
-                    </section>
-                    <section data-route="sheetEdit">
-                        <sheet-edit></sheet-edit>
-                    </section>
-                </iron-pages>
-            </paper-header-panel>
-        </paper-drawer-panel>
+                    <img src="../assets/img/dices.svg" />
+                </app-toolbar>
+            </app-header>
 
+            <!-- Main Content -->
+            <content-pages route="{{ route }}"
+                           sheet-list="{{ sheetList }}"
+                           base-sheet="{{ baseSheet }}"
+                           new-sheet="{{ newSheet }}"></content-pages>
+        </app-drawer-layout>
     </template>
 </dom-module>
 
 <script>
     Polymer({
         is: "dungeon-dices",
-        properties: {
-            route: {
-                type: Object,
-                notify: true
-            },
-            sheetList: {
-                type: Object,
-                notify: true
-            },
-            baseSheet: {
-                type: Object,
-                notify: true
-            },
-            creatingSheet: {
-                type: Object,
-                notify: true
-            }
-        },
+
+        observers: [
+            "_scrollTop(route)"
+        ],
+
         ready: function(e){
             console.log("Dungeons 'n Dices Loaded");
         },
+
         attached: function(e){
             console.log("Route to Sheet List");
-            if(!this.route.path || this.route.path == '/sheetDetail'){
-                this.set('route.path', '/sheetList');
+            if(!this.route.path || this.route.path != "/sheetList"){
+                this.set("route.path", "/sheetList");
             }
         },
-        sideNavRouteWillChange: function(e){
+
+        _toggleDrawer: function(e){
+            this.isDrawerOpen = !this.isDrawerOpen;
+        },
+
+        _scrollTop: function(e){
+            console.log("Content Scroll Top");
+            document.querySelector("content-pages").scrollTop = 0;
+        },
+
+        _sideNavRouteWillChange: function(e){
             console.log('SideNav: Route Will Chage');
-            document.querySelector("paper-drawer-panel").closeDrawer()
-        },
-        initializeDefaultSheetList: function(e) {
-            this.sheetList = {
-                list: []
-            };
-        },
-        initializeDefaultBaseSheet: function(e){
-            this.baseSheet = {
-                name: "",
-                job: "",
-                race: "",
-                level: "1",
-                system: "",
-                statusList: [
-                    {
-                        name: "Str/Dex/Int/...",
-                        value: 0,
-                        baseValue: 0,
-                        levelModifier: 0,
-                        persistBonus: 0,
-                        volatileBonus: 0
-                    }
-                ],
-                // { *name: "vit", value: SUM, *baseValue: 10, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
-                resourcesList: [
-                    {
-                        name: "HP/MP/...",
-                        value: 0,
-                        baseValue: 0,
-                        statusBase:  "None",
-                        statusBaseModifier: 1,
-                        levelModifier: 0.5,
-                        persistBonus: 0,
-                        volatileBonus: 0
-                    }
-                ],
-                // { *name: "hp", value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
-                defensesList: [
-                    {
-                        name: "Armor/Magic Resistence/...",
-                        value: 0,
-                        baseValue: 10,
-                        statusBase: "None",
-                        statusBaseModifier: 1,
-                        levelModifier: 0.5,
-                        persistBonus: 0,
-                        volatileBonus: 0
-                    }
-                ],
-                // { *name: "armor", value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
-                attacksList: [],
-                // { *name: "attackName", AttackValue: SUM, DamageValue: SUM, *baseAttack: 10, *attackStatusBase: Vit, *attackStatusBaseModifier: 1, *attackLevelModifier: 0, attackpersistBonus: 0, attackVolatileBonus: 0, *baseDamage: 10, *damageStatusBase: Vit, *damageStatusBaseModifier: 1, *damageLevelModifier: 0, damagepersistBonus: 0, damageVolatileBonus: 0 }, ...
-                skillsList: [
-                    {
-                        name: "Diplomacy/Heal...",
-                        value: 0,
-                        baseValue: 10,
-                        statusBase: "None",
-                        statusBaseModifier: 1,
-                        levelModifier: 0.5,
-                        persistBonus: 0,
-                        volatileBonus: 0
-                    }
-                ],
-                // { *name: "skillName", value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
-                equipments: {
-                    head: {},
-                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                    chest: {},
-                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                    legs: {},
-                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                    feet: {},
-                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                    hands: {},
-                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                    cloak: {},
-                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                    waist: {},
-                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                    wrist: {},
-                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                    trinkets: {},
-                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }, ...
-                    weapon: {},
-                    // *equipmentName: { *type: 1, *attack: 10, *damage: 10, effect1: { *value: 10, *affect: Armor }, ... }
-                    shield: {}
-                    // *equipmentName: { effect1: { *value: 10, *affect: Armor }, ... }
-                },
-                persistBonusList: [],
-                // { name: "bonusName", *value: 10, *affect: Vit }, ...  Kind of: Equipment Bonus
-                volatileBonusList: []
-                // { *name: "bonusName", *value: 10, *affect: Vit }, ...  Kind of: Potion Bonus
-            }
-        },
-        initializeDefaultCreatingSheet: function(e){
-            if((typeof this.creatingSheet == 'undefined' || this.creatingSheet == null)  && this.baseSheet != null){
-                //this.creatingSheet = Object.create(this.baseSheet);
-                this.creatingSheet = Object.assign({}, this.baseSheet);
-                console.log('Creating Sheet Assigned as Base Sheet');
-            }
+            this._toggleDrawer();
         }
     });
 </script>

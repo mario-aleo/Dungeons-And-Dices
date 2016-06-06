@@ -1,10 +1,30 @@
-<!--link href="../../../assets/bower_components/polymer/polymer.html" rel="import"-->
+<link rel="import" href="../../../assets/bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../../assets/bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../../assets/bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../../assets/bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../assets/bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../../assets/bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="basic-tab.html">
+<link rel="import" href="status-tab.html">
+<link rel="import" href="status-card.html">
+<link rel="import" href="resources-tab.html">
+<link rel="import" href="resources-card.html">
+<link rel="import" href="defenses-tab.html">
+<link rel="import" href="defenses-card.html">
+<link rel="import" href="skills-tab.html">
+<link rel="import" href="skills-card.html">
 
 <dom-module id="sheet-creation">
     <template>
         <style>
             :host {
+                display: none;
                 width: 100%;
+            }
+
+            :host([active]) {
+                display: block;
             }
 
             paper-tabs, paper-toolbar {
@@ -18,55 +38,32 @@
                 color: var(--accent-color);
             }
 
-            .tabs-pages {
-                height: calc(100vh - 120px);
-                overflow-y: auto;
-            }
-
-            #save-sheet {
+            paper-fab {
                 position: absolute;
                 right: 16px;
                 top: 120px;
                 z-index: 1;
             }
 
+            iron-pages {
+                height: calc(100vh - 112px);
+                overflow-y: auto;
+            }
+
             #openSaveSheetDialog {
                 min-width: 240px;
             }
 
-            @media (min-width: 490px) and (max-width: 600px) {
-                #save-sheet {
-                    top: 80px;
-                }
-            }
-
-            @media (min-width: 740px) {
-                #save-sheet {
+            @media (min-width: 490px) {
+                paper-fab {
                     top: 80px;
                 }
             }
         </style>
 
-        <app-location use-hash-as-path
-                      route="{{ route }}"></app-location>
-
-        <app-route route="{{ route }}"
-                   pattern="/:page"
-                   data="{{ dataRoute }}"></app-route>
-
-        <iron-localstorage name="localstorageSheetList"
-                           value="{{ sheetList }}"></iron-localstorage>
-
-        <iron-localstorage name="localstorageBaseSheet"
-                           value="{{ baseSheet }}"></iron-localstorage>
-
-        <iron-localstorage name="localstorageCreatingSheet"
-                           value="{{ creatingSheet }}"></iron-localstorage>
-
         <paper-fab noink
                    icon="save"
-                   id="save-sheet"
-                   on-click="openSaveSheetDialog"></paper-fab>
+                   on-click="_openSaveSheetDialog"></paper-fab>
 
         <paper-tabs noink
                     scrollable
@@ -78,25 +75,24 @@
             <paper-tab>Skills</paper-tab>
         </paper-tabs>
 
-        <iron-pages selected="{{ tabSelected }}"
-                    class="tabs-pages">
+        <iron-pages selected="{{ tabSelected }}">
 
-            <basic-tab name="{{ creatingSheet.name }}"
-                       job="{{ creatingSheet.job }}"
-                       race="{{ creatingSheet.race }}"
-                       level="{{ creatingSheet.level }}"
-                       system="{{ creatingSheet.system }}"></basic-tab>
+            <basic-tab name="{{ newSheet.name }}"
+                       job="{{ newSheet.job }}"
+                       race="{{ newSheet.race }}"
+                       level="{{ newSheet.level }}"
+                       system="{{ newSheet.system }}"></basic-tab>
 
-            <status-tab status-list="{{ creatingSheet.statusList }}"></status-tab>
+            <status-tab status-list="{{ newSheet.statusList }}"></status-tab>
 
-            <resources-tab resources-list="{{ creatingSheet.resourcesList }}"
-                           status-list="{{ creatingSheet.statusList }}"></resources-tab>
+            <resources-tab resources-list="{{ newSheet.resourcesList }}"
+                           status-list="{{ newSheet.statusList }}"></resources-tab>
 
-            <defenses-tab defenses-list="{{ creatingSheet.defensesList }}"
-                           status-list="{{ creatingSheet.statusList }}"></defenses-tab>
+            <defenses-tab defenses-list="{{ newSheet.defensesList }}"
+                           status-list="{{ newSheet.statusList }}"></defenses-tab>
 
-            <skills-tab skills-list="{{ creatingSheet.skillsList }}"
-                        status-list="{{ creatingSheet.statusList }}"></skills-tab>
+            <skills-tab skills-list="{{ newSheet.skillsList }}"
+                        status-list="{{ newSheet.statusList }}"></skills-tab>
 
         </iron-pages>
 
@@ -109,7 +105,7 @@
                 <paper-button dialog-dismiss>Decline</paper-button>
                 <paper-button dialog-confirm
                               autofocus
-                              on-click="saveSheet">Accept</paper-button>
+                              on-click="_saveSheet">Accept</paper-button>
             </div>
         </paper-dialog>
     </template>
@@ -118,7 +114,13 @@
 <script>
     Polymer({
         is: "sheet-creation",
+
         properties: {
+            active: {
+                type: Boolean,
+                value: false,
+                reflectToAttribute: true
+            },
             tabSelected: {
                 type: String,
                 value: "0",
@@ -127,95 +129,82 @@
             dialogFit: {
                 type: Object,
                 notify: true
-            },
-            route: {
-                type: Object,
-                notify: true
-            },
-            sheetList: {
-                type: Object,
-                notify: true
-            },
-            baseSheet: {
-                type: Object,
-                notify: true
-            },
-            creatingSheet: {
-                type: Object,
-                notify: true
             }
         },
+
         ready: function(e){
             console.log("Sheet Creation Loaded");
         },
+
         attached: function(e){
-            this.dialogFit = document.querySelector("#pagesMainContent");
-            this.mainSheetList = document.querySelector("sheet-list");
+            this.dialogFit = document.querySelector("content-pages");
         },
-        openSaveSheetDialog: function(e){
+
+        _openSaveSheetDialog: function(e){
             document.querySelector("#openSaveSheetDialog").open();
         },
-        saveSheet: function(e){
+
+        _saveSheet: function(e){
             console.log("Saving Sheet");
             // Need to Verify  Each Status, Resource, Defense and Skill and SUM
             var element = this;
             // SUM Status = baseValue + (levelModifier * level)
-            this.creatingSheet.statusList.forEach(
+            this.newSheet.statusList.forEach(
                 function(status, index){
-                    status.value = parseInt(status.baseValue) + (parseFloat(status.levelModifier) * parseInt(element.creatingSheet.level));
+                    status.value = parseInt(status.baseValue) + (parseFloat(status.levelModifier) * parseInt(element.newSheet.level));
                 }
             );
             // SUM Resource = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
             // or if statusBase == None => SUM Resource = baseValue + (levelModifier * level)
-            this.creatingSheet.resourcesList.forEach(
+            this.newSheet.resourcesList.forEach(
                 function(resource, index){
                     if(resource.statusBase != "None"){
-                        var baseStatusValue = Enumerable.From(element.creatingSheet.statusList)
+                        var baseStatusValue = Enumerable.From(element.newSheet.statusList)
                                                         .Where(function (x) { return x.name == resource.statusBase })
                                                         .Select(function (x) { return x.value })
                                                         .ToString();
-                        resource.value = parseInt(parseInt(resource.baseValue) + (parseFloat(resource.statusBaseModifier) * parseInt(baseStatusValue)) + (parseFloat(resource.levelModifier) * parseInt(element.creatingSheet.level)));
+                        resource.value = parseInt(parseInt(resource.baseValue) + (parseFloat(resource.statusBaseModifier) * parseInt(baseStatusValue)) + (parseFloat(resource.levelModifier) * parseInt(element.newSheet.level)));
                     } else{
-                        resource.value = parseInt(parseInt(resource.baseValue) + (parseFloat(resource.levelModifier) * parseInt(element.creatingSheet.level)));
+                        resource.value = parseInt(parseInt(resource.baseValue) + (parseFloat(resource.levelModifier) * parseInt(element.newSheet.level)));
                     }
                 }
             );
             // SUM Defense = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
             // or if statusBase == None => SUM Defense = baseValue + (levelModifier * level)
-            this.creatingSheet.defensesList.forEach(
+            this.newSheet.defensesList.forEach(
                 function(defense, index){
                     if(defense.statusBase != "None"){
-                        var baseStatusValue = Enumerable.From(element.creatingSheet.statusList)
+                        var baseStatusValue = Enumerable.From(element.newSheet.statusList)
                                                         .Where(function (x) { return x.name == defense.statusBase })
                                                         .Select(function (x) { return x.value })
                                                         .ToString();
-                        defense.value = parseInt(parseInt(defense.baseValue) + (parseFloat(defense.statusBaseModifier) * parseInt(baseStatusValue)) + (parseFloat(defense.levelModifier) * parseInt(element.creatingSheet.level)));
+                        defense.value = parseInt(parseInt(defense.baseValue) + (parseFloat(defense.statusBaseModifier) * parseInt(baseStatusValue)) + (parseFloat(defense.levelModifier) * parseInt(element.newSheet.level)));
                     } else{
-                        defense.value = parseInt(parseInt(defense.baseValue) + (parseFloat(defense.levelModifier) * parseInt(element.creatingSheet.level)));
+                        defense.value = parseInt(parseInt(defense.baseValue) + (parseFloat(defense.levelModifier) * parseInt(element.newSheet.level)));
                     }
                 }
             );
             // SUM Skill = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
             // or if statusBase == None => SUM Skill = baseValue + (levelModifier * level)
-            this.creatingSheet.skillsList.forEach(
+            this.newSheet.skillsList.forEach(
                 function(skill, index){
                     if(skill.statusBase != "None"){
-                        var baseStatusValue = Enumerable.From(element.creatingSheet.statusList)
+                        var baseStatusValue = Enumerable.From(element.newSheet.statusList)
                                                         .Where(function (x) { return x.name == skill.statusBase })
                                                         .Select(function (x) { return x.value })
                                                         .ToString();
-                        skill.value = parseInt(parseInt(skill.baseValue) + (parseFloat(skill.statusBaseModifier) * parseInt(baseStatusValue)) + (parseFloat(skill.levelModifier) * parseInt(element.creatingSheet.level)));
+                        skill.value = parseInt(parseInt(skill.baseValue) + (parseFloat(skill.statusBaseModifier) * parseInt(baseStatusValue)) + (parseFloat(skill.levelModifier) * parseInt(element.newSheet.level)));
                     } else{
-                        skill.value = parseInt(parseInt(skill.baseValue) + (parseFloat(skill.levelModifier) * parseInt(element.creatingSheet.level)));
+                        skill.value = parseInt(parseInt(skill.baseValue) + (parseFloat(skill.levelModifier) * parseInt(element.newSheet.level)));
                     }
                 }
             );
-            // Pushing to SheetList and Cleaning the CreatingSheet
-            this.mainSheetList.push("sheetList.list", this.creatingSheet);
-            this.set("creatingSheet", this.baseSheet);
+            // Pushing to SheetList and Cleaning the newSheet
+            this.push("sheetList.list", this.newSheet);
+            this.set("newSheet", this.baseSheet);
             console.log("Sheet Saved");
             console.log("Route to SheetList");
-            this.set("route.path", "/sheetList");
+            document.querySelector("dungeon-dices").set("route.path", "/sheetList");
         }
     });
 </script>

@@ -4,7 +4,12 @@
     <template>
         <style>
             :host {
+                display: none;
                 width: 100%;
+            }
+
+            :host([active]) {
+                display: block;
             }
 
             paper-tabs, paper-toolbar {
@@ -18,16 +23,15 @@
                 color: var(--accent-color);
             }
 
-            .tabs-pages {
-                height: calc(100vh - 120px);
-                overflow-y: auto;
-            }
-
-            #save-sheet {
+            paper-fab {
                 position: absolute;
                 right: 16px;
                 top: 120px;
-                z-index: 1;
+            }
+
+            .tabs-pages {
+                height: calc(100vh - 120px);
+                overflow-y: auto;
             }
 
             @media (min-width: 370px) and (max-width: 600px) {
@@ -87,7 +91,13 @@
 <script>
     Polymer({
         is: "sheet-edit",
+
         properties: {
+            active: {
+                type: Boolean,
+                value: false,
+                reflectToAttribute: true
+            },
             tabSelected: {
                 type: String,
                 value: "0",
@@ -102,12 +112,11 @@
                 notify: true
             }
         },
+
         ready: function(e){
             console.log("Sheet Edit Loaded");
         },
-        attached: function(e){
-            this.mainSheetList = document.querySelector("sheet-list");
-        },
+
         saveSheet: function(e){
             console.log("Saving Sheet");
             // Need to Verify  Each Status, Resource, Defense and Skill and SUM

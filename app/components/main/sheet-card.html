@@ -1,4 +1,4 @@
-<!--link href="../../../assets/bower_components/polymer/polymer.html" rel="import"-->
+<link rel="import" href="../../../assets/bower_components/paper-card/paper-card.html">
 
 <dom-module id="sheet-card">
     <template>
@@ -21,13 +21,6 @@
                  margin-bottom: -1em;
             }
         </style>
-
-        <app-location use-hash-as-path
-                      route="{{ route }}"></app-location>
-
-        <app-route route="{{ route }}"
-                   pattern="/:page"
-                   data="{{ dataRoute }}"></app-route>
 
         <paper-card on-click="openSheet">
             <div class="card-content">

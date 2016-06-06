@@ -1,0 +1,33 @@
+<link rel="import" href="../../../assets/bower_components/iron-localstorage/iron-localstorage.html">
+
+<dom-module id="sheetlist-data">
+    <template>
+		<iron-localstorage name="DungeonNDicesSheetList"
+                           value="{{ sheetList }}"
+                           on-iron-localstorage-load-empty="_initializeSheetList"></iron-localstorage>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: "sheetlist-data",
+
+        properties: {
+            sheetList: {
+                type: Object,
+                notify: true,
+                reflectToAttribute: true
+            }
+        },
+
+        ready: function(e){
+            console.log("Sheet List Data Loaded");
+        },
+
+        _initializeSheetList: function(e){
+            this.sheetList = {
+                list: []
+            };
+        }
+    });
+</script>

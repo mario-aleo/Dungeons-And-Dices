@@ -1,4 +1,9 @@
-<!--link href="../../../assets/bower_components/polymer/polymer.html" rel="import"-->
+<link rel="import" href="../../../assets/bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../../assets/bower_components/paper-input/paper-input-container.html">
+<link rel="import" href="../../../assets/bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../../assets/bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../../assets/bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../../assets/bower_components/paper-button/paper-button.html">
 
 <dom-module id="skills-card">
     <template>
@@ -67,7 +72,7 @@
             </div>
             <div class="card-actions">
                 <paper-button class="card-actions-button"
-                              on-click="deleteCard">Delete</paper-button>
+                              on-click="_deleteCard">Delete</paper-button>
             </div>
         </paper-card>
     </template>
@@ -76,10 +81,8 @@
 <script>
     Polymer({
         is: "skills-card",
+
         properties: {
-            index: {
-                type: Number
-            },
             name: {
                 type: String,
                 notify: true,
@@ -120,17 +123,16 @@
                 type: String,
                 notify: true,
                 reflectToAttribute: true
-            },
-            statusList: {
-                type: Array
             }
         },
+
         ready: function(e){
             console.log("Skills Card Loaded");
         },
+
         deleteCard: function(e){
             console.log("Skill Card Deleted");
-            document.querySelector("sheet-creation").splice('creatingSheet.skillsList', this.index, 1);
+            document.querySelector("sheet-creation").splice('newSheet.skillsList', this.index, 1);
         }
     });
 </script>

@@ -1,44 +1,39 @@
-<!--link href="../../../assets/bower_components/polymer/polymer.html" rel="import"-->
+<link rel="import" href="../../../assets/bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../../assets/bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="sheet-card.html">
 
 <dom-module id="sheet-list">
     <template>
         <style>
             :host {
-                width: 100%;
+                display: none;
             }
 
-            #div-empty {
+            :host([active]) {
+                display: block;
+            }
+
+            a {
+                position: absolute;
+                bottom: 16px;
+                right: 16px;
+            }
+
+            .div-empty {
                 width: 80%;
                 margin: 16px auto;
                 @apply(--layout-vertical);
                 @apply(--layout-center);
             }
 
-            #text-empty {
+            .text-empty {
                 color: var(--dark-primary-color)
             }
 
-            #add-sheet {
-                position: absolute;
-                bottom: 16px;
-                right: 16px;
-            }
-
-            #space {
+            .space {
                 height: 64px;
             }
         </style>
-
-        <app-location use-hash-as-path
-                      route="{{ route }}"></app-location>
-
-        <app-route route="{{ route }}"
-                   pattern="/:page"
-                   data="{{ dataRoute }}"></app-route>
-
-        <iron-localstorage id="sheetListLocalStorage"
-                           name="localstorageSheetList"
-                           value="{{ sheetList }}"></iron-localstorage>
 
         <template is="dom-repeat"
                   items="{{ sheetList.list }}">
@@ -52,17 +47,17 @@
 
         <template is="dom-if"
                   if="{{ hasSheet }}">
-            <div id="div-empty">
-                <h2 id="text-empty">Nothing to See Here :(</h2>
+            <div class="div-empty">
+                <h2 class="text-empty">Nothing to See Here :(</h2>
             </div>
         </template>
 
-        <div id="space"></div>
+        <div class="space"></div>
 
-        <paper-fab noink
-                   icon="add"
-                   id="add-sheet"
-                   on-click="createSheet"></paper-fab>
+        <a href="#/sheetCreation">
+            <paper-fab noink
+                       icon="add"></paper-fab>
+        </a>
     </template>
 </dom-module>
 
@@ -70,33 +65,33 @@
     Polymer({
         is: "sheet-list",
         properties: {
-            sheetList: {
-                type: Object,
-                notify: true
-            },
-            route: {
-                type: Object,
-                notify: true
+            active: {
+                type: Boolean,
+                value: false,
+                reflectToAttribute: true
             },
             hasSheet: {
                 type: Boolean,
-                value: false,
-                notify: true
+                value: false
             }
         },
+
         observers: [
-            "_sheetListUpdate(sheetList.*)"
+            "_sheetListUpdate(sheetList.list)"
         ],
+
         ready: function(e){
             console.log("Sheet List Loaded");
         },
+
         _sheetListUpdate: function(e){
-            if(typeof this.sheetList.list == null || this.sheetList.list.length == 0){
+            if(this.sheetList.list.length == 0){
                 this.hasSheet = true;
             } else{
                 this.hasSheet = false;
             }
         },
+
         createSheet: function(e){
             console.log("Route to CreateSheet");
             this.set("route.path", "/sheetCreation");

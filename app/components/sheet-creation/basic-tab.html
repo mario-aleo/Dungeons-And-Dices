@@ -1,11 +1,11 @@
-<!--link href="../assets/bower_components/polymer/polymer.html" rel="import"-->
+<link rel="import" href="../../../assets/bower_components/paper-input/paper-input-container.html">
 
 <dom-module id="basic-tab">
     <template>
         <style>
             :host {
                 width: 90%;
-                margin: auto;
+                margin: 16px auto;
                 @apply(--layout-vertical);
                 --paper-input-container-focus-color: #03A9F4;
             }
@@ -46,6 +46,7 @@
 <script>
     Polymer({
         is: "basic-tab",
+
         properties: {
             name: {
                 type: String,
@@ -73,6 +74,7 @@
                 reflectToAttribute: true
             }
         },
+
         ready: function(e){
             console.log("Basic Tab Loaded");
         }

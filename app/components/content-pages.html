@@ -1,0 +1,57 @@
+<link rel="import" href="../../assets/bower_components/app-route/app-route.html">
+
+<link rel="import" href="main/sheet-list.html">
+<link rel="import" href="sheet-creation/sheet-creation.html">
+<link rel="import" href="sheet-detail/sheet-detail.html">
+<link rel="import" href="sheet-edit/sheet-edit.html">
+
+<dom-module id="content-pages">
+    <template>
+        <style>
+            :host {
+                display: block;
+                height: calc(100vh - 64px);
+                overflow-y: auto;
+            }
+        </style>
+
+		<app-route route="{{ route }}"
+                   pattern="/sheetList"
+                   active="{{ listActive }}"></app-route>
+
+        <app-route route="{{ route }}"
+                   pattern="/sheetDetail"
+                   active="{{ detailActive }}"></app-route>
+
+        <app-route route="{{ route }}"
+                   pattern="/sheetCreation"
+                   active="{{ creationActive }}"></app-route>
+
+        <app-route route="{{ route }}"
+                   pattern="/sheetEdit"
+                   active="{{ editActive }}"></app-route>
+
+		<sheet-list active="{{ listActive }}"
+                    sheet-list="{{ sheetList }}"></sheet-list>
+
+		<!--sheet-detail active="{{ detailActive }}"></sheet-detail-->
+
+		<sheet-creation active="{{ creationActive }}"
+                        sheet-list="{{ sheetList }}"
+                        base-sheet="{{ baseSheet }}"
+                        new-sheet="{{ newSheet }}"></sheet-creation>
+
+		<!--sheet-edit active="{{ editActive }}"></sheet-edit-->
+
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: "content-pages",
+
+        ready: function(e){
+            console.log("Content Pages Loaded");
+        }
+    });
+</script>
