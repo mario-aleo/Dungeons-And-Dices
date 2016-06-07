@@ -1,0 +1,34 @@
+<link rel="import" href="../../../assets/bower_components/iron-localstorage/iron-localstorage.html">
+
+<dom-module id="opensheet-data">
+    <template>
+		<iron-localstorage name="DungeonNDicesOpenSheet"
+                           value="{{ openSheet }}"
+                           on-iron-localstorage-load-empty="_initializeOpenSheet"></iron-localstorage>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: "opensheet-data",
+
+        properties: {
+            openSheet: {
+                type: Object,
+                notify: true,
+                reflectToAttribute: true
+            }
+        },
+
+        ready: function(e){
+            console.log("Sheet List Data Loaded");
+        },
+
+        _initializeOpenSheet: function(e){
+            this.openSheet = {
+                index: null,
+                sheet: null
+            };
+        }
+    });
+</script>

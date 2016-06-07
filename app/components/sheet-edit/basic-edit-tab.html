@@ -1,0 +1,89 @@
+<link rel="import" href="../../../assets/bower_components/paper-input/paper-input-container.html">
+
+<dom-module id="basic-edit-tab">
+    <template>
+        <style>
+            :host {
+                width: 90%;
+                margin: 16px auto;
+                @apply(--layout-vertical);
+                --paper-input-container-focus-color: #03A9F4;
+            }
+
+            input:disabled {
+                color: #727272;
+            }
+        </style>
+
+        <paper-input-container>
+            <label>Name</label>
+            <input is="iron-input"
+                   bind-value="{{name}}"
+                   disabled="true">
+        </paper-input-container>
+
+        <paper-input-container>
+            <label>Class</label>
+            <input is="iron-input"
+                   bind-value="{{job}}">
+        </paper-input-container>
+
+        <paper-input-container>
+            <label>Race</label>
+            <input is="iron-input"
+                   bind-value="{{race}}"
+                   disabled="true">
+        </paper-input-container>
+
+        <paper-input-container>
+            <label>Level</label>
+            <input is="iron-input"
+                   bind-value="{{level}}">
+        </paper-input-container>
+
+        <paper-input-container>
+            <label>System</label>
+            <input is="iron-input"
+                   bind-value="{{system}}"
+                   disabled="true">
+        </paper-input-container>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: "basic-edit-tab",
+
+        properties: {
+            name: {
+                type: String,
+                notify: true,
+                reflectToAttribute: true
+            },
+            job: {
+                type: String,
+                notify: true,
+                reflectToAttribute: true
+            },
+            race: {
+                type: String,
+                notify: true,
+                reflectToAttribute: true
+            },
+            level: {
+                type: Number,
+                notify: true,
+                reflectToAttribute: true
+            },
+            system: {
+                type: String,
+                notify: true,
+                reflectToAttribute: true
+            }
+        },
+
+        ready: function(e){
+            console.log("Basic Tab Loaded");
+        }
+    });
+</script>

@@ -34,14 +34,16 @@
 		<sheet-list active="{{ listActive }}"
                     sheet-list="{{ sheetList }}"></sheet-list>
 
-		<sheet-detail active="{{ detailActive }}"></sheet-detail>
+		<sheet-detail active="{{ detailActive }}"
+                      sheet="{{ openSheet.sheet }}"></sheet-detail>
 
 		<sheet-creation active="{{ creationActive }}"
                         sheet-list="{{ sheetList }}"
                         base-sheet="{{ baseSheet }}"
                         new-sheet="{{ newSheet }}"></sheet-creation>
 
-		<sheet-edit active="{{ editActive }}"></sheet-edit>
+		<sheet-edit active="{{ editActive }}"
+                    openSheet="{{ openSheet }}"></sheet-edit>
 
     </template>
 </dom-module>

@@ -37,7 +37,8 @@
 
         <template is="dom-repeat"
                   items="{{ sheetList.list }}">
-            <sheet-card personagem="{{ item.name }}"
+            <sheet-card index="{{ index }}"
+                        personagem="{{ item.name }}"
                         level="{{ item.level }}"
                         classe="{{ item.job }}"
                         raca="{{ item.race }}"

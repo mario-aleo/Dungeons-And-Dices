@@ -52,11 +52,6 @@
         <dungeon-dices></dungeon-dices>
 
         <script>
-            // HTTPS for Servic Worker
-            var host = "dungeon-n-dices.github.io";
-            if (host == window.location.host && window.location.protocol != "https:")
-            window.location.protocol = "https";
-
             // Load Web Components when not supported
             var webComponentsSupported = ("registerElement" in document
                 && 'import' in document.createElement("link")

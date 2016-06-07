@@ -1,3 +1,4 @@
+<link rel="import" href="../assets/bower_components/platinum-https-redirect/platinum-https-redirect.html">
 <link rel="import" href="../assets/bower_components/platinum-sw/platinum-sw-register.html">
 <link rel="import" href="../assets/bower_components/platinum-sw/platinum-sw-cache.html">
 
@@ -5,6 +6,7 @@
 <link rel="import" href="components/data/sheetlist-data.html">
 <link rel="import" href="components/data/basesheet-data.html">
 <link rel="import" href="components/data/newsheet-data.html">
+<link rel="import" href="components/data/opensheet-data.html">
 
 <link rel="import" href="../assets/bower_components/app-route/app-location.html">
 <link rel="import" href="../assets/bower_components/app-route/app-route.html">
@@ -101,13 +103,15 @@
             }
         </style>
 
-        <platinum-sw-register auto-register
+        <platinum-https-redirect></platinum-https-redirect>
+
+        <!--platinum-sw-register auto-register
                               skip-waiting
                               clients-claim
                               reload-on-install
                               href="../sw-import.js">
-            <platinum-sw-cache default-cache-strategy="networkFirst"></platinum-sw-cache>
-        </platinum-sw-register>
+            <platinum-sw-cache default-cache-strategy="fastest"></platinum-sw-cache>
+        </platinum-sw-register-->
 
         <app-location use-hash-as-path
                       route="{{ route }}"></app-location>
@@ -123,6 +127,8 @@
 
         <newsheet-data new-sheet="{{ newSheet }}"
                        base-Sheet="{{ baseSheet }}"></newsheet-data>
+
+        <opensheet-data open-sheet="{{ openSheet }}"></opensheet-data>
 
         <app-drawer-layout fullbleed
                            force-narrow="true">
@@ -159,7 +165,8 @@
             <content-pages route="{{ route }}"
                            sheet-list="{{ sheetList }}"
                            base-sheet="{{ baseSheet }}"
-                           new-sheet="{{ newSheet }}"></content-pages>
+                           new-sheet="{{ newSheet }}"
+                           open-sheet="{{ openSheet }}"></content-pages>
         </app-drawer-layout>
     </template>
 </dom-module>
@@ -190,6 +197,9 @@
         _routeChanged:function(e){
             if(this.route.path == "/sheetCreation"){
                 document.querySelector("sheet-creation").tabSelected = 0;
+                document.querySelector("iron-pages").scrollTop = 0;
+            } else if(this.route.path == "/sheetEdit"){
+                document.querySelector("sheet-edit").tabSelected = 0;
                 document.querySelector("iron-pages").scrollTop = 0;
             } else{
                 document.querySelector("content-pages").scrollTop = 0;

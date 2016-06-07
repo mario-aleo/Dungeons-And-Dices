@@ -53,8 +53,8 @@
         },
 
         openSheet: function(e){
-            document.querySelector("sheet-detail").set('sheet', this.sheet);
-            document.querySelector("sheet-edit").set('sheet', this.sheet);
+            document.querySelector("opensheet-data").set("openSheet.index", this.index);
+            document.querySelector("opensheet-data").set("openSheet.sheet", document.querySelector("sheetlist-data").sheetList.list[this.index]);
             document.querySelector("dungeon-dices").set("route.path", "/sheetDetail");
         }
     });
