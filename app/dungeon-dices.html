@@ -169,7 +169,7 @@
         is: "dungeon-dices",
 
         observers: [
-            "_scrollTop(route)"
+            "_routeChanged(route.*)"
         ],
 
         ready: function(e){
@@ -187,9 +187,13 @@
             this.isDrawerOpen = !this.isDrawerOpen;
         },
 
-        _scrollTop: function(e){
-            console.log("Content Scroll Top");
-            document.querySelector("content-pages").scrollTop = 0;
+        _routeChanged:function(e){
+            if(this.route.path == "/sheetCreation"){
+                document.querySelector("sheet-creation").tabSelected = 0;
+                document.querySelector("iron-pages").scrollTop = 0;
+            } else{
+                document.querySelector("content-pages").scrollTop = 0;
+            }
         },
 
         _sideNavRouteWillChange: function(e){

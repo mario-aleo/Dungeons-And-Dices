@@ -46,7 +46,7 @@
         </template>
 
         <template is="dom-if"
-                  if="{{ hasSheet }}">
+                  if="{{ !hasSheet }}">
             <div class="div-empty">
                 <h2 class="text-empty">Nothing to See Here :(</h2>
             </div>
@@ -64,7 +64,7 @@
 <script>
     Polymer({
         is: "sheet-list",
-        
+
         properties: {
             active: {
                 type: Boolean,
@@ -78,7 +78,7 @@
         },
 
         observers: [
-            "_sheetListUpdate(sheetList.list)"
+            "_sheetListUpdate(sheetList.*)"
         ],
 
         ready: function(e){
@@ -86,10 +86,10 @@
         },
 
         _sheetListUpdate: function(e){
-            if(this.sheetList.list.length == 0){
-                this.hasSheet = true;
-            } else{
+            if(this.sheetList == null ||this.sheetList.list.length == 0){
                 this.hasSheet = false;
+            } else{
+                this.hasSheet = true;
             }
         }
     });

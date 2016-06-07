@@ -200,8 +200,8 @@
                 }
             );
             // Pushing to SheetList and Cleaning the newSheet
-            this.push("sheetList.list", this.newSheet);
-            this.set("newSheet", this.baseSheet);
+            document.querySelector("sheetlist-data").push("sheetList.list", this.newSheet);
+            document.querySelector("newsheet-data").set("newSheet", this.baseSheet);
             console.log("Sheet Saved");
             console.log("Route to SheetList");
             document.querySelector("dungeon-dices").set("route.path", "/sheetList");
