@@ -28,16 +28,23 @@
         <meta name="msapplication-TileImage" content="assets/img/icon-144.png">
         <meta name="msapplication-TileColor" content="#2F3BA2">
 
-
-        <link rel="stylesheet" href="assets/css/main.css">
-
         <link rel="import" href="assets/bower_components/polymer/polymer.html">
 
         <link rel="import" href="app/dungeon-dices.html">
-        <!--link rel="import" href="assets/css/elements.html"-->
 
         <title>Dungeon 'n Dices</title>
         <meta name="description" content="The RPG Generic Sheet Organizer">
+
+        <style>
+            body {
+                -webkit-touch-callout: none;    /* prevent callout to copy image, etc when tap to hold */
+                -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
+                -webkit-user-select: none;      /* prevent copy paste, to allow, change 'none' to 'text' */
+                background: #fafafa;
+                font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                margin: 0;
+            }
+        </style>
     </head>
 
     <body unresolved>

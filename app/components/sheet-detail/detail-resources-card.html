@@ -1,6 +1,6 @@
-<!--link href="../assets/bower_components/polymer/polymer.html" rel="import"-->
+<link rel="import" href="../../../assets/bower_components/paper-card/paper-card.html">
 
-<dom-module id="statuslist-card">
+<dom-module id="detail-resources-card">
     <template>
         <style>
             :host {
@@ -22,10 +22,10 @@
             }
         </style>
 
-        <paper-card  heading="Status">
+        <paper-card  heading="Resources">
             <div class="card-content">
                 <template is="dom-repeat"
-                          items="{{ statusList }}">
+                          items="{{ resorcesList }}">
                     <div class="card-content-row">
                       <p>{{ item.name }}:</p><p>{{ item.value }}</p>
                     </div>
@@ -37,14 +37,10 @@
 
 <script>
     Polymer({
-        is: "statuslist-card",
-        properties: {
-            statusList: {
-                type: Object
-            }
-        },
+        is: "detail-resources-card",
+        
         ready: function(e){
-            console.log("Status List Card Loaded");
+            console.log("Resorces List Card Loaded");
         }
     });
 </script>

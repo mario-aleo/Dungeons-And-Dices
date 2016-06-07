@@ -1,6 +1,6 @@
-<!--link href="../assets/bower_components/polymer/polymer.html" rel="import"-->
+<link rel="import" href="../../../assets/bower_components/paper-card/paper-card.html">
 
-<dom-module id="basic-card">
+<dom-module id="sheet-card">
     <template>
         <style>
             :host {
@@ -22,19 +22,22 @@
             }
         </style>
 
-        <paper-card  heading="Basic">
+        <paper-card on-click="openSheet">
             <div class="card-content">
                 <div class="card-content-row">
-                    <p>Name:</p><p>{{ name }}</p>
-                </div>
-                <div class="card-content-row">
-                    <p>Class:</p><p>{{ job }}</p>
-                </div>
-                <div class="card-content-row">
-                    <p>Race:</p><p>{{ race }}</p>
+                    <p>Personagem:</p><p>{{ personagem }}</p>
                 </div>
                 <div class="card-content-row">
                     <p>Level:</p><p>{{ level }}</p>
+                </div>
+                <div class="card-content-row">
+                    <p>Classe:</p><p>{{ classe }}</p>
+                </div>
+                <div class="card-content-row">
+                    <p>Raça:</p><p>{{ raca }}</p>
+                </div>
+                <div class="card-content-row">
+                    <p>Sistema:</p><p>{{ sistema }}</p>
                 </div>
             </div>
         </paper-card>
@@ -43,23 +46,16 @@
 
 <script>
     Polymer({
-        is: "basic-card",
-        properties: {
-            name: {
-                type: Object
-            },
-            job: {
-                type: Object
-            },
-            race: {
-                type: Object
-            },
-            level: {
-                type: Object
-            }
-        },
+        is: "sheet-card",
+
         ready: function(e){
-            console.log("Basic Card Loaded");
+            console.log("Sheet List Card Loaded");
+        },
+
+        openSheet: function(e){
+            document.querySelector("sheet-detail").set('sheet', this.sheet);
+            document.querySelector("sheet-edit").set('sheet', this.sheet);
+            document.querySelector("dungeon-dices").set("route.path", "/sheetDetail");
         }
     });
 </script>

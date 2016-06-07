@@ -1,4 +1,4 @@
-<!--link href="../assets/bower_components/polymer/polymer.html" rel="import"-->
+<link rel="import" href="../../../assets/bower_components/paper-card/paper-card.html">
 
 <dom-module id="detail-basic-card">
     <template>
@@ -44,20 +44,7 @@
 <script>
     Polymer({
         is: "detail-basic-card",
-        properties: {
-            name: {
-                type: Object
-            },
-            job: {
-                type: Object
-            },
-            race: {
-                type: Object
-            },
-            level: {
-                type: Object
-            }
-        },
+
         ready: function(e){
             console.log("Basic Card Loaded");
         }

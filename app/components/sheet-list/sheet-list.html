@@ -64,6 +64,7 @@
 <script>
     Polymer({
         is: "sheet-list",
+        
         properties: {
             active: {
                 type: Boolean,
@@ -90,11 +91,6 @@
             } else{
                 this.hasSheet = false;
             }
-        },
-
-        createSheet: function(e){
-            console.log("Route to CreateSheet");
-            this.set("route.path", "/sheetCreation");
         }
     });
 </script>

@@ -1,9 +1,9 @@
 <link rel="import" href="../../assets/bower_components/app-route/app-route.html">
 
-<link rel="import" href="main/sheet-list.html">
-<link rel="import" href="sheet-creation/sheet-creation.html">
-<link rel="import" href="sheet-detail/sheet-detail.html">
-<link rel="import" href="sheet-edit/sheet-edit.html">
+<link rel="import" href="sheet-list/sheet-list.html">
+<link rel="import" href="sheet-creation/sheet-creation.html" async >
+<link rel="import" href="sheet-detail/sheet-detail.html" async>
+<link rel="import" href="sheet-edit/sheet-edit.html" async>
 
 <dom-module id="content-pages">
     <template>
@@ -34,14 +34,14 @@
 		<sheet-list active="{{ listActive }}"
                     sheet-list="{{ sheetList }}"></sheet-list>
 
-		<!--sheet-detail active="{{ detailActive }}"></sheet-detail-->
+		<sheet-detail active="{{ detailActive }}"></sheet-detail>
 
 		<sheet-creation active="{{ creationActive }}"
                         sheet-list="{{ sheetList }}"
                         base-sheet="{{ baseSheet }}"
                         new-sheet="{{ newSheet }}"></sheet-creation>
 
-		<!--sheet-edit active="{{ editActive }}"></sheet-edit-->
+		<sheet-edit active="{{ editActive }}"></sheet-edit>
 
     </template>
 </dom-module>

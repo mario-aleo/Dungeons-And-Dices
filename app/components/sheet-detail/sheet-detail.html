@@ -1,7 +1,12 @@
 <link rel="import" href="../../../assets/bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../../assets/bower_components/iron-icons/editor-icons.html">
+
 
 <link rel="import" href="detail-basic-card.html">
 <link rel="import" href="detail-resources-card.html">
+<link rel="import" href="detail-status-card.html">
+<link rel="import" href="detail-defenses-card.html">
+<link rel="import" href="detail-skills-card.html">
 
 <dom-module id="sheet-detail">
     <template>
@@ -21,7 +26,7 @@
                 bottom: 16px;
             }
 
-            div {
+            .space {
                 height: 64px;
             }
         </style>
@@ -41,7 +46,7 @@
 
         <!-- Bonus List Card -->
 
-        <div id="space"></div>
+        <div class="space"></div>
 
         <a href="#/sheetEdit">
             <paper-fab noink
@@ -60,9 +65,6 @@
                 type: Boolean,
                 value: false,
                 reflectToAttribute: true
-            },
-            sheet: {
-                type: Object
             }
         },
 
