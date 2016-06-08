@@ -35,7 +35,7 @@
                     sheet-list="{{ sheetList }}"></sheet-list>
 
 		<sheet-detail active="{{ detailActive }}"
-                      sheet="{{ openSheet.sheet }}"></sheet-detail>
+                      sheet-list="{{ sheetList }}"></sheet-detail>
 
 		<sheet-creation active="{{ creationActive }}"
                         sheet-list="{{ sheetList }}"
@@ -43,7 +43,7 @@
                         new-sheet="{{ newSheet }}"></sheet-creation>
 
 		<sheet-edit active="{{ editActive }}"
-                    openSheet="{{ openSheet }}"></sheet-edit>
+                    sheet-list="{{ sheetList }}"></sheet-edit>
 
     </template>
 </dom-module>

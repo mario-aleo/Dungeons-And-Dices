@@ -97,8 +97,25 @@
             }
         },
 
+        observers: [
+            "_openSheet(index)",
+            "_sheetChanged(sheet.*)"
+        ],
+
         ready: function(e){
             console.log("Sheet Edit Loaded");
+        },
+
+        _openSheet: function(e){
+            console.log(document.querySelector("sheetlist-data").sheetList.list[this.index]);
+            this.sheet = document.querySelector("sheetlist-data").sheetList.list[this.index];
+        },
+
+        _sheetChanged: function(e){
+            document.querySelector("sheetlist-data").set("sheetList.list[this.index]", null);
+            console.log(this.sheet);
+            document.querySelector("sheetlist-data").sheetList.list[this.index] = this.sheet;
+            console.log(document.querySelector("sheetlist-data").sheetList.list[this.index]);
         },
 
         saveSheet: function(e){

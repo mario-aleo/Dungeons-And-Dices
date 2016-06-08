@@ -67,8 +67,23 @@
             }
         },
 
+        observers: [
+            "_openSheet(index)",
+            "_sheetChanged(sheet.*)"
+        ],
+
         ready: function(e){
             console.log("Sheet Detail Loaded");
+        },
+
+        _openSheet: function(e){
+            console.log(this.sheetList.list[this.index]);
+            this.sheet = this.sheetList.list[this.index];
+        },
+
+        _sheetChanged: function(e){
+            //console.log(this.sheet);
+            //this.sheetList.list[this.index] = this.sheet;
         }
     });
 </script>
