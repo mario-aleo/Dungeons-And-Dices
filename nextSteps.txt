@@ -1,0 +1,8 @@
+# Reduce Custom Elements => Reduce Http Requests to Load
+* Put Every Specialized Card Components Inside Their Page Component, Still Trying to Keep the Organization and Scopes
+
+# Study the Page Routing
+* Better Pages Integration with Iron-Pages or Rob Dodson Way?
+
+# Create Sheet Edit => First RC
+* Create the Sheet Edition to Finally Create the First RC
