@@ -1,9 +1,17 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/my-app.html",
+  "shell": "src/dnd-app.html",
   "fragments": [
-    "src/my-view1.html",
-    "src/my-view2.html",
-    "src/my-view3.html"
+    "src/dnd-basesheet-data.html",
+    "src/dnd-newsheet-data.html",
+    "src/dnd-sheet-list.html",
+    "src/dnd-sheet-list.html",
+    "src/dnd-sheet-create.html",
+    "src/dnd-sheet-detail.html",
+    "src/create-basic-tab.html",
+    "src/create-status-tab.html",
+    "src/create-resources-tab.html",
+    "src/create-defenses-tab.html",
+    "src/create-skills-tab.html"
   ]
 }
