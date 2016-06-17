@@ -13,14 +13,27 @@
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 
+<link rel="import" href="dnd-sheetlist-data.html">
+<link rel="import" href="dnd-basesheet-data.html">
+<link rel="import" href="dnd-newsheet-data.html">
+
 <dom-module id="dnd-app">
 
     <template>
 
         <style>
             :root {
-                --app-primary-color: #4285f4;
-                --app-secondary-color: black;
+                --primary-color: #9E9E9E;
+                --darker-primary-color: #616161;
+                --light-primary-color: #F5F5F5;
+                --secondary-color: #03A9F4;
+                --primary-text: #F5F5F5;
+                --secondary-text: #727272;
+                --divider-color: #B6B6B6;
+
+                --paper-fab-background: var(--secondary-color);
+                --paper-tabs-selection-bar-color: var(--secondary-color);
+                --paper-input-container-focus-color: var(--secondary-color);
             }
 
             :host {
@@ -28,7 +41,7 @@
             }
 
             app-header {
-                background-color: var(--app-primary-color);
+                background-color: var(--primary-color);
                 color: #fff;
             }
             app-header paper-icon-button {
@@ -36,21 +49,26 @@
             }
 
             .drawer-list {
-                margin: 0 20px;
+                margin: 0 16px;
             }
             .drawer-list a {
                 display: block;
                 padding: 0 16px;
                 line-height: 40px;
                 text-decoration: none;
-                color: var(--app-secondary-color);
+                color: black;
             }
             .drawer-list a.iron-selected {
                 color: black;
                 font-weight: bold;
             }
-            .drawer-list a.subroute {
-                padding-left: 32px;
+
+            .drawer-list a:focus {
+                outline-style: hidden !important;
+            }
+
+            :focus {
+             outline: 0;
             }
         </style>
 
@@ -59,6 +77,11 @@
                    pattern="/:page"
                    data="{{routeData}}"
                    tail="{{subroute}}"></app-route>
+
+        <dnd-sheetlist-data sheet-list="{{ sheetList }}"></dnd-sheetlist-data>
+        <dnd-basesheet-data base-sheet="{{ baseSheet }}"></dnd-basesheet-data>
+        <dnd-newsheet-data new-sheet="{{ newSheet }}"
+                           base-sheet="{{ baseSheet }}"></dnd-newsheet-data>
 
         <app-drawer-layout fullbleed
                            force-narrow>
@@ -81,7 +104,7 @@
                 <app-toolbar>
                     <paper-icon-button icon="menu"
                                        drawer-toggle></paper-icon-button>
-                    <div title>My App</div>
+                    <div title>Dungeon 'n Dices</div>
                 </app-toolbar>
             </app-header>
 
