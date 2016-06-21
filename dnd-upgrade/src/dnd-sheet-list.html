@@ -94,6 +94,10 @@
                 "_sheetListUpdate(sheetList.*)"
             ],
 
+            attached: function(e){
+                Polymer.updateStyles();
+            },
+
             _sheetListUpdate: function(e){
                 if(this.sheetList == null ||this.sheetList.list.length == 0){
                     this.hasSheet = false;
