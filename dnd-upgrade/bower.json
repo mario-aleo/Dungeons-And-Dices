@@ -84,6 +84,7 @@
     "platinum-bluetooth": "PolymerElements/platinum-bluetooth#^2.0.0",
     "platinum-https-redirect": "PolymerElements/platinum-https-redirect#^1.0.0",
     "platinum-push-messaging": "PolymerElements/platinum-push-messaging#^1.0.0",
-    "platinum-sw": "PolymerElements/platinum-sw#^1.2.0"
+    "platinum-sw": "PolymerElements/platinum-sw#^1.2.0",
+    "linqjs": "^3.0.5"
   }
 }

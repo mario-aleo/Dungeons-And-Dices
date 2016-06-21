@@ -29,6 +29,9 @@
                     e.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
                     document.head.appendChild(e);
                 }
+                var e = document.createElement('script');
+                e.src = '/bower_components/linqjs/linq.min.js';
+                document.head.appendChild(e);
             })();
             // load pre-caching service worker
             if ('serviceWorker' in navigator) {
@@ -42,16 +45,16 @@
 
         <style>
 
-        body {
-            -webkit-touch-callout: none;    /* prevent callout to copy image, etc when tap to hold */
-            -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
-            -webkit-user-select: none;      /* prevent copy paste, to allow, change 'none' to 'text' */
-            margin: 0;
-            font-family: 'Roboto', 'Noto', sans-serif;
-            line-height: 1.5;
-            min-height: 100vh;
-            background-color: #eee;
-        }
+            body {
+                -webkit-touch-callout: none;    /* prevent callout to copy image, etc when tap to hold */
+                -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
+                -webkit-user-select: none;      /* prevent copy paste, to allow, change 'none' to 'text' */
+                margin: 0;
+                font-family: 'Roboto', 'Noto', sans-serif;
+                line-height: 1.5;
+                min-height: 100vh;
+                background-color: #eee;
+            }
 
         </style>
 
@@ -61,6 +64,5 @@
 
         <dnd-app unresolved></dnd-app>
 
-        <script type="text/javascript" src="/linq.min.js"></script>
     </body>
 </html>
