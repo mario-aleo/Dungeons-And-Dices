@@ -139,13 +139,22 @@
                 '_routePageChanged(routeData.page)'
             ],
 
+            ready: function(e) {
+                this.importHref(
+                    this.resolveUrl('dnd-sheet-list.html'), null, null, true);
+                this.importHref(
+                    this.resolveUrl('dnd-sheet-create.html'), null, null, true);
+                this.importHref(
+                    this.resolveUrl('dnd-sheet-detail.html'), null, null, true);
+            },
+
             _routePageChanged: function(page) {
                 this.page = page || 'list';
             },
 
             _pageChanged: function(page) {
-                this.importHref(
-                    this.resolveUrl('dnd-sheet-' + page + '.html'), null, null, true);
+                //this.importHref(
+                //    this.resolveUrl('dnd-sheet-' + page + '.html'), null, null, true);
             }
 
         });
