@@ -73,8 +73,9 @@
                                        selected="{{ item.statusBase }}">
                             <paper-item status-name="None">None</paper-item>
                             <template is="dom-repeat"
-                                      items="{{ item.statusList }}">
-                                <paper-item status-name="{{ item.name }}">{{ item.name }}</paper-item>
+                                      items="{{ item.statusList }}"
+                                      as="stat">
+                                <paper-item status-name="{{ stat.name }}">{{ stat.name }}</paper-item>
                             </template>
                         </paper-listbox>
                     </paper-dropdown-menu>
