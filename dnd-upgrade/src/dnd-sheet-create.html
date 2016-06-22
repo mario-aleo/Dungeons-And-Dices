@@ -81,7 +81,7 @@
         <paper-fab icon="save"
                    on-click="_openSaveSheetDialog"></paper-fab>
 
-        <paper-dialog id="openSaveSheetDialog">
+        <paper-dialog opened="{{ dialogOpen }}">
             <h2>Save New Sheet</h2>
             <p>Do you want to save this new sheet? </p>
             <p>Keep in mind that you can't add or remove anything later.</p>
@@ -106,6 +106,11 @@
                     type: String,
                     value: "0",
                     notify: true
+                },
+                dialogOpen: {
+                    type: Boolean,
+                    value: false,
+                    notify: true
                 }
             },
 
@@ -114,7 +119,7 @@
             },
 
             _openSaveSheetDialog: function(e){
-                document.querySelector("paper-dialog").open();
+                this.dialogOpen = !this.dialogOpen;
             },
 
             _saveSheet: function(e){
