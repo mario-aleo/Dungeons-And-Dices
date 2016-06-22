@@ -18,8 +18,8 @@
                 padding: 16px;
             }
 
-            input[is="iron-input"] {
-                font: inherit;
+            paper-card {
+                margin-bottom: 16px;
             }
 
             paper-fab {
@@ -69,9 +69,8 @@
                                        selected="{{ item.statusBase }}">
                             <paper-item status-name="None">None</paper-item>
                             <template is="dom-repeat"
-                                      items="{{ item.statusList }}"
-                                      as="stat">
-                                <paper-item status-name="{{ stat.name }}">{{ stat.name }}</paper-item>
+                                      items="{{ statusList }}">
+                                <paper-item status-name="{{ item.name }}">{{ item.name }}</paper-item>
                             </template>
                         </paper-listbox>
                     </paper-dropdown-menu>
@@ -108,19 +107,6 @@
     Polymer({
 
         is: "create-resources-tab",
-
-        properties: {
-            resourcesList: {
-                type: Array,
-                notify: true,
-                reflectToAttribute: true
-            },
-            statusList: {
-                type: Array,
-                notify: true,
-                reflectToAttribute: true
-            }
-        },
 
         _newResources: function(e){
             console.log("Resources Card Add");

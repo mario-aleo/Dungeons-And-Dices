@@ -16,6 +16,10 @@
                 padding: 16px;
             }
 
+            paper-card {
+                margin-bottom: 16px;
+            }
+
             paper-fab {
                 position: absolute;
                 bottom: 16px;
@@ -94,10 +98,6 @@
         },
 
         _newStatus: function(e){
-            console.log(this.statusList);
-        },
-
-        newStatus: function(e){
             console.log("Status Card Add");
             this.push("statusList", {
                 name: "Str/Dex/Int/...",

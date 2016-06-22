@@ -7,40 +7,60 @@
         <style>
             :host {
                 display: block;
-                padding: 0 16px;
+                height: calc(100% - 16px);
+                padding: 8px;
                 @apply(--layout-vertical);
+            }
+
+            paper-card {
+                width: 100%;
+                height: 100%;
+            }
+
+            .card-content {
+                padding: 16px;
+                position: relative;
             }
         </style>
 
-        <paper-input-container>
-            <label>Name</label>
-            <input is="iron-input"
-                   bind-value="{{name}}">
-        </paper-input-container>
+        <paper-card>
 
-        <paper-input-container>
-            <label>Class</label>
-            <input is="iron-input"
-                   bind-value="{{job}}">
-        </paper-input-container>
+            <div class="card-content">
 
-        <paper-input-container>
-            <label>Race</label>
-            <input is="iron-input"
-                   bind-value="{{race}}">
-        </paper-input-container>
+                <paper-input-container>
+                    <label>Name</label>
+                    <input is="iron-input"
+                           bind-value="{{name}}">
+                </paper-input-container>
 
-        <paper-input-container>
-            <label>Level</label>
-            <input is="iron-input"
-                   bind-value="{{level}}">
-        </paper-input-container>
+                <paper-input-container>
+                    <label>Class</label>
+                    <input is="iron-input"
+                           bind-value="{{job}}">
+                </paper-input-container>
 
-        <paper-input-container>
-            <label>System</label>
-            <input is="iron-input"
-                   bind-value="{{system}}">
-        </paper-input-container>
+                <paper-input-container>
+                    <label>Race</label>
+                    <input is="iron-input"
+                           bind-value="{{race}}">
+                </paper-input-container>
+
+                <paper-input-container>
+                    <label>Level</label>
+                    <input is="iron-input"
+                           bind-value="{{level}}">
+                </paper-input-container>
+
+                <paper-input-container>
+                    <label>System</label>
+                    <input is="iron-input"
+                           bind-value="{{system}}">
+                </paper-input-container>
+
+            </div>
+
+        </paper-card>
+
     </template>
 </dom-module>
 
