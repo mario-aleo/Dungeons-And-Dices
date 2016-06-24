@@ -7,9 +7,6 @@
 <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 
-<link rel="import" href="dnd-basesheet-data.html">
-<link rel="import" href="dnd-newsheet-data.html">
-
 <link rel="import" href="create-basic-tab.html">
 <link rel="import" href="create-status-tab.html">
 <link rel="import" href="create-resources-tab.html">
@@ -42,10 +39,6 @@
                 overflow: auto;
             }
         </style>
-
-        <dnd-basesheet-data base-sheet="{{ baseSheet }}"></dnd-basesheet-data>
-        <dnd-newsheet-data new-sheet="{{ newSheet }}"
-                           base-sheet="{{ baseSheet }}"></dnd-newsheet-data>
 
         <paper-tabs noink
                     scrollable
@@ -107,9 +100,16 @@
                     value: "0",
                     notify: true
                 },
-                dialogOpen: {
-                    type: Boolean,
-                    value: false,
+                newSheet: {
+                    type: Object,
+                    notify: true
+                },
+                baseSheet: {
+                    type: Object,
+                    notify: true
+                },
+                sheetList: {
+                    type: Object,
                     notify: true
                 }
             },
@@ -178,11 +178,11 @@
                     }
                 );
                 // Pushing to SheetList and Cleaning the newSheet
-                document.querySelector("sheetlist-data").push("sheetList.list", this.newSheet);
-                document.querySelector("newsheet-data").set("newSheet", this.baseSheet);
+                this.push("sheetList.list", this.newSheet);
+                this.set("newSheet", this.baseSheet);
                 console.log("Sheet Saved");
                 console.log("Route to SheetList");
-                document.querySelector("dungeon-dices").set("route.path", "/sheetList");
+                //document.querySelector("dungeon-dices").set("route.path", "/sheetList");
             }
 
         });

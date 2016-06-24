@@ -85,36 +85,41 @@
 
         <app-drawer-layout fullbleed
                            force-narrow>
-        <!-- Drawer content -->
-        <app-drawer swipe-open>
-            <app-toolbar>Menu</app-toolbar>
-            <iron-selector class="drawer-list"
-                           attr-for-selected="route"
-                           selected="[[page]]"
-                           role="navigation">
-                <a route="list" href="/list">Sheet List</a>
-            </iron-selector>
+            <!-- Drawer content -->
+            <app-drawer id="appDrawer"
+                        swipe-open>
+                <app-toolbar>Menu</app-toolbar>
+                <iron-selector class="drawer-list"
+                               attr-for-selected="route"
+                               selected="[[page]]"
+                               role="navigation">
+                    <a route="list" href="/list">Sheet List</a>
+                </iron-selector>
             </app-drawer>
 
-        <!-- Main content -->
-        <app-header-layout has-scrolling-region>
+            <!-- Main content -->
+            <app-header-layout has-scrolling-region>
 
-            <app-header fixed
-                        effects="waterfall">
-                <app-toolbar>
-                    <paper-icon-button icon="menu"
-                                       drawer-toggle></paper-icon-button>
-                    <div title>Dungeon 'n Dices</div>
-                </app-toolbar>
-            </app-header>
+                <app-header fixed
+                            effects="waterfall">
+                    <app-toolbar>
+                        <paper-icon-button icon="menu"
+                                           drawer-toggle></paper-icon-button>
+                        <div title>Dungeon 'n Dices</div>
+                    </app-toolbar>
+                </app-header>
 
-            <iron-pages role="main"
-                        attr-for-selected="route"
-                        selected="[[page]]">
-                <dnd-sheet-list route="list"></dnd-sheet-list>
-                <dnd-sheet-create route="create"></dnd-sheet-create>
-                <dnd-sheet-detail route="detail"></dnd-sheet-detail>
-            </iron-pages>
+                <iron-pages role="main"
+                            attr-for-selected="route"
+                            selected="[[page]]">
+                    <dnd-sheet-list route="list"
+                                    sheet-list="{{ sheetList }}"></dnd-sheet-list>
+                    <dnd-sheet-create route="create"
+                                      new-sheet="{{ newSheet }}"
+                                      base-sheet="{{ baseSheet }}"
+                                      sheet-list="{{ sheetList }}"></dnd-sheet-create>
+                    <dnd-sheet-detail route="detail"></dnd-sheet-detail>
+                </iron-pages>
 
             </app-header-layout>
         </app-drawer-layout>
@@ -132,14 +137,15 @@
                     type: String,
                     reflectToAttribute: true,
                     observer: '_pageChanged'
-                },
+                }
             },
 
             observers: [
                 '_routePageChanged(routeData.page)'
             ],
 
-            ready: function(e) {
+            attached: function(e) {
+                // Lazyload the views as soon as the AppShell has been Painted
                 this.importHref(
                     this.resolveUrl('dnd-sheet-list.html'), null, null, true);
                 this.importHref(
@@ -153,8 +159,9 @@
             },
 
             _pageChanged: function(page) {
-                //this.importHref(
-                //    this.resolveUrl('dnd-sheet-' + page + '.html'), null, null, true);
+                if(this.$.appDrawer.opened){
+                    this.$.appDrawer.opened = !this.$.appDrawer.opened;
+                }
             }
 
         });
