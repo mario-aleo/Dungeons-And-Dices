@@ -10,13 +10,12 @@
         <style>
             :host {
                 display: block;
-                padding: 10px;
                 @apply(--layout-vertical);
-                @apply(--layout-center);
+                padding: 16px;
             }
 
             paper-card {
-                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+                margin-bottom: 16px;
             }
 
             h2 {
@@ -28,6 +27,13 @@
                 bottom: 16px;
                 right: 16px;
             }
+
+            .card-content-row {
+                 @apply(--layout-horizontal);
+                 @apply(--layout-justified);
+                 margin-top: -16px;
+                 margin-bottom: -16px;
+            }
         </style>
 
         <template is="dom-repeat"
@@ -37,19 +43,19 @@
 
                     <div class="card-content">
                         <div class="card-content-row">
-                            <p>Personagem:</p><p>{{ personagem }}</p>
+                            <p>Personagem:</p><p>{{ item.name }}</p>
                         </div>
                         <div class="card-content-row">
-                            <p>Level:</p><p>{{ level }}</p>
+                            <p>Level:</p><p>{{ item.level }}</p>
                         </div>
                         <div class="card-content-row">
-                            <p>Classe:</p><p>{{ classe }}</p>
+                            <p>Classe:</p><p>{{ item.job }}</p>
                         </div>
                         <div class="card-content-row">
-                            <p>Raça:</p><p>{{ raca }}</p>
+                            <p>Raça:</p><p>{{ item.race }}</p>
                         </div>
                         <div class="card-content-row">
-                            <p>Sistema:</p><p>{{ sistema }}</p>
+                            <p>Sistema:</p><p>{{ item.system }}</p>
                         </div>
                     </div>
 
