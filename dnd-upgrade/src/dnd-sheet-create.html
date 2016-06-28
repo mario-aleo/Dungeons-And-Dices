@@ -62,13 +62,13 @@
             <create-status-tab status-list="{{ newSheet.statusList }}"></create-status-tab>
 
             <create-resources-tab resources-list="{{ newSheet.resourcesList }}"
-                                  status-list="{{ newSheet.statusList }}"></create-resources-tab>
+                                  status-list="[[ newSheet.statusList ]]"></create-resources-tab>
 
             <create-defenses-tab defenses-list="{{ newSheet.defensesList }}"
-                                 status-list="{{ newSheet.statusList }}"></create-defenses-tab>
+                                 status-list="[[ newSheet.statusList ]]"></create-defenses-tab>
 
             <create-skills-tab skills-list="{{ newSheet.skillsList }}"
-                               status-list="{{ newSheet.statusList }}"></create-skills-tab>
+                               status-list="[[ newSheet.statusList ]]"></create-skills-tab>
 
         </iron-pages>
 

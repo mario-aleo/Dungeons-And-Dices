@@ -1,0 +1,122 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-input/paper-input-container.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+<dom-module id="create-defenses-card">
+    <template>
+        <style>
+            :host {
+                display: block;
+                @apply(--layout-vertical);
+            }
+
+            paper-dropdown-menu {
+                width: 100%;
+            }
+
+            paper-card {
+                margin-bottom: 16px;
+            }
+
+            .card-actions-button {
+                color: #F44336;
+            }
+        </style>
+
+        <paper-card>
+			<div class="card-content">
+				<paper-input-container>
+					<label>Name</label>
+					<input is="iron-input"
+						   bind-value="{{ name }}">
+				</paper-input-container>
+
+				<paper-input-container>
+					<label>Initial Value</label>
+					<input is="iron-input"
+						   bind-value="{{ baseValue }}">
+				</paper-input-container>
+
+				<paper-dropdown-menu label="Status Modificador">
+					<paper-listbox class="dropdown-content"
+								   attr-for-selected="status-name"
+								   selected="{{ statusBase }}">
+						<paper-item status-name="None">None</paper-item>
+						<template is="dom-repeat"
+								  items="{{ statusList }}">
+							<paper-item status-name="{{ item.name }}">{{ item.name }}</paper-item>
+						</template>
+					</paper-listbox>
+				</paper-dropdown-menu>
+
+				<paper-input-container>
+					<label>Value Modifier per Status Point</label>
+					<input is="iron-input"
+						   bind-value="{{ statusBaseModifier }}">
+				</paper-input-container>
+
+				<paper-input-container>
+					<label>Value Modifier per Level</label>
+					<input is="iron-input"
+						   bind-value="{{ levelModifier }}">
+				</paper-input-container>
+			</div>
+            <div class="card-actions">
+                <paper-button class="card-actions-button"
+                              on-click="_requestDeleteDefenses">Delete</paper-button>
+            </div>
+        </paper-card>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+
+        is: "create-defenses-card",
+
+        properties: {
+            index: {
+                type: Number
+            },
+            name: {
+                type: String,
+                notify: true,
+                reflectToAttribute: true
+            },
+            baseValue: {
+                type: String,
+                notify: true,
+                reflectToAttribute: true
+            },
+            statusBase: {
+                type: String,
+                value: "None",
+                notify: true,
+                reflectToAttribute: true
+            },
+            statusBaseModifier: {
+                type: String,
+                notify: true,
+                reflectToAttribute: true
+            },
+            levelModifier: {
+                type: String,
+                notify: true,
+                reflectToAttribute: true
+            },
+			statusList: {
+				type: Array
+			}
+        },
+
+        _requestDeleteDefenses: function(e){
+            this.fire('requestDeleteDefenses', {
+                index: this.index
+            });
+        }
+    });
+</script>

@@ -1,12 +1,8 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../bower_components/paper-card/paper-card.html">
-<link rel="import" href="../bower_components/paper-input/paper-input-container.html">
-<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
-<link rel="import" href="../bower_components/paper-item/paper-item.html">
-<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="create-skills-card.html">
 
 <dom-module id="create-skills-tab">
     <template>
@@ -18,74 +14,23 @@
                 padding: 16px;
             }
 
-            paper-card {
-                margin-bottom: 16px;
-            }
-
-            paper-dropdown-menu {
-                width: 100%;
-            }
-
             paper-fab {
                 position: absolute;
                 bottom: 16px;
                 right: 16px;
-            }
-
-            .card-actions-button {
-                color: #F44336;
             }
         </style>
 
         <template is="dom-repeat"
                   items="{{ skillsList }}">
 
-            <paper-card>
-
-                <div class="card-content">
-                    <paper-input-container>
-                        <label>Name</label>
-                        <input is="iron-input"
-                               bind-value="{{ item.name }}">
-                    </paper-input-container>
-
-                    <paper-input-container>
-                        <label>Initial Value</label>
-                        <input is="iron-input"
-                               bind-value="{{ item.baseValue }}">
-                    </paper-input-container>
-
-                    <paper-dropdown-menu label="Status Modificador">
-                        <paper-listbox class="dropdown-content"
-                                       attr-for-selected="status-name"
-                                       selected="{{ item.statusBase }}">
-                            <paper-item status-name="None">None</paper-item>
-                            <template is="dom-repeat"
-                                      items="{{ statusList }}">
-                                <paper-item status-name="{{ item.name }}">{{ item.name }}</paper-item>
-                            </template>
-                        </paper-listbox>
-                    </paper-dropdown-menu>
-
-                    <paper-input-container>
-                        <label>Value Modifier per Status Point</label>
-                        <input is="iron-input"
-                               bind-value="{{ item.statusBaseModifier }}">
-                    </paper-input-container>
-
-                    <paper-input-container>
-                        <label>Value Modifier per Level</label>
-                        <input is="iron-input"
-                               bind-value="{{ item.levelModifier }}">
-                    </paper-input-container>
-                </div>
-
-                <div class="card-actions">
-                    <paper-button class="card-actions-button"
-                                  on-click="_deleteCard">Delete</paper-button>
-                </div>
-
-            </paper-card>
+            <create-skills-card index="{{ index }}"
+                                name="{{ item.name }}"
+                                base-value="{{ item.baseValue }}"
+                                status-base="{{ item.statusBase }}"
+                                status-base-modifier="{{ item.statusBaseModifier }}"
+                                level-modifier="{{ item.levelModifier }}"
+                                status-list="[[ statusList ]]"></create-skills-card>
 
         </template>
 
@@ -107,14 +52,15 @@
                 reflectToAttribute: true
             },
             statusList: {
-                type: Array,
-                notify: true,
-                reflectToAttribute: true
+                type: Array
             }
         },
 
+        listeners: {
+            'requestDeleteSkills': '_deleteSkills'
+        },
+
         _newSkills: function(e){
-            console.log("Skills Card Add");
             this.push("skillsList", {
                 name: "Diplomacy/Heal...",
                 value: 0,
@@ -127,10 +73,8 @@
             });
         },
 
-        _deleteCard: function(e){
-            console.log("Skill Card Deleted");
-            console.log(e);
-            //document.querySelector("sheet-creation").splice('newSheet.skillsList', this.index, 1);
+        _deleteSkills: function(e){
+            this.splice('skillsList', e.detail.index, 1);
         }
 
     });

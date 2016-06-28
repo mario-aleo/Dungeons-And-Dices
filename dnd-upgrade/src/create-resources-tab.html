@@ -30,54 +30,7 @@
                                    status-base="{{ item.statusBase }}"
                                    status-base-modifier="{{ item.statusBaseModifier }}"
                                    level-modifier="{{ item.levelModifier }}"
-                                   status-list="{{ statusList }}"></create-resources-card>
-
-            <!--paper-card>
-
-                <div class="card-content">
-                    <paper-input-container>
-                        <label>Name</label>
-                        <input is="iron-input"
-                               bind-value="{{ item.name }}">
-                    </paper-input-container>
-
-                    <paper-input-container>
-                        <label>Initial Value</label>
-                        <input is="iron-input"
-                               bind-value="{{ item.baseValue }}">
-                    </paper-input-container>
-
-                    <paper-dropdown-menu label="Status Modificador">
-                        <paper-listbox class="dropdown-content"
-                                       attr-for-selected="status-name"
-                                       selected="{{ item.statusBase }}">
-                            <paper-item status-name="None">None</paper-item>
-                            <template is="dom-repeat"
-                                      items="{{ statusList }}">
-                                <paper-item status-name="{{ item.name }}">{{ item.name }}</paper-item>
-                            </template>
-                        </paper-listbox>
-                    </paper-dropdown-menu>
-
-                    <paper-input-container>
-                        <label>Value Modifier per Status Point</label>
-                        <input is="iron-input"
-                               bind-value="{{ item.statusBaseModifier }}">
-                    </paper-input-container>
-
-                    <paper-input-container>
-                        <label>Value Modifier per Level</label>
-                        <input is="iron-input"
-                               bind-value="{{ item.levelModifier }}">
-                    </paper-input-container>
-                </div>
-
-                <div class="card-actions">
-                    <paper-button class="card-actions-button"
-                                  on-click="_deleteCard">Delete</paper-button>
-                </div>
-
-            </paper-card-->
+                                   status-list="[[ statusList ]]"></create-resources-card>
 
         </template>
 
