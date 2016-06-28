@@ -1,9 +1,8 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../bower_components/paper-card/paper-card.html">
-<link rel="import" href="../bower_components/paper-input/paper-input-container.html">
-<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="create-status-card.html">
 
 <dom-module id="create-status-tab">
 
@@ -16,52 +15,20 @@
                 padding: 16px;
             }
 
-            paper-card {
-                margin-bottom: 16px;
-            }
-
             paper-fab {
                 position: absolute;
                 bottom: 16px;
                 right: 16px;
-            }
-
-            .card-actions-button {
-                color: #F44336;
             }
         </style>
 
         <template is="dom-repeat"
                   items="{{ statusList }}">
 
-            <paper-card>
-
-                <div class="card-content">
-                    <paper-input-container>
-                        <label>Name</label>
-                        <input is="iron-input"
-                               bind-value="{{ item.name }}">
-                    </paper-input-container>
-
-                    <paper-input-container>
-                        <label>Inital Value</label>
-                        <input is="iron-input"
-                               bind-value="{{ item.baseValue }}">
-                    </paper-input-container>
-
-                    <paper-input-container>
-                        <label>Value Modifier per Level</label>
-                        <input is="iron-input"
-                               bind-value="{{ item.levelModifier }}">
-                    </paper-input-container>
-                </div>
-
-                <div class="card-actions">
-                    <paper-button class="card-actions-button"
-                                  on-click="_deleteCard">Delete</paper-button>
-                </div>
-
-            </paper-card>
+            <create-status-card index="{{ index }}"
+                                name="{{ item.name }}"
+                                base-value="{{ item.baseValue }}"
+                                level-modifier="{{ item.levelModifier }}"></create-status-card>
 
         </template>
 
@@ -85,8 +52,11 @@
             }
         },
 
+        listeners: {
+            'requestDeleteStatus': '_deleteStatus'
+        },
+
         _newStatus: function(e){
-            console.log("Status Card Add");
             this.push("statusList", {
                 name: "Str/Dex/Int/...",
                 value: 0,
@@ -97,10 +67,8 @@
             });
         },
 
-        _deleteCard: function(e){
-            console.log("Status Card Deleted");
-            console.log(e);
-            //document.querySelector("dnd-sheet-create").splice('newSheet.statusList', this.index, 1);
+        _deleteStatus: function(e){
+            this.splice('statusList', e.detail.index, 1);
         }
 
     });
