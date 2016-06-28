@@ -27,11 +27,13 @@
                 --darker-primary-color: #512DA8;
                 --light-primary-color: #D1C4E9;
                 --secondary-color: #03A9F4;
+                --focus-color: #0288D1;
                 --primary-text: #212121;
                 --secondary-text: #727272;
                 --divider-color: #B6B6B6;
 
                 --paper-fab-background: var(--secondary-color);
+                --paper-fab-keyboard-focus-background: var(--focus-color);
                 --paper-tabs-selection-bar-color: var(--secondary-color);
                 --paper-input-container-focus-color: var(--secondary-color);
             }
@@ -99,6 +101,7 @@
                                selected="[[page]]"
                                role="navigation">
                     <a route="list" href="/list">Sheet List</a>
+                    <a route="create" href="/create">New Sheet</a>
                 </iron-selector>
             </app-drawer>
 
