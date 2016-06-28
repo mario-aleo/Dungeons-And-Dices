@@ -6,7 +6,7 @@
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 
-<dom-module id="create-defenses-card">
+<dom-module id="create-statusbased-card">
     <template>
         <style>
             :host {
@@ -67,7 +67,7 @@
 			</div>
             <div class="card-actions">
                 <paper-button class="card-actions-button"
-                              on-click="_requestDeleteDefenses">Delete</paper-button>
+                              on-click="_requestDeleteCard">Delete</paper-button>
             </div>
         </paper-card>
     </template>
@@ -76,7 +76,7 @@
 <script>
     Polymer({
 
-        is: "create-defenses-card",
+        is: "create-statusbased-card",
 
         properties: {
             index: {
@@ -113,8 +113,8 @@
 			}
         },
 
-        _requestDeleteDefenses: function(e){
-            this.fire('requestDeleteDefenses', {
+        _requestDeleteCard: function(e){
+            this.fire('requestDeleteCard', {
                 index: this.index
             });
         }
