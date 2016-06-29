@@ -1,71 +1,124 @@
-<!--
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
 <dom-module id="dnd-sheet-detail">
 
-  <template>
+    <template>
 
-    <style>
-      :host {
-        display: block;
-        padding: 10px;
-      }
-      .card {
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-        padding: 16px;
-        margin: 24px;
-        border-radius: 5px;
-        background-color: #fff;
-        color: #757575;
-      }
-      .circle {
-        display: inline-block;
-        height: 64px;
-        width: 64px;
-        border-radius: 50%;
-        background: #ddd;
-        line-height: 64px;
-        font-size: 30px;
-        color: #555;
-        text-align: center;
-      }
-      h1 {
-        font-size: 22px;
-        margin: 16px 0;
-        color: #212121;
-      }
-    </style>
+        <style>
+            :host {
+                display: block;
+                padding: 16px;
+            }
 
-    <div class="card">
-      <div class="circle">3</div>
-      <h1>View Three</h1>
-      <p>Modus commodo minimum eum te, vero utinam assueverit per eu.</p>
-      <p>Ea duis bonorum nec, falli paulo aliquid ei eum.Has at minim mucius aliquam, est id tempor laoreet.Pro saepe pertinax ei, ad pri animal labores suscipiantur.</p>
-    </div>
+            paper-card {
+                margin-bottom: 16px;
+            }
 
-  </template>
+            .card-content-row {
+                @apply(--layout-horizontal);
+                @apply(--layout-justified);
+                margin-top: -16px;
+                margin-bottom: -16px;
+            }
+        </style>
 
-  <script>
+        <!-- Base Card -->
+        <paper-card>
+            <div class="card-content">
+                <div class="card-content-row">
+                    <p>Name:</p><p>{{ sheetDetail.name }}</p>
+                </div>
 
-    Polymer({
+                <div class="card-content-row">
+                    <p>Class:</p><p>{{ sheetDetail.job }}</p>
+                </div>
 
-      is: 'dnd-sheet-detail',
+                <div class="card-content-row">
+                    <p>Race:</p><p>{{ sheetDetail.race }}</p>
+                </div>
 
-      attached: function(e){
-          Polymer.updateStyles();
-      }
+                <div class="card-content-row">
+                    <p>Level:</p><p>{{ sheetDetail.level }}</p>
+                </div>
+            </div>
+        </paper-card>
 
-    });
+        <!-- Resources Card -->
+        <paper-card>
+            <div class="card-content">
+                <template is="dom-repeat"
+                          items="{{ sheetDetail.resourcesList }}">
 
-  </script>
+                    <div class="card-content-row">
+                        <p>{{ item.name }}:</p><p>{{ item.value }}</p>
+                    </div>
+
+                </template>
+            </div>
+        </paper-card>
+
+        <!-- Status Card -->
+        <paper-card>
+            <div class="card-content">
+                <template is="dom-repeat"
+                          items="{{ sheetDetail.statusList }}">
+
+                    <div class="card-content-row">
+                        <p>{{ item.name }}:</p><p>{{ item.value }}</p>
+                    </div>
+
+                </template>
+            </div>
+        </paper-card>
+
+        <!-- Defenses Card -->
+        <paper-card>
+            <div class="card-content">
+                <template is="dom-repeat"
+                          items="{{ sheetDetail.defensesList }}">
+
+                    <div class="card-content-row">
+                        <p>{{ item.name }}:</p><p>{{ item.value }}</p>
+                    </div>
+
+                </template>
+            </div>
+        </paper-card>
+
+        <!-- Skills Card -->
+        <paper-card>
+            <div class="card-content">
+                <template is="dom-repeat"
+                          items="{{ sheetDetail.skillsList }}">
+
+                    <div class="card-content-row">
+                        <p>{{ item.name }}:</p><p>{{ item.value }}</p>
+                    </div>
+
+                </template>
+            </div>
+        </paper-card>
+
+    </template>
+
+    <script>
+
+        Polymer({
+
+            is: 'dnd-sheet-detail',
+
+            properties: {
+                sheetDetail: {
+                    type: Object
+                }
+            },
+
+            attached: function(e){
+                Polymer.updateStyles();
+            }
+
+        });
+
+    </script>
 
 </dom-module>

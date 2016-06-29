@@ -44,29 +44,29 @@
         <template is="dom-repeat"
                   items="{{ sheetList.list }}">
 
-                <paper-card>
+            <paper-card>
 
-                    <div class="card-content">
-                        <div class="card-content-row">
-                            <p>Personagem:</p><p>{{ item.name }}</p>
-                        </div>
-                        <div class="card-content-row">
-                            <p>Level:</p><p>{{ item.level }}</p>
-                        </div>
-                        <div class="card-content-row">
-                            <p>Classe:</p><p>{{ item.job }}</p>
-                        </div>
-                        <div class="card-content-row">
-                            <p>Raça:</p><p>{{ item.race }}</p>
-                        </div>
-                        <div class="card-content-row">
-                            <p>Sistema:</p><p>{{ item.system }}</p>
-                        </div>
+                <div class="card-content">
+                    <div class="card-content-row">
+                        <p>Personagem:</p><p>{{ item.name }}</p>
                     </div>
+                    <div class="card-content-row">
+                        <p>Level:</p><p>{{ item.level }}</p>
+                    </div>
+                    <div class="card-content-row">
+                        <p>Classe:</p><p>{{ item.job }}</p>
+                    </div>
+                    <div class="card-content-row">
+                        <p>Raça:</p><p>{{ item.race }}</p>
+                    </div>
+                    <div class="card-content-row">
+                        <p>Sistema:</p><p>{{ item.system }}</p>
+                    </div>
+                </div>
 
-                </paper-card>
+            </paper-card>
 
-            </template>
+        </template>
 
         <template is="dom-if"
                   if="{{ !hasSheet }}">
