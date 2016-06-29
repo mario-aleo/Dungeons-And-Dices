@@ -34,6 +34,11 @@
                  margin-top: -16px;
                  margin-bottom: -16px;
             }
+
+            .emptyList {
+                @apply(--layout-vertical);
+                @apply(--layout-center);
+            }
         </style>
 
         <template is="dom-repeat"
@@ -66,8 +71,8 @@
         <template is="dom-if"
                   if="{{ !hasSheet }}">
 
-            <div>
-                <h2>Nothing to See Here :(</h2>
+            <div class="emptyList">
+                <h2>No Sheet Found :(</h2>
             </div>
 
         </template>
@@ -85,11 +90,6 @@
             is: 'dnd-sheet-list',
 
             properties: {
-                active: {
-                    type: Boolean,
-                    value: false,
-                    reflectToAttribute: true
-                },
                 hasSheet: {
                     type: Boolean,
                     value: false

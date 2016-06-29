@@ -124,7 +124,6 @@
             },
 
             _saveSheet: function(e){
-                console.log("Saving Sheet");
                 // Need to Verify  Each Status, Resource, Defense and Skill and SUM
                 var element = this;
                 // SUM Status = baseValue + (levelModifier * level)
@@ -181,9 +180,9 @@
                 // Pushing to SheetList and Cleaning the newSheet
                 this.push("sheetList.list", this.newSheet);
                 this.set("newSheet", this.baseSheet);
-                console.log("Sheet Saved");
-                console.log("Route to SheetList");
-                //document.querySelector("dungeon-dices").set("route.path", "/sheetList");
+                this.fire('requestChangeRoute', {
+                    route: "/list"
+                });
             }
 
         });

@@ -82,11 +82,11 @@
             }
         </style>
 
-        <app-location route="{{route}}"></app-location>
-        <app-route route="{{route}}"
+        <app-location route="{{ route }}"></app-location>
+        <app-route route="{{ route }}"
                    pattern="/:page"
-                   data="{{routeData}}"
-                   tail="{{subroute}}"></app-route>
+                   data="{{ routeData }}"
+                   tail="{{ subroute }}"></app-route>
 
         <dnd-sheetlist-data sheet-list="{{ sheetList }}"></dnd-sheetlist-data>
         <dnd-basesheet-data base-sheet="{{ baseSheet }}"></dnd-basesheet-data>
@@ -101,7 +101,7 @@
                 <app-toolbar>Menu</app-toolbar>
                 <iron-selector class="drawer-list"
                                attr-for-selected="route"
-                               selected="[[page]]"
+                               selected="[[ page ]]"
                                role="navigation">
                     <a route="list" href="/list">Sheet List</a>
                     <a route="create" href="/create">New Sheet</a>
@@ -122,7 +122,7 @@
 
                 <iron-pages role="main"
                             attr-for-selected="route"
-                            selected="[[page]]">
+                            selected="[[ page ]]">
                     <dnd-sheet-list route="list"
                                     sheet-list="{{ sheetList }}"></dnd-sheet-list>
                     <dnd-sheet-create route="create"
@@ -146,6 +146,7 @@
             properties: {
                 page: {
                     type: String,
+                    notify: true,
                     reflectToAttribute: true,
                     observer: '_pageChanged'
                 }
@@ -155,6 +156,10 @@
                 '_routePageChanged(routeData.page)'
             ],
 
+            listeners: {
+                'requestChangeRoute': '_changeRoute'
+            },
+
             attached: function(e) {
                 // Lazyload the views as soon as the AppShell has been Painted
                 this.importHref(
@@ -163,6 +168,10 @@
                     this.resolveUrl('dnd-sheet-create.html'), null, null, true);
                 this.importHref(
                     this.resolveUrl('dnd-sheet-detail.html'), null, null, true);
+            },
+
+            _changeRoute: function(e) {
+                this.set("route.path", e.detail.route);
             },
 
             _routePageChanged: function(page) {
