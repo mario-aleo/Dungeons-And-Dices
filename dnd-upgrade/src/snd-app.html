@@ -13,11 +13,11 @@
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 
-<link rel="import" href="dnd-sheetlist-data.html">
-<link rel="import" href="dnd-basesheet-data.html">
-<link rel="import" href="dnd-newsheet-data.html">
+<link rel="import" href="snd-sheetlist-data.html">
+<link rel="import" href="snd-basesheet-data.html">
+<link rel="import" href="snd-newsheet-data.html">
 
-<dom-module id="dnd-app">
+<dom-module id="snd-app">
 
     <template>
 
@@ -88,10 +88,10 @@
                    data="{{ routeData }}"
                    tail="{{ subroute }}"></app-route>
 
-        <dnd-sheetlist-data sheet-list="{{ sheetList }}"></dnd-sheetlist-data>
-        <dnd-basesheet-data base-sheet="{{ baseSheet }}"></dnd-basesheet-data>
-        <dnd-newsheet-data new-sheet="{{ newSheet }}"
-                           base-sheet="{{ baseSheet }}"></dnd-newsheet-data>
+        <snd-sheetlist-data sheet-list="{{ sheetList }}"></snd-sheetlist-data>
+        <snd-basesheet-data base-sheet="{{ baseSheet }}"></snd-basesheet-data>
+        <snd-newsheet-data new-sheet="{{ newSheet }}"
+                           base-sheet="{{ baseSheet }}"></snd-newsheet-data>
 
         <app-drawer-layout fullbleed
                            force-narrow>
@@ -123,13 +123,13 @@
                 <iron-pages role="main"
                             attr-for-selected="route"
                             selected="[[ page ]]">
-                    <dnd-sheet-list route="list"
-                                    sheet-list="{{ sheetList }}"></dnd-sheet-list>
-                    <dnd-sheet-create route="create"
+                    <snd-sheet-list route="list"
+                                    sheet-list="{{ sheetList }}"></snd-sheet-list>
+                    <snd-sheet-create route="create"
                                       new-sheet="{{ newSheet }}"
                                       base-sheet="{{ baseSheet }}"
-                                      sheet-list="{{ sheetList }}"></dnd-sheet-create>
-                    <dnd-sheet-detail route="detail"></dnd-sheet-detail>
+                                      sheet-list="{{ sheetList }}"></snd-sheet-create>
+                    <snd-sheet-detail route="detail"></snd-sheet-detail>
                 </iron-pages>
 
             </app-header-layout>
@@ -141,7 +141,7 @@
 
         Polymer({
 
-            is: 'dnd-app',
+            is: 'snd-app',
 
             properties: {
                 page: {
@@ -163,11 +163,11 @@
             attached: function(e) {
                 // Lazyload the views as soon as the AppShell has been Painted
                 this.importHref(
-                    this.resolveUrl('dnd-sheet-list.html'), null, null, true);
+                    this.resolveUrl('snd-sheet-list.html'), null, null, true);
                 this.importHref(
-                    this.resolveUrl('dnd-sheet-create.html'), null, null, true);
+                    this.resolveUrl('snd-sheet-create.html'), null, null, true);
                 this.importHref(
-                    this.resolveUrl('dnd-sheet-detail.html'), null, null, true);
+                    this.resolveUrl('snd-sheet-detail.html'), null, null, true);
             },
 
             _changeRoute: function(e) {
