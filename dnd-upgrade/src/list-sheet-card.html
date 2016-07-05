@@ -12,6 +12,13 @@
 			paper-card {
 				margin-bottom: 16px;
 			}
+
+            .card-content-row {
+                 @apply(--layout-horizontal);
+                 @apply(--layout-justified);
+                 margin-top: -16px;
+                 margin-bottom: -16px;
+            }
         </style>
 
         <paper-card on-click="_sendRequestDetail">
@@ -70,7 +77,9 @@
         },
 
 		_sendRequestDetail: function(e){
-			
+            this.fire("requestDetail", {
+                index: this.index
+            });
 		}
 
     });

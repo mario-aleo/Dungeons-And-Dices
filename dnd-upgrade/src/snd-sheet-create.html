@@ -78,7 +78,7 @@
         <paper-dialog opened="{{ dialogOpen }}">
             <h2>Save New Sheet</h2>
             <p>Do you want to save this new sheet? </p>
-            <p>Keep in mind that you can't add or remove anything later.</p>
+            <p>Keep in mind that you can"t add or remove anything later.</p>
             <div class="buttons">
                 <paper-button dialog-dismiss>Decline</paper-button>
                 <paper-button dialog-confirm
@@ -93,7 +93,7 @@
 
         Polymer({
 
-            is: 'snd-sheet-create',
+            is: "snd-sheet-create",
 
             properties: {
                 tabSelected: {
@@ -180,7 +180,7 @@
                 // Pushing to SheetList and Cleaning the newSheet
                 this.push("sheetList.list", this.newSheet);
                 this.set("newSheet", this.baseSheet);
-                this.fire('requestChangeRoute', {
+                this.fire("requestChangeRoute", {
                     route: "/list"
                 });
             }

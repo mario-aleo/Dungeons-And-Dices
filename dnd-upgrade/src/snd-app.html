@@ -124,12 +124,14 @@
                             attr-for-selected="route"
                             selected="[[ page ]]">
                     <snd-sheet-list route="list"
-                                    sheet-list="{{ sheetList }}"></snd-sheet-list>
+                                    sheet-list="{{ sheetList }}"
+                                    sheet-detail="{{ sheetDetail }}"></snd-sheet-list>
                     <snd-sheet-create route="create"
                                       new-sheet="{{ newSheet }}"
                                       base-sheet="{{ baseSheet }}"
                                       sheet-list="{{ sheetList }}"></snd-sheet-create>
-                    <snd-sheet-detail route="detail"></snd-sheet-detail>
+                    <snd-sheet-detail route="detail"
+                                      sheet-detail="{{ sheetDetail }}"></snd-sheet-detail>
                 </iron-pages>
 
             </app-header-layout>
@@ -141,33 +143,38 @@
 
         Polymer({
 
-            is: 'snd-app',
+            is: "snd-app",
 
             properties: {
                 page: {
                     type: String,
                     notify: true,
                     reflectToAttribute: true,
-                    observer: '_pageChanged'
+                    observer: "_pageChanged"
                 }
             },
 
             observers: [
-                '_routePageChanged(routeData.page)'
+                "_routePageChanged(routeData.page)"
             ],
 
             listeners: {
-                'requestChangeRoute': '_changeRoute'
+                "requestChangeRoute": "_changeRoute"
             },
 
             attached: function(e) {
                 // Lazyload the views as soon as the AppShell has been Painted
                 this.importHref(
-                    this.resolveUrl('snd-sheet-list.html'), null, null, true);
+                    this.resolveUrl("snd-sheet-list.html"), null, null, true);
                 this.importHref(
-                    this.resolveUrl('snd-sheet-create.html'), null, null, true);
+                    this.resolveUrl("snd-sheet-create.html"), null, null, true);
                 this.importHref(
-                    this.resolveUrl('snd-sheet-detail.html'), null, null, true);
+                    this.resolveUrl("snd-sheet-detail.html"), null, null, true);
+
+                // If the application is reloaded, redirect to /list
+                if(this.page != "list"){
+                    this.set("route.path", "/list");
+                }
             },
 
             _changeRoute: function(e) {
@@ -175,7 +182,7 @@
             },
 
             _routePageChanged: function(page) {
-                this.page = page || 'list';
+                this.page = page || "list";
             },
 
             _pageChanged: function(page) {
