@@ -129,7 +129,7 @@
                 // SUM Status = baseValue + (levelModifier * level)
                 this.newSheet.statusList.forEach(
                     function(status, index){
-                        status.value = parseInt(_numberTypeCheck(status.baseValue)) + (parseFloat(_numberTypeCheck(status.levelModifier)) * parseInt(_numberTypeCheck(element.newSheet.level)));
+                        status.value = parseInt(element._numberTypeCheck(status.baseValue)) + (parseFloat(element._numberTypeCheck(status.levelModifier)) * parseInt(element._numberTypeCheck(element.newSheet.level)));
                     }
                 );
                 // SUM Resource = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
@@ -141,9 +141,9 @@
                                                             .Where(function (x) { return x.name == resource.statusBase })
                                                             .Select(function (x) { return x.value })
                                                             .ToString();
-                            resource.value = parseInt(parseInt(_numberTypeCheck(resource.baseValue)) + (parseFloat(_numberTypeCheck(resource.statusBaseModifier)) * parseInt(_numberTypeCheck(baseStatusValue))) + (parseFloat(_numberTypeCheck(resource.levelModifier)) * parseInt(_numberTypeCheck(element.newSheet.level))));
+                            resource.value = parseInt(parseInt(element._numberTypeCheck(resource.baseValue)) + (parseFloat(element._numberTypeCheck(resource.statusBaseModifier)) * parseInt(element._numberTypeCheck(baseStatusValue))) + (parseFloat(element._numberTypeCheck(resource.levelModifier)) * parseInt(element._numberTypeCheck(element.newSheet.level))));
                         } else{
-                            resource.value = parseInt(parseInt(_numberTypeCheck(resource.baseValue)) + (parseFloat(_numberTypeCheck(resource.levelModifier)) * parseInt(_numberTypeCheck(element.newSheet.level))));
+                            resource.value = parseInt(parseInt(element._numberTypeCheck(resource.baseValue)) + (parseFloat(element._numberTypeCheck(resource.levelModifier)) * parseInt(element._numberTypeCheck(element.newSheet.level))));
                         }
                     }
                 );
@@ -156,9 +156,9 @@
                                                             .Where(function (x) { return x.name == defense.statusBase })
                                                             .Select(function (x) { return x.value })
                                                             .ToString();
-                            defense.value = parseInt(parseInt(_numberTypeCheck(defense.baseValue)) + (parseFloat(_numberTypeCheck(defense.statusBaseModifier)) * parseInt(_numberTypeCheck(baseStatusValue))) + (parseFloat(_numberTypeCheck(defense.levelModifier)) * parseInt(_numberTypeCheck(element.newSheet.level))));
+                            defense.value = parseInt(parseInt(element._numberTypeCheck(defense.baseValue)) + (parseFloat(element._numberTypeCheck(defense.statusBaseModifier)) * parseInt(element._numberTypeCheck(baseStatusValue))) + (parseFloat(element._numberTypeCheck(defense.levelModifier)) * parseInt(element._numberTypeCheck(element.newSheet.level))));
                         } else{
-                            defense.value = parseInt(parseInt(_numberTypeCheck(defense.baseValue)) + (parseFloat(_numberTypeCheck(defense.levelModifier)) * parseInt(_numberTypeCheck(element.newSheet.level))));
+                            defense.value = parseInt(parseInt(element._numberTypeCheck(defense.baseValue)) + (parseFloat(element._numberTypeCheck(defense.levelModifier)) * parseInt(element._numberTypeCheck(element.newSheet.level))));
                         }
                     }
                 );
@@ -171,9 +171,9 @@
                                                             .Where(function (x) { return x.name == skill.statusBase })
                                                             .Select(function (x) { return x.value })
                                                             .ToString();
-                            skill.value = parseInt(parseInt(_numberTypeCheck(skill.baseValue)) + (parseFloat(_numberTypeCheck(skill.statusBaseModifier)) * parseInt(_numberTypeCheck(baseStatusValue))) + (parseFloat(_numberTypeCheck(skill.levelModifier)) * parseInt(_numberTypeCheck(element.newSheet.level))));
+                            skill.value = parseInt(parseInt(element._numberTypeCheck(skill.baseValue)) + (parseFloat(element._numberTypeCheck(skill.statusBaseModifier)) * parseInt(element._numberTypeCheck(baseStatusValue))) + (parseFloat(element._numberTypeCheck(skill.levelModifier)) * parseInt(element._numberTypeCheck(element.newSheet.level))));
                         } else{
-                            skill.value = parseInt(parseInt(_numberTypeCheck(skill.baseValue)) + (parseFloat(_numberTypeCheck(skill.levelModifier)) * parseInt(_numberTypeCheck(element.newSheet.level))));
+                            skill.value = parseInt(parseInt(element._numberTypeCheck(skill.baseValue)) + (parseFloat(element._numberTypeCheck(skill.levelModifier)) * parseInt(element._numberTypeCheck(element.newSheet.level))));
                         }
                     }
                 );
