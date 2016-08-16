@@ -195,6 +195,43 @@
                     return e
                 }
             }
+            
+            /* Deadlock Validation
+                var validation = [];
+                var hasError = false;
+                var validationFunction = function (element) {
+                    if(element.dependency.length !== 0) {
+                        element.dependency.forEach(function (dependency) {
+                            this.errorCounter = Enumerable.From(validation)
+                                .Where(function (x) { return x == dependency })
+                                .Select(function (x) { return x }).ToArray().length;
+                            if (this.errorCounter == 0) {
+                                validationFunction(dependency);
+                            } else {
+                                hasError = 1;
+                                return;
+                            }
+                        });
+                    } else {
+                        hasError = 0;
+                        return;
+                    }
+                }
+            
+                // Need to Verify  Each Status, Resource, Defense and Skill and SUM
+                var element = this;
+                var validation = [];
+                // SUM Status = baseValue + (levelModifier * level)
+                this.newSheet.statusList.forEach(
+                    function(status, index){                
+                        validationFunction(status);
+                        if (hasError == true) {
+                            throw "Dependency Loop at " + status.name;
+                        }
+                        status.value = parseInt(element._numberTypeCheck(status.baseValue)) + (parseFloat(element._numberTypeCheck(status.levelModifier)) * parseInt(element._numberTypeCheck(element.newSheet.level)));
+                    }
+                );
+            */
 
         });
 
