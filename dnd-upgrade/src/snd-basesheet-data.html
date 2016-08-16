@@ -25,6 +25,12 @@
         },
 
         _initializeBaseSheet: function(e){
+            /* Status Modifier Calc
+            if(value – minimumModifierValue < 0)
+  	    { (value - minimumModifierValue - 1) / 2 = result }
+            else 
+            { (value - minimumModifierValue )  /  2 = result }
+            */
             this.baseSheet = {
                 name: "",
                 job: "",
@@ -36,12 +42,21 @@
                         name: "Str/Dex/Int/...",
                         value: 0,
                         baseValue: 0,
+                        minimumModifierValue: 10,
                         levelModifier: 0,
                         persistBonus: 0,
-                        volatileBonus: 0
+                        volatileBonus: 0,
+                        dependency: [
+                            {
+                            	location: "None", 
+                            	name: "None", 
+                            	modifier: 1 
+                            	
+                            }
+                        ]
                     }
                 ],
-                // { *name: "vit", value: SUM, *baseValue: 10, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
+                // { *name: "Initiative", value: SUM, *baseValue: 10, *levelModifier: 0, persistBonus: 0, volatileBonus: 0, dependency: [{ location: 'skillsList', name: 'High Perception', modifier: 1 }] }], ...
                 resourcesList: [
                     {
                         name: "HP/MP/...",
@@ -51,7 +66,15 @@
                         statusBaseModifier: 1,
                         levelModifier: 0.5,
                         persistBonus: 0,
-                        volatileBonus: 0
+                        volatileBonus: 0,
+                        dependency: [
+                            {
+                            	location: "None", 
+                            	name: "None", 
+                            	modifier: 1 
+                            	
+                            }
+                        ]
                     }
                 ],
                 // { *name: "hp", value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
@@ -64,7 +87,15 @@
                         statusBaseModifier: 1,
                         levelModifier: 0.5,
                         persistBonus: 0,
-                        volatileBonus: 0
+                        volatileBonus: 0,
+                        dependency: [
+                            {
+                            	location: "None", 
+                            	name: "None", 
+                            	modifier: 1 
+                            	
+                            }
+                        ]
                     }
                 ],
                 // { *name: "armor", value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
@@ -79,7 +110,15 @@
                         statusBaseModifier: 1,
                         levelModifier: 0.5,
                         persistBonus: 0,
-                        volatileBonus: 0
+                        volatileBonus: 0,
+                        dependency: [
+                            {
+                            	location: "None", 
+                            	name: "None", 
+                            	modifier: 1 
+                            	
+                            }
+                        ]
                     }
                 ],
                 // { *name: "skillName", value: SUM, *baseValue: 10, *statusBase: Vit, *statusBaseModifier: 1, *levelModifier: 0, persistBonus: 0, volatileBonus: 0 }, ...
