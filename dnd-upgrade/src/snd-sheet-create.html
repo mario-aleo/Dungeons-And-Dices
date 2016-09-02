@@ -59,16 +59,25 @@
                               level="{{ newSheet.level }}"
                               system="{{ newSheet.system }}"></create-basic-tab>
 
-            <create-status-tab status-list="{{ newSheet.statusList }}"></create-status-tab>
+            <create-status-tab status-list="{{ newSheet.statusList }}"
+                               resources-list="[[ newSheet.resourcesList ]]"
+                               defenses-list="[[ newSheet.defensesList ]]"
+                               skills-list="[[ newSheet.skillsList ]]"></create-status-tab>
 
             <create-resources-tab resources-list="{{ newSheet.resourcesList }}"
-                                  status-list="[[ newSheet.statusList ]]"></create-resources-tab>
+                                  status-list="[[ newSheet.statusList ]]"
+                                  defenses-list="[[ newSheet.defensesList ]]"
+                                  skills-list="[[ newSheet.skillsList ]]"></create-resources-tab>
 
             <create-defenses-tab defenses-list="{{ newSheet.defensesList }}"
-                                 status-list="[[ newSheet.statusList ]]"></create-defenses-tab>
+                                 status-list="[[ newSheet.statusList ]]"
+                                 resources-list="[[ newSheet.resourcesList ]]"
+                                 skills-list="[[ newSheet.skillsList ]]"></create-defenses-tab>
 
             <create-skills-tab skills-list="{{ newSheet.skillsList }}"
-                               status-list="[[ newSheet.statusList ]]"></create-skills-tab>
+                               status-list="[[ newSheet.statusList ]]"
+                               resources-list="[[ newSheet.resourcesList ]]"
+                               defenses-list="[[ newSheet.defensesList ]]"></create-skills-tab>
 
         </iron-pages>
 
@@ -104,6 +113,9 @@
                 dialogOpen: {
                     type: Boolean
                 },
+                dependencyChain: {
+                    type: Array
+                },
                 newSheet: {
                     type: Object,
                     notify: true
@@ -126,6 +138,149 @@
                 this.dialogOpen = !this.dialogOpen;
             },
 
+            _numberTypeCheck: function(e){
+                if(isNaN(parseInt(e))){
+                    return "0"
+                } else {
+                    return e
+                }
+            },
+
+            _saveSheet: function(){
+                // Need to Verify  Each Status, Resource, Defense and Skill and SUM
+                var element = this;
+                parseInt(element._numberTypeCheck(element.newSheet.level));
+                // SUM Status = baseValue + (levelModifier * level)
+                this.newSheet.statusList.forEach(
+                    function(status){
+                        if (status.value === null) {
+                            element.dependencyChain.push(status);
+                            element._objectCalculation(status);
+                            element.dependencyChain = [];
+                        }
+                    }
+                );
+                // SUM Resource = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
+                // or if statusBase == None => SUM Resource = baseValue + (levelModifier * level)
+                this.newSheet.resourcesList.forEach(
+                    function(resource){
+                        if (resource.value === null) {
+                            element.dependencyChain.push(resource);
+                            element._objectCalculation(resource);
+                            element.dependencyChain = [];
+                        }
+                    }
+                );
+                // SUM Defense = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
+                // or if statusBase == None => SUM Defense = baseValue + (levelModifier * level)
+                this.newSheet.defensesList.forEach(
+                    function(defense){
+                        if (defense.value === null) {
+                            element.dependencyChain.push(defense);
+                            element._objectCalculation(defense);
+                            element.dependencyChain = [];
+                        }
+                    }
+                );
+                // SUM Skill = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
+                // or if statusBase == None => SUM Skill = baseValue + (levelModifier * level)
+                this.newSheet.skillsList.forEach(
+                    function(skill){
+                        if (skill.value === null) {
+                            element.dependencyChain.push(skill);
+                            element._objectCalculation(skill);
+                            element.dependencyChain = [];
+                        }
+                    }
+                );
+                // Pushing to SheetList and Cleaning the newSheet
+                this.push("sheetList.list", this.newSheet);
+                this.set("newSheet", this.baseSheet);
+                this.fire("requestChangeRoute", {
+                    route: "/list"
+                });
+            },
+
+            _objectCalculation: function(obj){
+                // Encapsulation
+                var element = this;
+                    // Verify if the Element have Dependency
+                    if(obj.dependencyList.length > 0){
+                        // Start Value Calculation
+                        this.dependencyElements = [];
+
+                        // Populate dependencyElements Array
+                        obj.dependencyListforEach(function (dependencyItem) {
+                            Object.keys(element.newSheet).forEach(function (key) {
+                                if (key == dependencyItem.location) {
+                                    element.newSheet[key].forEach(function (obj) {
+                                        if (obj.name == dependencyItem.name) {
+                                            this.dependencyElements.push(obj);
+                                        }
+                                    });
+                                }
+                            });
+                        });
+
+                        // Call _objectCalculation() for dependencyElements without Value
+                        Enumerable.From(this.dependencyElements)
+                            .Where(function (dependencyElement) {
+                                return dependencyElement.value === null;
+                            })
+                            .Select(function (dependencyElement) {
+                                return dependencyElement;
+                            })
+                            .ToArray().forEach(function (nullDependencyElement) {
+                                // Deadlock Exception Finder
+                                element.dependencyChain.forEach(function (dependencyChainItem) {
+                                    if (dependencyChainItem.name == nullDependencyElement.name) {
+                                        element.dependencyChain.push(nullDependencyElement);
+                                        console.log(dependencyChain);
+                                        throw "Deadlock Warlord";
+                                    } 
+                                });                
+                                element.dependencyChain.push(nullDependencyElement);
+                                element._objectCalculation(nullDependencyElement);
+                            });
+
+                        // Reset dependencyElements Array
+                        this.dependencyElements = [];
+                        obj.dependencyListforEach(function (dependencyItem) {
+                            Object.keys(element.newSheet).forEach(function (key) {
+                                if (key == dependencyItem.location) {
+                                    element.newSheet[key].forEach(function (obj) {
+                                        if (obj.name == dependencyItem.name) {
+                                            this.dependencyElements.push(obj);
+                                        }
+                                    });
+                                }
+                            });
+                        });
+
+                        // Init the Element Value
+                        //obj.value = obj.baseValue;
+                        obj.value = parseInt( parseInt(element._numberTypeCheck(obj.baseValue)) + parseInt(obj._numberTypeCheck(element.newSheet.level)) * parseFloat(element._numberTypeCheck(obj.levelModifier)) );
+                        console.log("Init " + obj.name + " the Element Value: " + obj.value);
+
+                        // Update the Element Value with the dependencyElements Values
+                        obj.dependencyListforEach(function (dependencyItem) {
+                            this.dependencyElements.forEach(function (dependencyElement){
+                                if (dependencyElement.name == dependencyItem.name) {
+                                    obj.value = parseInt( element._numberTypeCheck(obj.value) + parseInt(obj._numberTypeCheck(dependencyElement.value)) * parseFloat(element._numberTypeCheck(dependencyItem.modifier)) );
+                                    console.log("Update " + obj.name + " Value with " + dependencyElement.name +  " Value: " + obj.value);
+                                }
+                            });
+                        });
+                        // End Value Calculation
+                        console.log("End " + obj.name + " Value Calculation: " + obj.value);
+                    } else {
+                        obj.value = obj.baseValue;
+                        console.log("Init " + obj.name + " the Element Value: " + obj.value);
+                        console.log("End " + obj.name + " Value Calculation: " + obj.value);
+                    }
+            }
+
+            /*
             _saveSheet: function(e){
                 // Need to Verify  Each Status, Resource, Defense and Skill and SUM
                 var element = this;
@@ -186,53 +341,8 @@
                 this.fire("requestChangeRoute", {
                     route: "/list"
                 });
-            },
-
-            _numberTypeCheck: function(e){
-                if(isNaN(parseInt(e))){
-                    return "0"
-                } else {
-                    return e
-                }
             }
-            
-            /* Deadlock Validation
-                var validation = [];
-                var hasError = false;
-                var validationFunction = function (element) {
-                    if(element.dependency.length !== 0) {
-                        element.dependency.forEach(function (dependency) {
-                            this.errorCounter = Enumerable.From(validation)
-                                .Where(function (x) { return x == dependency })
-                                .Select(function (x) { return x }).ToArray().length;
-                            if (this.errorCounter == 0) {
-                                validationFunction(dependency);
-                            } else {
-                                hasError = 1;
-                                return;
-                            }
-                        });
-                    } else {
-                        hasError = 0;
-                        return;
-                    }
-                }
-            
-                // Need to Verify  Each Status, Resource, Defense and Skill and SUM
-                var element = this;
-                var validation = [];
-                // SUM Status = baseValue + (levelModifier * level)
-                this.newSheet.statusList.forEach(
-                    function(status, index){                
-                        validationFunction(status);
-                        if (hasError == true) {
-                            throw "Dependency Loop at " + status.name;
-                        }
-                        status.value = parseInt(element._numberTypeCheck(status.baseValue)) + (parseFloat(element._numberTypeCheck(status.levelModifier)) * parseInt(element._numberTypeCheck(element.newSheet.level)));
-                    }
-                );
             */
-
         });
 
     </script>
