@@ -1,0 +1,91 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-localstorage/iron-localstorage.html">
+
+<dom-module id="snd-newsheet-data">
+    <template>
+
+		<iron-localstorage name="SheetsNDicesNewSheet"
+                           value="{{ newSheet }}"
+                           on-iron-localstorage-load-empty="_initializeNewSheet"></iron-localstorage>
+
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+
+        is: "snd-newsheet-data",
+
+        properties: {
+            newSheet: {
+                type: Object,
+                notify: true
+            }
+        },
+
+        sheetBaseContructor: function () {
+            function SheetBase () {
+                this.name = "";
+                this.job = "";
+                this.race = "";
+                this.level = "1";
+                this.system = "",
+                this.statusList = [
+                    new Status()
+                ];
+                this.resourcesList = [
+                    new StatusBased("HP")
+                ];
+                this.defensesList = [
+                    new StatusBased("Armor")
+                ];
+                this.skillsList = [
+                    new StatusBased("Diplomacy")
+                ];
+                this.persistBonusList = [];
+                this.volatileBonusList = [];
+            }
+
+            function Dependency () {
+                this.location = "None";
+                this.name = "None";
+                this.modifier = 0;
+            }
+
+            function Status () {
+                this.name = "Strength";
+                this.value = 0;
+                this.baseValue = 0;
+                this.minimumModifierValue = 10;
+                this.levelModifier = 0;
+                this.persistBonus = 0;
+                this.volatileBonus = 0;
+                this.dependencyList = [
+                    new Dependency()
+                ];
+            }
+
+            function StatusBased (name) {
+                this.name = name;
+                this.value = 0;
+                this.baseValue = 0;
+                this.levelModifier = 0.5;
+                this.persistBonus = 0;
+                this.volatileBonus = 0;
+                this.dependencyList = [
+                    new Dependency()
+                ]
+            }
+
+            return new SheetBase();
+        },
+
+        _initializeNewSheet: function(e){
+            if(!this.newSheet){
+                this.set("newSheet", this.sheetBaseContructor());
+                console.log("Creating Sheet Assigned as Base Sheet");
+            }
+        }
+
+    });
+</script>

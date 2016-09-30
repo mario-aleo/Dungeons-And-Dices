@@ -1,0 +1,20 @@
+{
+    "entrypoint": "index.html",
+    "shell": "src/snd-app.html",
+    "fragments": [
+        "src/snd-sheetlist-data.html",
+        "src/snd-basesheet-data.html",
+        "src/snd-newsheet-data.html",
+        "src/snd-sheet-list.html",
+        "src/snd-sheet-create.html",
+        "src/snd-sheet-detail.html",
+        "src/list-sheet-card.html",
+        "src/create-basic-tab.html",
+        "src/create-status-tab.html",
+        "src/create-resources-tab.html",
+        "src/create-defenses-tab.html",
+        "src/create-skills-tab.html",
+        "src/create-status-card.html",
+        "src/create-statusbased-card.html"
+    ]
+}

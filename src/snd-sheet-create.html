@@ -1,0 +1,347 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="create-basic-tab.html">
+<link rel="import" href="create-status-tab.html">
+<link rel="import" href="create-resources-tab.html">
+<link rel="import" href="create-defenses-tab.html">
+<link rel="import" href="create-skills-tab.html">
+
+<dom-module id="snd-sheet-create">
+
+    <template>
+
+        <style>
+            :host {
+                display: block;
+            }
+
+            paper-tabs {
+                background-color: var(--primary-color);
+                color: #FFF;
+            }
+
+            paper-fab {
+                position: absolute;
+                top: 56px;
+                right: 16px;
+            }
+
+            iron-pages{
+                height: calc(100vh - 50px - 64px);
+                margin-top: 2px;
+                overflow: auto;
+            }
+        </style>
+
+        <paper-tabs noink
+                    scrollable
+                    hide-scroll-buttons
+                    selected="{{ tabSelected }}">
+            <paper-tab>Basic</paper-tab>
+            <paper-tab>Status</paper-tab>
+            <paper-tab>Resources</paper-tab>
+            <paper-tab>Defenses</paper-tab>
+            <paper-tab>Skills</paper-tab>
+        </paper-tabs>
+
+        <iron-pages selected="{{ tabSelected }}">
+
+            <create-basic-tab name="{{ newSheet.name }}"
+                              job="{{ newSheet.job }}"
+                              race="{{ newSheet.race }}"
+                              level="{{ newSheet.level }}"
+                              system="{{ newSheet.system }}"></create-basic-tab>
+
+            <create-status-tab status-list="{{ newSheet.statusList }}"
+                               resources-list="[[ newSheet.resourcesList ]]"
+                               defenses-list="[[ newSheet.defensesList ]]"
+                               skills-list="[[ newSheet.skillsList ]]"></create-status-tab>
+
+            <create-resources-tab resources-list="{{ newSheet.resourcesList }}"
+                                  status-list="[[ newSheet.statusList ]]"
+                                  defenses-list="[[ newSheet.defensesList ]]"
+                                  skills-list="[[ newSheet.skillsList ]]"></create-resources-tab>
+
+            <create-defenses-tab defenses-list="{{ newSheet.defensesList }}"
+                                 status-list="[[ newSheet.statusList ]]"
+                                 resources-list="[[ newSheet.resourcesList ]]"
+                                 skills-list="[[ newSheet.skillsList ]]"></create-defenses-tab>
+
+            <create-skills-tab skills-list="{{ newSheet.skillsList }}"
+                               status-list="[[ newSheet.statusList ]]"
+                               resources-list="[[ newSheet.resourcesList ]]"
+                               defenses-list="[[ newSheet.defensesList ]]"></create-skills-tab>
+
+        </iron-pages>
+
+        <paper-fab icon="save"
+                   on-click="_openSaveSheetDialog"></paper-fab>
+
+        <paper-dialog opened="{{ dialogOpen }}">
+            <h2>Save New Sheet</h2>
+            <p>Do you want to save this new sheet? </p>
+            <p>Keep in mind that you can"t add or remove anything later.</p>
+            <div class="buttons">
+                <paper-button dialog-dismiss>Decline</paper-button>
+                <paper-button dialog-confirm
+                              autofocus
+                              on-click="_saveSheet">Accept</paper-button>
+            </div>
+        </paper-dialog>
+
+    </template>
+
+    <script>
+
+        Polymer({
+
+            is: "snd-sheet-create",
+
+            properties: {
+                tabSelected: {
+                    type: String,
+                    value: "0",
+                    notify: true
+                },
+                dialogOpen: {
+                    type: Boolean
+                },
+                dependencyChain: {
+                    type: Array,
+                    value: []
+                },
+                sheetList: {
+                    type: Object,
+                    notify: true
+                },
+                newSheet: {
+                    type: Object,
+                    notify: true
+                }
+            },
+
+            attached: function (e) {
+                Polymer.updateStyles();
+            },
+
+            _openSaveSheetDialog: function (e) {
+                this.dialogOpen = !this.dialogOpen;
+            },
+
+            _numberTypeCheck: function (e) {
+                if (isNaN(parseInt(e))) {
+                    return "0"
+                } else {
+                    return e
+                }
+            },
+
+            sheetBaseContructor: function () {
+                function SheetBase () {
+                    this.name = "";
+                    this.job = "";
+                    this.race = "";
+                    this.level = "1";
+                    this.system = "",
+                    this.statusList = [
+                        new Status()
+                    ];
+                    this.resourcesList = [
+                        new StatusBased("HP")
+                    ];
+                    this.defensesList = [
+                        new StatusBased("Armor")
+                    ];
+                    this.skillsList = [
+                        new StatusBased("Diplomacy")
+                    ];
+                    this.persistBonusList = [];
+                    this.volatileBonusList = [];
+                }
+
+                function Dependency () {
+                    this.location = "None";
+                    this.name = "None";
+                    this.modifier = 0;
+                }
+
+                function Status () {
+                    this.name = "Strength";
+                    this.value = 0;
+                    this.baseValue = 0;
+                    this.minimumModifierValue = 10;
+                    this.levelModifier = 0;
+                    this.persistBonus = 0;
+                    this.volatileBonus = 0;
+                    this.dependencyList = [
+                        new Dependency()
+                    ];
+                }
+
+                function StatusBased (name) {
+                    this.name = name;
+                    this.value = 0;
+                    this.baseValue = 0;
+                    this.levelModifier = 0.5;
+                    this.persistBonus = 0;
+                    this.volatileBonus = 0;
+                    this.dependencyList = [
+                        new Dependency()
+                    ]
+                }
+
+                return new SheetBase();
+            },
+
+            _saveSheet: function () {
+                // Need to Verify  Each Status, Resource, Defense and Skill and SUM
+                var element = this;
+                parseInt(element._numberTypeCheck(element.newSheet.level));
+
+                // SUM Status = baseValue + (levelModifier * level)
+                this.newSheet.statusList.forEach(
+                    function (status) {
+                        if (status.value === 0) {
+                            element.dependencyChain.push(status);
+                            element._objectCalculation(status);
+                            element.dependencyChain = [];
+                        }
+                    }
+                );
+
+                // SUM Resource = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
+                // or if statusBase == None => SUM Resource = baseValue + (levelModifier * level)
+                this.newSheet.resourcesList.forEach(
+                    function (resource) {
+                        if (resource.value === 0) {
+                            element.dependencyChain.push(resource);
+                            element._objectCalculation(resource);
+                            element.dependencyChain = [];
+                        }
+                    }
+                );
+
+                // SUM Defense = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
+                // or if statusBase == None => SUM Defense = baseValue + (levelModifier * level)
+                this.newSheet.defensesList.forEach(
+                    function (defense) {
+                        if (defense.value === 0) {
+                            element.dependencyChain.push(defense);
+                            element._objectCalculation(defense);
+                            element.dependencyChain = [];
+                        }
+                    }
+                );
+
+                // SUM Skill = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
+                // or if statusBase == None => SUM Skill = baseValue + (levelModifier * level)
+                this.newSheet.skillsList.forEach(
+                    function (skill) {
+                        if (skill.value === 0) {
+                            element.dependencyChain.push(skill);
+                            element._objectCalculation(skill);
+                            element.dependencyChain = [];
+                        }
+                    }
+                );
+
+                // Pushing to SheetList and Cleaning the newSheet
+                this.push("sheetList.list", this.newSheet);
+
+                this.set("newSheet", this.sheetBaseContructor());
+
+                this.fire("requestChangeRoute", {
+                    route: "/list"
+                });
+            },
+
+            _objectCalculation: function (obj) {
+                // Encapsulation
+                var element = this;
+                    // Verify if the Element have Dependency
+                    if(obj.dependencyList.length > 0){
+                        // Start Value Calculation
+                        this.dependencyElements = [];
+
+                        // Populate dependencyElements Array
+                        obj.dependencyList.forEach(function (dependencyItem) {
+                            Object.keys(element.newSheet).forEach(function (key) {
+                                if (key == dependencyItem.location) {
+                                    element.newSheet[key].forEach(function (obj) {
+                                        if (obj.name == dependencyItem.name) {
+                                            element.dependencyElements.push(obj);
+                                        }
+                                    });
+                                }
+                            });
+                        });
+
+                        // Call _objectCalculation() for dependencyElements without Value
+                        Enumerable.From(element.dependencyElements)
+                            .Where(function (dependencyElement) {
+                                return dependencyElement.value === 0;
+                            })
+                            .Select(function (dependencyElement) {
+                                return dependencyElement;
+                            })
+                            .ToArray().forEach(function (nullDependencyElement) {
+                                // Deadlock Exception Finder
+                                element.dependencyChain.forEach(function (dependencyChainItem) {
+                                    if (dependencyChainItem.name == nullDependencyElement.name) {
+                                        element.dependencyChain.push(nullDependencyElement);
+                                        console.log(dependencyChain);
+                                        throw "Deadlock Warlord";
+                                    }
+                                });
+                                element.dependencyChain.push(nullDependencyElement);
+                                element._objectCalculation(nullDependencyElement);
+                            });
+
+                        // Reset dependencyElements Array
+                        element.dependencyElements = [];
+                        obj.dependencyList.forEach(function (dependencyItem) {
+                            Object.keys(element.newSheet).forEach(function (key) {
+                                if (key == dependencyItem.location) {
+                                    element.newSheet[key].forEach(function (obj) {
+                                        if (obj.name == dependencyItem.name) {
+                                            element.dependencyElements.push(obj);
+                                        }
+                                    });
+                                }
+                            });
+                        });
+
+                        // Init the Element Value
+                        obj.value = parseInt( parseInt(element._numberTypeCheck(obj.baseValue)) + parseInt(element._numberTypeCheck(element.newSheet.level)) * parseFloat(element._numberTypeCheck(obj.levelModifier)) );
+                        console.log("Init " + obj.name + " the Element Value: " + obj.value);
+
+                        // Update the Element Value with the dependencyElements Values
+                        obj.dependencyList.forEach(function (dependencyItem) {
+                            element.dependencyElements.forEach(function (dependencyElement){
+                                if (dependencyElement.name == dependencyItem.name) {
+                                    obj.value = parseInt( element._numberTypeCheck(obj.value) + parseInt(element._numberTypeCheck(dependencyElement.value)) * parseFloat(element._numberTypeCheck(dependencyItem.value)) );
+                                    console.log("Update " + obj.name + " Value with " + dependencyElement.name +  " Value: " + obj.value);
+                                }
+                            });
+                        });
+                        // End Value Calculation
+                        element.dependencyElements = [];
+                        console.log("End " + obj.name + " Value Calculation: " + obj.value);
+                    } else {
+                        obj.value = obj.baseValue;
+                        console.log("Init " + obj.name + " the Element Value: " + obj.value);
+                        console.log("End " + obj.name + " Value Calculation: " + obj.value);
+                    }
+            }
+        });
+
+    </script>
+
+</dom-module>

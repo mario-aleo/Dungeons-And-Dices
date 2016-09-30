@@ -1,0 +1,86 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/paper-input/paper-input-container.html">
+
+<dom-module id="create-basic-tab">
+    <template>
+        <style>
+            :host {
+                display: block;
+                height: calc(100% - 16px);
+                padding: 8px;
+                @apply(--layout-vertical);
+            }
+        </style>
+
+        <paper-card>
+
+            <div class="card-content">
+
+                <paper-input-container>
+                    <label>Name</label>
+                    <input is="iron-input"
+                           bind-value="{{name}}">
+                </paper-input-container>
+
+                <paper-input-container>
+                    <label>Class</label>
+                    <input is="iron-input"
+                           bind-value="{{job}}">
+                </paper-input-container>
+
+                <paper-input-container>
+                    <label>Race</label>
+                    <input is="iron-input"
+                           bind-value="{{race}}">
+                </paper-input-container>
+
+                <paper-input-container>
+                    <label>Level</label>
+                    <input is="iron-input"
+                           bind-value="{{level}}">
+                </paper-input-container>
+
+                <paper-input-container>
+                    <label>System</label>
+                    <input is="iron-input"
+                           bind-value="{{system}}">
+                </paper-input-container>
+
+            </div>
+
+        </paper-card>
+
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+
+        is: "create-basic-tab",
+
+        properties: {
+            name: {
+                type: String,
+                notify: true
+            },
+            job: {
+                type: String,
+                notify: true
+            },
+            race: {
+                type: String,
+                notify: true
+            },
+            level: {
+                type: Number,
+                notify: true
+            },
+            system: {
+                type: String,
+                notify: true
+            }
+        }
+
+    });
+</script>

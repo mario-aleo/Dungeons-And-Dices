@@ -1,0 +1,34 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-localstorage/iron-localstorage.html">
+
+<dom-module id="snd-sheetlist-data">
+    <template>
+
+		<iron-localstorage name="SheetsNDicesSheetList"
+                           value="{{ sheetList }}"
+                           on-iron-localstorage-load-empty="_initializeSheetList"></iron-localstorage>
+
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+
+        is: "snd-sheetlist-data",
+
+        properties: {
+            sheetList: {
+                type: Object,
+                notify: true,
+                reflectToAttribute: true
+            }
+        },
+
+        _initializeSheetList: function(e){
+            this.sheetList = {
+                list: []
+            };
+        }
+
+    });
+</script>
