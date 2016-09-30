@@ -1,10 +1,13 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
-<link rel="import" href="../bower_components/paper-input/paper-input-container.html">
-<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/paper-input/paper-input-container.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+
+<link rel="import" href="create-dependency-element.html">
 
 <dom-module id="create-statusbased-card">
     <template>
@@ -14,12 +17,13 @@
                 @apply(--layout-vertical);
             }
 
-            paper-dropdown-menu {
-                width: 100%;
-            }
-
             paper-card {
                 margin-bottom: 16px;
+            }
+
+            .dependency-add-button {
+                margin: 8px 0 0 0;
+                color: var(--secondary-color);
             }
 
             .card-actions-button {
@@ -41,29 +45,25 @@
 						   bind-value="{{ baseValue }}">
 				</paper-input-container>
 
-				<paper-dropdown-menu label="Status Modificador">
-					<paper-listbox class="dropdown-content"
-								   attr-for-selected="status-name"
-								   selected="{{ statusBase }}">
-						<paper-item status-name="None">None</paper-item>
-						<template is="dom-repeat"
-								  items="{{ statusList }}">
-							<paper-item status-name="{{ item.name }}">{{ item.name }}</paper-item>
-						</template>
-					</paper-listbox>
-				</paper-dropdown-menu>
-
-				<paper-input-container>
-					<label>Value Modifier per Status Point</label>
-					<input is="iron-input"
-						   bind-value="{{ statusBaseModifier }}">
-				</paper-input-container>
-
 				<paper-input-container>
 					<label>Value Modifier per Level</label>
 					<input is="iron-input"
 						   bind-value="{{ levelModifier }}">
 				</paper-input-container>
+
+                <template is="dom-repeat"
+                          items="{{ dependencyList }}">
+                    <create-dependency-element dependency-location="{{ item.location }}"
+                                               dependency-value="{{ item.value }}"
+                                               dependency-name="{{ item.name }}"
+                                               resources-list="[[ resourcesList ]]"
+                                               defenses-list="[[ defensesList ]]"
+                                               status-list="[[ statusList ]]"
+                                               skills-list="[[ skillsList ]]"></create-dependency-element>
+                </template>
+
+                <paper-button class="dependency-add-button"
+                              on-click="_addDependency">Add Dependency</paper-button>
 			</div>
             <div class="card-actions">
                 <paper-button class="card-actions-button"
@@ -90,17 +90,12 @@
                 type: String,
                 notify: true
             },
-            statusBase: {
-                type: String,
-                value: "None",
-                notify: true
-            },
-            statusBaseModifier: {
-                type: String,
-                notify: true
-            },
             levelModifier: {
                 type: String,
+                notify: true
+            },
+            dependencyList: {
+                type: Array,
                 notify: true
             },
 			statusList: {
@@ -115,6 +110,24 @@
             skillsList: {
                 type: Array
             }
+        },
+
+        listeners: {
+            "requestDeleteDependency": "_deleteDependency"
+        },
+
+        _addDependency: function (e) {
+            function Dependency () {
+                this.location = "None";
+                this.name = "None";
+                this.modifier = 0;
+            }
+
+            this.push("dependencyList", new Dependency());
+        },
+
+        _deleteDependency: function (e) {
+            this.splice("dependencyList", e.detail.index, 1);
         },
 
         _requestDeleteCard: function(e){

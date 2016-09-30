@@ -5,13 +5,14 @@
 <link rel="import" href="create-statusbased-card.html">
 
 <dom-module id="create-defenses-tab">
+
     <template>
 
         <style>
             :host {
                 display: block;
                 @apply(--layout-vertical);
-                padding: 16px;
+                padding: 16px 0;
             }
 
             paper-fab {
@@ -25,12 +26,14 @@
                   items="{{ defensesList }}">
 
             <create-statusbased-card index="{{ index }}"
-                                  name="{{ item.name }}"
-                                  base-value="{{ item.baseValue }}"
-                                  status-base="{{ item.statusBase }}"
-                                  status-base-modifier="{{ item.statusBaseModifier }}"
-                                  level-modifier="{{ item.levelModifier }}"
-                                  status-list="[[ statusList ]]"></create-statusbased-card>
+                                     name="{{ item.name }}"
+                                     base-value="{{ item.baseValue }}"
+                                     level-modifier="{{ item.levelModifier }}"
+                                     dependency-list="{{ item.dependencyList }}"
+                                     status-list="[[ statusList ]]"
+                                     resources-list="[[ resourcesList ]]"
+                                     defenses-list="[[ defensesList ]]"
+                                     skills-list="[[ skillsList ]]"></create-statusbased-card>
 
         </template>
 
@@ -38,6 +41,7 @@
                    on-click="_newDefenses"></paper-fab>
 
     </template>
+    
 </dom-module>
 
 <script>
@@ -46,11 +50,17 @@
         is: "create-defenses-tab",
 
         properties: {
+            statusList: {
+                type: Array
+            },
+            resourcesList: {
+                type: Array
+            },
             defensesList: {
                 type: Array,
                 notify: true
             },
-            statusList: {
+            skillsList: {
                 type: Array
             }
         },
@@ -59,20 +69,29 @@
             "requestDeleteCard": "_deleteDefenses"
         },
 
-        _newDefenses: function(e){
-            this.push("defensesList", {
-				name: "Armor/Magic Resistence",
-				value: 0,
-				baseValue: 0,
-				statusBase: "None",
-				statusBaseModifier: 1,
-				levelModifier: 0.5,
-				persistBonus: 0,
-				volatileBonus: 0
-			});
+        _newDefenses: function (e) {
+            function Dependency () {
+                this.location = "None";
+                this.name = "None";
+                this.modifier = 0;
+            }
+
+            function StatusBased (name) {
+                this.name = name;
+                this.value = 0;
+                this.baseValue = 0;
+                this.levelModifier = 0.5;
+                this.persistBonus = 0;
+                this.volatileBonus = 0;
+                this.dependencyList = [
+                    new Dependency()
+                ]
+            }
+
+            this.push("defensesList", new StatusBased("Armor"));
         },
 
-        _deleteDefenses: function(e){
+        _deleteDefenses: function (e) {
             this.splice("defensesList", e.detail.index, 1);
         }
 

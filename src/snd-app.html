@@ -14,7 +14,6 @@
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 
 <link rel="import" href="snd-sheetlist-data.html">
-<link rel="import" href="snd-newsheet-data.html">
 
 <dom-module id="snd-app">
 
@@ -89,8 +88,6 @@
 
         <snd-sheetlist-data sheet-list="{{ sheetList }}"></snd-sheetlist-data>
 
-        <snd-newsheet-data new-sheet="{{ newSheet }}"></snd-newsheet-data>
-
         <app-drawer-layout fullbleed
                            force-narrow>
             <!-- Drawer content -->
@@ -125,8 +122,7 @@
                                     sheet-list="{{ sheetList }}"
                                     sheet-detail="{{ sheetDetail }}"></snd-sheet-list>
                     <snd-sheet-create route="create"
-                                      sheet-list="{{ sheetList }}"
-                                      new-sheet="{{ newSheet }}"></snd-sheet-create>
+                                      sheet-list="{{ sheetList }}"></snd-sheet-create>
                     <snd-sheet-detail route="detail"
                                       sheet-detail="{{ sheetDetail }}"></snd-sheet-detail>
                 </iron-pages>

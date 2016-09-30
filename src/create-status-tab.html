@@ -30,7 +30,7 @@
                                 base-value="{{ item.baseValue }}"
                                 level-modifier="{{ item.levelModifier }}"
                                 dependency-list="{{ item.dependencyList }}"
-                                status-list="{{ statusList }}"
+                                status-list="[[ statusList ]]"
                                 resources-list="[[ resourcesList ]]"
                                 defenses-list="[[ defensesList ]]"
                                 skills-list="[[ skillsList ]]"></create-status-card>
@@ -69,25 +69,30 @@
             "requestDeleteStatus": "_deleteStatus"
         },
 
-        _newStatus: function(e){
-            this.push("statusList", {
-                name: "Str/Dex/Int",
-                value: 0,
-                baseValue: 0,
-                levelModifier: 0,
-                dependencyList: [
-                    {
-                        location: "statusList",
-                        name: null,
-                        value: 0
-                    }
-                ],
-                persistBonus: 0,
-                volatileBonus: 0
-            });
+        _newStatus: function (e) {
+            function Dependency () {
+                this.location = "None";
+                this.name = "None";
+                this.modifier = 0;
+            }
+
+            function Status () {
+                this.name = "Strength";
+                this.value = 0;
+                this.baseValue = 0;
+                this.minimumModifierValue = 10;
+                this.levelModifier = 0;
+                this.persistBonus = 0;
+                this.volatileBonus = 0;
+                this.dependencyList = [
+                    new Dependency()
+                ];
+            }
+
+            this.push("statusList", new Status());
         },
 
-        _deleteStatus: function(e){
+        _deleteStatus: function (e) {
             this.splice("statusList", e.detail.index, 1);
         }
 

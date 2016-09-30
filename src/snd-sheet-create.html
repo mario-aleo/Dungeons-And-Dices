@@ -7,6 +7,8 @@
 <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 
+<link rel="import" href="snd-newsheet-data.html">
+
 <link rel="import" href="create-basic-tab.html">
 <link rel="import" href="create-status-tab.html">
 <link rel="import" href="create-resources-tab.html">
@@ -39,6 +41,8 @@
                 overflow: auto;
             }
         </style>
+
+        <snd-newsheet-data new-sheet="{{ newSheet }}"></snd-newsheet-data>
 
         <paper-tabs noink
                     scrollable

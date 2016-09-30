@@ -1,0 +1,117 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/paper-input/paper-input-container.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+
+<dom-module id="create-dependency-element">
+    <template>
+        <style>
+            :host {
+                display: block;
+                position: relative;
+                width: 100%;
+                @apply(--layout-horizontal);
+            }
+
+            .dependency-name {
+                margin: 0 8px;
+            }
+
+            .dependency-remove-button {
+                min-width: 40px;
+                color: #F44336;
+                @apply(--layout-self-end);
+            }
+        </style>
+
+        <paper-dropdown-menu label="Type"
+                             class="dependency-location">
+            <paper-listbox class="dropdown-content"
+                           attr-for-selected="dependency-location"
+                           selected="{{ dependencyLocation }}"
+                           on-iron-select="_dependencyLocationChanged">
+                <paper-item dependency-location="None">None</paper-item>
+                <paper-item dependency-location="statusList">Status</paper-item>
+                <paper-item dependency-location="resourcesList">Resource</paper-item>
+                <paper-item dependency-location="defensesList">Defense</paper-item>
+                <paper-item dependency-location="skillsList">Skill</paper-item>
+            </paper-listbox>
+        </paper-dropdown-menu>
+
+        <paper-dropdown-menu label="Modifier"
+                             class="dependency-name">
+            <paper-listbox id="dependencyNameDropdown"
+                           class="dropdown-content dependency-name-dropdown"
+                           attr-for-selected="modifier-name"
+                           selected="{{ dependencyName }}">
+                <template id="dependencyNameList" is="dom-repeat" items="{{ modifierNameList }}">
+                    <paper-item modifier-name="{{ item.name }}">{{ item.name }}</paper-item>
+                </template>
+            </paper-listbox>
+        </paper-dropdown-menu>
+
+        <paper-input-container class="dependency-value">
+            <label>Value</label>
+            <input is="iron-input"
+                   bind-value="{{ dependencyValue }}">
+        </paper-input-container>
+
+        <paper-icon-button class="dependency-remove-button"
+                           icon="remove"
+                           on-click="_requestDeleteDependency"></paper-icon-button>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+
+        is: "create-dependency-element",
+
+        properties: {
+            index: {
+                type: Number
+            },
+            dependencyLocation: {
+                type: String,
+                notify: true
+            },
+            dependencyName: {
+                type: String,
+                notify: true
+            },
+            dependencyValue: {
+                type: String,
+                notify: true
+            },
+            statusList: {
+                type: Array
+            },
+            resourcesList: {
+                type: Array
+            },
+            defensesList: {
+                type: Array
+            },
+            skillsList: {
+                type: Array
+            }
+        },
+
+        _dependencyLocationChanged: function (e) {
+            this.set("modifierNameList", Object.assign([], this[this.dependencyLocation]));
+            this.$.dependencyNameDropdown.selected = null;
+            this.$.dependencyNameList.render();
+
+        },
+
+        _requestDeleteDependency: function (e) {
+            this.fire("requestDeleteDependency", {
+                index: this.index
+            });
+        }
+
+    });
+</script>

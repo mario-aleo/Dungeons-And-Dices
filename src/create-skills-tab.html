@@ -5,13 +5,14 @@
 <link rel="import" href="create-statusbased-card.html">
 
 <dom-module id="create-skills-tab">
+
     <template>
 
         <style>
             :host {
                 display: block;
                 @apply(--layout-vertical);
-                padding: 16px;
+                padding: 16px 0;
             }
 
             paper-fab {
@@ -25,12 +26,14 @@
                   items="{{ skillsList }}">
 
             <create-statusbased-card index="{{ index }}"
-                                name="{{ item.name }}"
-                                base-value="{{ item.baseValue }}"
-                                status-base="{{ item.statusBase }}"
-                                status-base-modifier="{{ item.statusBaseModifier }}"
-                                level-modifier="{{ item.levelModifier }}"
-                                status-list="[[ statusList ]]"></create-statusbased-card>
+                                     name="{{ item.name }}"
+                                     base-value="{{ item.baseValue }}"
+                                     level-modifier="{{ item.levelModifier }}"
+                                     dependency-list="{{ item.dependencyList }}"
+                                     status-list="[[ statusList ]]"
+                                     resources-list="[[ resourcesList ]]"
+                                     defenses-list="[[ defensesList ]]"
+                                     skills-list="[[ skillsList ]]"></create-statusbased-card>
 
         </template>
 
@@ -38,6 +41,7 @@
                    on-click="_newSkills"></paper-fab>
 
     </template>
+    
 </dom-module>
 
 <script>
@@ -46,12 +50,18 @@
         is: "create-skills-tab",
 
         properties: {
+            statusList: {
+                type: Array
+            },
+            resourcesList: {
+                type: Array
+            },
+            defensesList: {
+                type: Array
+            },
             skillsList: {
                 type: Array,
                 notify: true
-            },
-            statusList: {
-                type: Array
             }
         },
 
@@ -59,20 +69,29 @@
             "requestDeleteCard": "_deleteSkills"
         },
 
-        _newSkills: function(e){
-            this.push("skillsList", {
-                name: "Diplomacy/Heal",
-                value: 0,
-                baseValue: 10,
-                statusBase: "None",
-                statusBaseModifier: 1,
-                levelModifier: 0.5,
-                persistBonus: 0,
-                volatileBonus: 0
-            });
+        _newSkills: function (e) {
+            function Dependency () {
+                this.location = "None";
+                this.name = "None";
+                this.modifier = 0;
+            }
+
+            function StatusBased (name) {
+                this.name = name;
+                this.value = 0;
+                this.baseValue = 0;
+                this.levelModifier = 0.5;
+                this.persistBonus = 0;
+                this.volatileBonus = 0;
+                this.dependencyList = [
+                    new Dependency()
+                ]
+            }
+
+            this.push("skillsList", new StatusBased("Diplomacy"));
         },
 
-        _deleteSkills: function(e){
+        _deleteSkills: function (e) {
             this.splice("skillsList", e.detail.index, 1);
         }
 

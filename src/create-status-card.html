@@ -1,12 +1,13 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
-<link rel="import" href="../bower_components/paper-input/paper-input-container.html">
-<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<!--link rel="import" href="../bower_components/paper-fab/paper-fab.html"-->
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/paper-input/paper-input-container.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+
+<link rel="import" href="create-dependency-element.html">
 
 <dom-module id="create-status-card">
     <template>
@@ -25,29 +26,8 @@
                 color: var(--secondary-color);
             }
 
-            .dependency-remove-button {
-                @apply(--layout-self-end);
-                min-width: 40px;
-                color: #F44336;
-            }
-
             .card-actions-button {
                 color: #F44336;
-            }
-
-            .dependency-container {
-                position: relative;
-                @apply(--layout-horizontal);
-            }
-
-            .dependency-content:nth-child(1) {
-                margin-right: 8px;
-            }
-            .dependency-content:nth-child(2) {
-                margin: 0 8px;
-            }
-            .dependency-content:nth-child(3) {
-                margin: 0 8px;
             }
         </style>
 
@@ -71,75 +51,17 @@
                            bind-value="{{ levelModifier }}">
                 </paper-input-container>
 
-                
                 <template is="dom-repeat"
                           items="{{ dependencyList }}">
-                    <div class="dependency-container">
-
-                        <paper-dropdown-menu label="Type"
-                                             class="dependency-content">
-                            <paper-listbox class="dropdown-content"
-                                           attr-for-selected="modifier-type"
-                                           selected="{{ item.location }}"
-                                           id="{{ index }}"
-                                           on-iron-select="_dependencyLocationChanged">
-                                <paper-item modifier-type="None">None</paper-item>
-                                <paper-item modifier-type="statusList">Status</paper-item>
-                                <paper-item modifier-type="resourcesList">Resource</paper-item>
-                                <paper-item modifier-type="defensesList">Defense</paper-item>
-                                <paper-item modifier-type="skillsList">Skill</paper-item>
-                            </paper-listbox>
-                        </paper-dropdown-menu>
-
-                        <paper-dropdown-menu label="Modifier"
-                                             class="dependency-content">
-                            <paper-listbox class="dropdown-content"
-                                           id="name{{ index }}"
-                                           attr-for-selected="modifier-name"
-                                           selected="{{ item.name }}">
-                                <template is="dom-if"
-                                          if="{{ _locationIsStatusList(item.location) }}">
-                                    <template is="dom-repeat"
-                                              items="{{ statusList }}">
-                                        <paper-item modifier-name="{{ item.name }}">{{ item.name }}</paper-item>
-                                    </template>
-                                </template>
-                                <template is="dom-if"
-                                          if="{{ _locationIsResourcesList(item.location) }}">
-                                    <template is="dom-repeat"
-                                              items="{{ resourcesList }}">
-                                        <paper-item modifier-name="{{ item.name }}">{{ item.name }}</paper-item>
-                                    </template>
-                                </template>
-                                <template is="dom-if"
-                                          if="{{ _locationIsDefensesList(item.location) }}">
-                                    <template is="dom-repeat"
-                                              items="{{ defensesList }}">
-                                        <paper-item modifier-name="{{ item.name }}">{{ item.name }}</paper-item>
-                                    </template>
-                                </template>
-                                <template is="dom-if"
-                                          if="{{ _locationIsSkillsList(item.location) }}">
-                                    <template is="dom-repeat"
-                                              items="{{ skillsList }}">
-                                        <paper-item modifier-name="{{ item.name }}">{{ item.name }}</paper-item>
-                                    </template>
-                                </template>
-                            </paper-listbox>
-                        </paper-dropdown-menu>
-
-                        <paper-input-container class="dependency-content">
-                            <label>Value</label>
-                            <input is="iron-input"
-                                   bind-value="{{ item.value }}">
-                        </paper-input-container>
-
-                        <paper-icon-button class="dependency-remove-button"
-                                           icon="remove"
-                                           on-click="_deleteDependency"></paper-icon-button>
-
-                    </div>
+                    <create-dependency-element dependency-location="{{ item.location }}"
+                                               dependency-value="{{ item.value }}"
+                                               dependency-name="{{ item.name }}"
+                                               resources-list="[[ resourcesList ]]"
+                                               defenses-list="[[ defensesList ]]"
+                                               status-list="[[ statusList ]]"
+                                               skills-list="[[ skillsList ]]"></create-dependency-element>
                 </template>
+
                 <paper-button class="dependency-add-button"
                               on-click="_addDependency">Add Dependency</paper-button>
             </div>
@@ -177,8 +99,7 @@
                 notify: true
             },
 			statusList: {
-				type: Array,
-                notify: true
+				type: Array
 			},
             resourcesList: {
                 type: Array
@@ -191,44 +112,28 @@
             }
         },
 
-        _addDependency: function(e){
-            this.push("dependencyList", {
-                location: "None",
-                name: null,
-                value: null
-            });
+        listeners: {
+            "requestDeleteDependency": "_deleteDependency"
         },
 
-        _deleteDependency: function(e){
-            this.splice("dependencyList", e.model.__data__.index, 1);
+        _addDependency: function (e) {
+            function Dependency () {
+                this.location = "None";
+                this.name = "None";
+                this.modifier = 0;
+            }
+
+            this.push("dependencyList", new Dependency());
         },
 
-        _requestDeleteStatus: function(e){
+        _deleteDependency: function (e) {
+            this.splice("dependencyList", e.detail.index, 1);
+        },
+
+        _requestDeleteStatus: function (e) {
             this.fire("requestDeleteStatus", {
                 index: this.index
             });
-        },
-
-        _dependencyLocationChanged: function(e, detail){
-            if(this.$$('#name' + detail.item.parentElement.id) !== null){
-                this.$$('#name' + detail.item.parentElement.id).selected = null;
-            }
-        },
-
-        _locationIsStatusList: function(type){
-            return type == 'statusList';
-        },
-
-        _locationIsResourcesList: function(type){
-            return type == 'resourcesList';
-        },
-
-        _locationIsDefensesList: function(type){
-            return type == 'defensesList';
-        },
-
-        _locationIsSkillsList: function(type){
-            return type == 'skillsList';
-        },
+        }
     });
 </script>
