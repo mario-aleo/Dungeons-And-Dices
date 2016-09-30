@@ -1,71 +1,75 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
     <head>
         <meta charset="utf-8">
 
         <!-- Mobile -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
 
-        <!-- Web App -->
-        <link rel="manifest" href="../manifest.json">
+        <title>Sheets 'n Dices</title>
+        <meta name="description" content="The Generic RPG Sheet Manager">
+
+        <link rel="shortcut icon" sizes="72x72" href="/images/icon_72.png">
+
+        <meta name="theme-color" content="#673AB7">
+
+        <link rel="manifest" href="/manifest.json">
 
         <!-- Chrome / Android -->
         <meta name="mobile-web-app-capable" content="yes">
-        <link rel="icon" sizes="32x32" href="assets/img/favicon-32.png">
 
         <!-- Safari / iOS -->
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <meta name="apple-mobile-web-app-title" content="Dungeon 'n Dices">
-        <link rel="shortcut icon" href="assets/img/favicon-72.png">
-        <link rel="apple-touch-icon" href="assets/img/icon-48.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="assets/img/icon-72.png">
-        <link rel="apple-touch-icon" sizes="96x96" href="assets/img/icon-96.png">
-        <link rel="apple-touch-icon" sizes="144x144" href="assets/img/icon-144.png">
-        <link rel="apple-touch-icon" sizes="192x192" href="assets/img/icon-192.png">
 
-        <!-- Windows -->
-        <meta name="msapplication-TileImage" content="assets/img/icon-144.png">
-        <meta name="msapplication-TileColor" content="#2F3BA2">
+        <script>
+            // setup Polymer options
+            window.Polymer = {lazyRegister: true, dom: 'shadow'};
 
-        <link rel="import" href="assets/bower_components/polymer/polymer.html">
+            // load webcomponents polyfills
+            (function() {
+                if ('registerElement' in document
+                    && 'import' in document.createElement('link')
+                    && 'content' in document.createElement('template')) {
+                    // browser has web components
+                } else {
+                    // polyfill web components
+                    var e = document.createElement('script');
+                    e.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
+                    document.head.appendChild(e);
+                }
+                var e = document.createElement('script');
+                e.src = '/bower_components/linqjs/linq.min.js';
+                document.head.appendChild(e);
+            })();
+            // load pre-caching service worker
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                    //navigator.serviceWorker.register('/service-worker.js');
+                });
+            }
+        </script>
 
-        <link rel="import" href="app/dungeon-dices.html">
-
-        <title>Dungeon 'n Dices</title>
-        <meta name="description" content="The Generic RPG Sheet Manager">
-    </head>
-
-    <body unresolved>
+        <link rel="import" href="/src/snd-app.html">
 
         <style>
             body {
                 -webkit-touch-callout: none;    /* prevent callout to copy image, etc when tap to hold */
                 -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
                 -webkit-user-select: none;      /* prevent copy paste, to allow, change 'none' to 'text' */
-                background: #fafafa;
-                font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 margin: 0;
+                font-family: 'Roboto', sans-serif, 'Noto';
+                line-height: 1.5;
+                min-height: 100vh;
+                background-color: #eee;
             }
         </style>
 
-        <dungeon-dices></dungeon-dices>
+    </head>
 
-        <script>
-            // Load Web Components when not supported
-            var webComponentsSupported = ("registerElement" in document
-                && 'import' in document.createElement("link")
-                && 'content' in document.createElement("template"));
+    <body>
 
-            if (!webComponentsSupported) {
-                var script = document.createElement("script");
-                script.src = "assets/bower_components/webcomponentsjs/webcomponents-lite.js";
-                document.head.appendChild(script);
-                console.log("WebComponents Loaded");
-            }
-        </script>
-
-        <script type="text/javascript" src="assets/libs/linq.min.js"></script>
+        <snd-app unresolved></snd-app>
 
     </body>
 </html>
