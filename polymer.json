@@ -3,7 +3,6 @@
     "shell": "src/snd-app.html",
     "fragments": [
         "src/snd-sheetlist-data.html",
-        "src/snd-basesheet-data.html",
         "src/snd-newsheet-data.html",
         "src/snd-sheet-list.html",
         "src/snd-sheet-create.html",
@@ -15,6 +14,7 @@
         "src/create-defenses-tab.html",
         "src/create-skills-tab.html",
         "src/create-status-card.html",
-        "src/create-statusbased-card.html"
+        "src/create-statusbased-card.html",
+        "src/create-dependency-element.html"
     ]
 }
