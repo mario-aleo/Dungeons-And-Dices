@@ -195,7 +195,34 @@
                 );
                 // Pushing to SheetList and Cleaning the newSheet
                 this.push("sheetList.list", this.newSheet);
-                this.set("newSheet", this.baseSheet);
+
+                /*
+                this.set("newSheet", Object.assign({}, this.baseSheet);
+                this.notifyPath("newSheet");
+
+                this.set("newSheet.statusList", Object.assign([], this.baseSheet.statusList);
+                this.notifyPath("newSheet.statusList");
+
+                this.set("newSheet.resourcesList", Object.assign([], this.baseSheet.resourcesList);
+                this.notifyPath("newSheet.resourcesList");
+
+                this.set("newSheet.defensesList", Object.assign([], this.baseSheet.defensesList);
+                this.notifyPath("newSheet.defensesList");
+
+                this.set("newSheet.skillsList", Object.assign([], this.baseSheet.skillsList);
+                this.notifyPath("newSheet.skillsList");
+                */
+                
+                this.set("newSheet", Object.assign({}, this.baseSheet);
+
+                this.set("newSheet.statusList", Object.assign([], this.baseSheet.statusList);
+
+                this.set("newSheet.resourcesList", Object.assign([], this.baseSheet.resourcesList);
+
+                this.set("newSheet.defensesList", Object.assign([], this.baseSheet.defensesList);
+
+                this.set("newSheet.skillsList", Object.assign([], this.baseSheet.skillsList);
+
                 this.fire("requestChangeRoute", {
                     route: "/list"
                 });
@@ -237,8 +264,8 @@
                                         element.dependencyChain.push(nullDependencyElement);
                                         console.log(dependencyChain);
                                         throw "Deadlock Warlord";
-                                    } 
-                                });                
+                                    }
+                                });
                                 element.dependencyChain.push(nullDependencyElement);
                                 element._objectCalculation(nullDependencyElement);
                             });
