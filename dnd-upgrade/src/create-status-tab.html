@@ -12,7 +12,7 @@
             :host {
                 display: block;
                 @apply(--layout-vertical);
-                padding: 16px;
+                padding: 16px 0;
             }
 
             paper-fab {
@@ -71,7 +71,7 @@
 
         _newStatus: function(e){
             this.push("statusList", {
-                name: "Str/Dex/Int/...",
+                name: "Str/Dex/Int",
                 value: 0,
                 baseValue: 0,
                 levelModifier: 0,

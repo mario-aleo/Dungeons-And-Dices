@@ -7,6 +7,9 @@
 <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 
+<link rel="import" href="snd-basesheet-data.html">
+<link rel="import" href="snd-newsheet-data.html">
+
 <link rel="import" href="create-basic-tab.html">
 <link rel="import" href="create-status-tab.html">
 <link rel="import" href="create-resources-tab.html">
@@ -39,6 +42,10 @@
                 overflow: auto;
             }
         </style>
+
+        <snd-basesheet-data base-sheet="{{ baseSheet }}"></snd-basesheet-data>
+        <snd-newsheet-data new-sheet="{{ newSheet }}"
+                           base-sheet="[[ baseSheet ]]"></snd-newsheet-data>
 
         <paper-tabs noink
                     scrollable
@@ -114,15 +121,8 @@
                     type: Boolean
                 },
                 dependencyChain: {
-                    type: Array
-                },
-                newSheet: {
-                    type: Object,
-                    notify: true
-                },
-                baseSheet: {
-                    type: Object,
-                    notify: true
+                    type: Array,
+                    value: []
                 },
                 sheetList: {
                     type: Object,
@@ -150,78 +150,135 @@
                 // Need to Verify  Each Status, Resource, Defense and Skill and SUM
                 var element = this;
                 parseInt(element._numberTypeCheck(element.newSheet.level));
+
                 // SUM Status = baseValue + (levelModifier * level)
                 this.newSheet.statusList.forEach(
                     function(status){
-                        if (status.value === null) {
+                        if (status.value === 0) {
                             element.dependencyChain.push(status);
                             element._objectCalculation(status);
                             element.dependencyChain = [];
                         }
                     }
                 );
+
                 // SUM Resource = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
                 // or if statusBase == None => SUM Resource = baseValue + (levelModifier * level)
                 this.newSheet.resourcesList.forEach(
                     function(resource){
-                        if (resource.value === null) {
+                        if (resource.value === 0) {
                             element.dependencyChain.push(resource);
                             element._objectCalculation(resource);
                             element.dependencyChain = [];
                         }
                     }
                 );
+
                 // SUM Defense = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
                 // or if statusBase == None => SUM Defense = baseValue + (levelModifier * level)
                 this.newSheet.defensesList.forEach(
                     function(defense){
-                        if (defense.value === null) {
+                        if (defense.value === 0) {
                             element.dependencyChain.push(defense);
                             element._objectCalculation(defense);
                             element.dependencyChain = [];
                         }
                     }
                 );
+
                 // SUM Skill = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
                 // or if statusBase == None => SUM Skill = baseValue + (levelModifier * level)
                 this.newSheet.skillsList.forEach(
                     function(skill){
-                        if (skill.value === null) {
+                        if (skill.value === 0) {
                             element.dependencyChain.push(skill);
                             element._objectCalculation(skill);
                             element.dependencyChain = [];
                         }
                     }
                 );
+
                 // Pushing to SheetList and Cleaning the newSheet
                 this.push("sheetList.list", this.newSheet);
 
-                /*
-                this.set("newSheet", Object.assign({}, this.baseSheet);
-                this.notifyPath("newSheet");
+                this.set("newSheet", Object.assign({}, this.baseSheet));
 
-                this.set("newSheet.statusList", Object.assign([], this.baseSheet.statusList);
-                this.notifyPath("newSheet.statusList");
+                this.set("newSheet.statusList", [
+                    {
+                        name: "Strength",
+                        value: 0,
+                        baseValue: 0,
+                        minimumModifierValue: 10,
+                        levelModifier: 0,
+                        persistBonus: 0,
+                        volatileBonus: 0,
+                        dependencyList: [
+                            {
+                            	location: "None",
+                            	name: "None",
+                            	modifier: 0
 
-                this.set("newSheet.resourcesList", Object.assign([], this.baseSheet.resourcesList);
-                this.notifyPath("newSheet.resourcesList");
+                            }
+                        ]
+                    }
+                ]);
 
-                this.set("newSheet.defensesList", Object.assign([], this.baseSheet.defensesList);
-                this.notifyPath("newSheet.defensesList");
+                this.set("newSheet.resourcesList", [
+                    {
+                        name: "HP",
+                        value: 0,
+                        baseValue: 0,
+                        levelModifier: 0.5,
+                        persistBonus: 0,
+                        volatileBonus: 0,
+                        dependencyList: [
+                            {
+                            	location: "None",
+                            	name: "None",
+                            	modifier: 0
 
-                this.set("newSheet.skillsList", Object.assign([], this.baseSheet.skillsList);
-                this.notifyPath("newSheet.skillsList");
-                */
-                
-                this.set("newSheet", Object.assign({}, this.baseSheet);
+                            }
+                        ]
+                    }
+                ]);
 
-                this.set("newSheet.statusList", Object.assign([], this.baseSheet.statusList);
+                this.set("newSheet.defensesList", [
+                    {
+                        name: "Armor",
+                        value: 0,
+                        baseValue: 10,
+                        levelModifier: 0.5,
+                        persistBonus: 0,
+                        volatileBonus: 0,
+                        dependencyList: [
+                            {
+                            	location: "None",
+                            	name: "None",
+                            	modifier: 0
 
-                this.set("newSheet.resourcesList", Object.assign([], this.baseSheet.resourcesList);
+                            }
+                        ]
+                    }
+                ]);
 
-                this.set("newSheet.defensesList", Object.assign([], this.baseSheet.defensesList);
+                this.set("newSheet.skillsList", [
+                    {
+                        name: "Diplomacy",
+                        value: 0,
+                        baseValue: 10,
+                        levelModifier: 0.5,
+                        persistBonus: 0,
+                        volatileBonus: 0,
+                        dependencyList: [
+                            {
+                            	location: "None",
+                            	name: "None",
+                            	modifier: 0
 
-                this.set("newSheet.skillsList", Object.assign([], this.baseSheet.skillsList);
+                            }
+                        ]
+                    }
+                ]);
 
                 this.fire("requestChangeRoute", {
                     route: "/list"
@@ -237,12 +294,12 @@
                         this.dependencyElements = [];
 
                         // Populate dependencyElements Array
-                        obj.dependencyListforEach(function (dependencyItem) {
+                        obj.dependencyList.forEach(function (dependencyItem) {
                             Object.keys(element.newSheet).forEach(function (key) {
                                 if (key == dependencyItem.location) {
                                     element.newSheet[key].forEach(function (obj) {
                                         if (obj.name == dependencyItem.name) {
-                                            this.dependencyElements.push(obj);
+                                            element.dependencyElements.push(obj);
                                         }
                                     });
                                 }
@@ -250,9 +307,9 @@
                         });
 
                         // Call _objectCalculation() for dependencyElements without Value
-                        Enumerable.From(this.dependencyElements)
+                        Enumerable.From(element.dependencyElements)
                             .Where(function (dependencyElement) {
-                                return dependencyElement.value === null;
+                                return dependencyElement.value === 0;
                             })
                             .Select(function (dependencyElement) {
                                 return dependencyElement;
@@ -271,13 +328,13 @@
                             });
 
                         // Reset dependencyElements Array
-                        this.dependencyElements = [];
-                        obj.dependencyListforEach(function (dependencyItem) {
+                        element.dependencyElements = [];
+                        obj.dependencyList.forEach(function (dependencyItem) {
                             Object.keys(element.newSheet).forEach(function (key) {
                                 if (key == dependencyItem.location) {
                                     element.newSheet[key].forEach(function (obj) {
                                         if (obj.name == dependencyItem.name) {
-                                            this.dependencyElements.push(obj);
+                                            element.dependencyElements.push(obj);
                                         }
                                     });
                                 }
@@ -285,20 +342,20 @@
                         });
 
                         // Init the Element Value
-                        //obj.value = obj.baseValue;
-                        obj.value = parseInt( parseInt(element._numberTypeCheck(obj.baseValue)) + parseInt(obj._numberTypeCheck(element.newSheet.level)) * parseFloat(element._numberTypeCheck(obj.levelModifier)) );
+                        obj.value = parseInt( parseInt(element._numberTypeCheck(obj.baseValue)) + parseInt(element._numberTypeCheck(element.newSheet.level)) * parseFloat(element._numberTypeCheck(obj.levelModifier)) );
                         console.log("Init " + obj.name + " the Element Value: " + obj.value);
 
                         // Update the Element Value with the dependencyElements Values
-                        obj.dependencyListforEach(function (dependencyItem) {
-                            this.dependencyElements.forEach(function (dependencyElement){
+                        obj.dependencyList.forEach(function (dependencyItem) {
+                            element.dependencyElements.forEach(function (dependencyElement){
                                 if (dependencyElement.name == dependencyItem.name) {
-                                    obj.value = parseInt( element._numberTypeCheck(obj.value) + parseInt(obj._numberTypeCheck(dependencyElement.value)) * parseFloat(element._numberTypeCheck(dependencyItem.modifier)) );
+                                    obj.value = parseInt( element._numberTypeCheck(obj.value) + parseInt(element._numberTypeCheck(dependencyElement.value)) * parseFloat(element._numberTypeCheck(dependencyItem.value)) );
                                     console.log("Update " + obj.name + " Value with " + dependencyElement.name +  " Value: " + obj.value);
                                 }
                             });
                         });
                         // End Value Calculation
+                        element.dependencyElements = [];
                         console.log("End " + obj.name + " Value Calculation: " + obj.value);
                     } else {
                         obj.value = obj.baseValue;
@@ -306,70 +363,6 @@
                         console.log("End " + obj.name + " Value Calculation: " + obj.value);
                     }
             }
-
-            /*
-            _saveSheet: function(e){
-                // Need to Verify  Each Status, Resource, Defense and Skill and SUM
-                var element = this;
-                // SUM Status = baseValue + (levelModifier * level)
-                this.newSheet.statusList.forEach(
-                    function(status, index){
-                        status.value = parseInt(element._numberTypeCheck(status.baseValue)) + (parseFloat(element._numberTypeCheck(status.levelModifier)) * parseInt(element._numberTypeCheck(element.newSheet.level)));
-                    }
-                );
-                // SUM Resource = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
-                // or if statusBase == None => SUM Resource = baseValue + (levelModifier * level)
-                this.newSheet.resourcesList.forEach(
-                    function(resource, index){
-                        if(resource.statusBase != "None"){
-                            var baseStatusValue = Enumerable.From(element.newSheet.statusList)
-                                                            .Where(function (x) { return x.name == resource.statusBase })
-                                                            .Select(function (x) { return x.value })
-                                                            .ToString();
-                            resource.value = parseInt(parseInt(element._numberTypeCheck(resource.baseValue)) + (parseFloat(element._numberTypeCheck(resource.statusBaseModifier)) * parseInt(element._numberTypeCheck(baseStatusValue))) + (parseFloat(element._numberTypeCheck(resource.levelModifier)) * parseInt(element._numberTypeCheck(element.newSheet.level))));
-                        } else{
-                            resource.value = parseInt(parseInt(element._numberTypeCheck(resource.baseValue)) + (parseFloat(element._numberTypeCheck(resource.levelModifier)) * parseInt(element._numberTypeCheck(element.newSheet.level))));
-                        }
-                    }
-                );
-                // SUM Defense = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
-                // or if statusBase == None => SUM Defense = baseValue + (levelModifier * level)
-                this.newSheet.defensesList.forEach(
-                    function(defense, index){
-                        if(defense.statusBase != "None"){
-                            var baseStatusValue = Enumerable.From(element.newSheet.statusList)
-                                                            .Where(function (x) { return x.name == defense.statusBase })
-                                                            .Select(function (x) { return x.value })
-                                                            .ToString();
-                            defense.value = parseInt(parseInt(element._numberTypeCheck(defense.baseValue)) + (parseFloat(element._numberTypeCheck(defense.statusBaseModifier)) * parseInt(element._numberTypeCheck(baseStatusValue))) + (parseFloat(element._numberTypeCheck(defense.levelModifier)) * parseInt(element._numberTypeCheck(element.newSheet.level))));
-                        } else{
-                            defense.value = parseInt(parseInt(element._numberTypeCheck(defense.baseValue)) + (parseFloat(element._numberTypeCheck(defense.levelModifier)) * parseInt(element._numberTypeCheck(element.newSheet.level))));
-                        }
-                    }
-                );
-                // SUM Skill = baseValue + (statusBase.value * statusBaseModifier) + (levelModifier * level)
-                // or if statusBase == None => SUM Skill = baseValue + (levelModifier * level)
-                this.newSheet.skillsList.forEach(
-                    function(skill, index){
-                        if(skill.statusBase != "None"){
-                            var baseStatusValue = Enumerable.From(element.newSheet.statusList)
-                                                            .Where(function (x) { return x.name == skill.statusBase })
-                                                            .Select(function (x) { return x.value })
-                                                            .ToString();
-                            skill.value = parseInt(parseInt(element._numberTypeCheck(skill.baseValue)) + (parseFloat(element._numberTypeCheck(skill.statusBaseModifier)) * parseInt(element._numberTypeCheck(baseStatusValue))) + (parseFloat(element._numberTypeCheck(skill.levelModifier)) * parseInt(element._numberTypeCheck(element.newSheet.level))));
-                        } else{
-                            skill.value = parseInt(parseInt(element._numberTypeCheck(skill.baseValue)) + (parseFloat(element._numberTypeCheck(skill.levelModifier)) * parseInt(element._numberTypeCheck(element.newSheet.level))));
-                        }
-                    }
-                );
-                // Pushing to SheetList and Cleaning the newSheet
-                this.push("sheetList.list", this.newSheet);
-                this.set("newSheet", this.baseSheet);
-                this.fire("requestChangeRoute", {
-                    route: "/list"
-                });
-            }
-            */
         });
 
     </script>

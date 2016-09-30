@@ -19,14 +19,12 @@
         properties: {
             newSheet: {
                 type: Object,
-                notify: true,
-                reflectToAttribute: true
+                notify: true
             }
         },
 
         _initializeNewSheet: function(e){
             if((typeof this.newSheet == "undefined" || this.newSheet == null) && this.baseSheet != null){
-                //this.newSheet = Object.create(this.baseSheet);
                 this.newSheet = Object.assign({}, this.baseSheet);
                 console.log("Creating Sheet Assigned as Base Sheet");
             }
