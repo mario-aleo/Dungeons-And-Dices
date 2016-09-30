@@ -44,7 +44,8 @@
 
         <snd-newsheet-data new-sheet="{{ newSheet }}"></snd-newsheet-data>
 
-        <paper-tabs noink
+        <paper-tabs id="sheetCreateTabs"
+                    noink
                     scrollable
                     hide-scroll-buttons
                     selected="{{ tabSelected }}">
@@ -257,6 +258,8 @@
                 );
 
                 // Pushing to SheetList and Cleaning the newSheet
+                this.tabSelected = 0;
+
                 this.push("sheetList.list", this.newSheet);
 
                 this.set("newSheet", this.sheetBaseContructor());
