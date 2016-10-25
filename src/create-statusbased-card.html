@@ -53,7 +53,8 @@
 
                 <template is="dom-repeat"
                           items="{{ dependencyList }}">
-                    <create-dependency-element dependency-location="{{ item.location }}"
+                    <create-dependency-element index="[[ index ]]"
+                                               dependency-location="{{ item.location }}"
                                                dependency-value="{{ item.value }}"
                                                dependency-name="{{ item.name }}"
                                                resources-list="[[ resourcesList ]]"
