@@ -6,7 +6,7 @@
         <!-- Mobile -->
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
 
-        <title>Sheets 'n Dices</title>
+        <title>Sheets n Dices</title>
         <meta name="description" content="The Generic RPG Sheet Manager">
 
         <link rel="shortcut icon" sizes="72x72" href="/images/icon_72.png">
@@ -21,6 +21,19 @@
         <!-- Safari / iOS -->
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+        <style>
+            body {
+                -webkit-touch-callout: none;    /* prevent callout to copy image, etc when tap to hold */
+                -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
+                -webkit-user-select: none;      /* prevent copy paste, to allow, change 'none' to 'text' */
+                margin: 0;
+                font-family: 'Roboto', sans-serif, 'Noto';
+                line-height: 1.5;
+                min-height: 100vh;
+                background-color: #eee;
+            }
+        </style>
 
         <script>
             // setup Polymer options
@@ -51,19 +64,6 @@
         </script>
 
         <link rel="import" href="/src/snd-app.html">
-
-        <style>
-            body {
-                -webkit-touch-callout: none;    /* prevent callout to copy image, etc when tap to hold */
-                -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
-                -webkit-user-select: none;      /* prevent copy paste, to allow, change 'none' to 'text' */
-                margin: 0;
-                font-family: 'Roboto', sans-serif, 'Noto';
-                line-height: 1.5;
-                min-height: 100vh;
-                background-color: #eee;
-            }
-        </style>
 
     </head>
 

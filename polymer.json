@@ -16,5 +16,14 @@
         "src/create-status-card.html",
         "src/create-statusbased-card.html",
         "src/create-dependency-element.html"
+    ],
+    "sources": [
+        "src/**/*",
+        "images/**/*",
+        "bower.json"
+    ],
+    "includeDependencies": [
+        "bower_components/webcomponentsjs/webcomponents-lite.min.js",
+        "bower_components/linqjs/linq.min.js"
     ]
 }
