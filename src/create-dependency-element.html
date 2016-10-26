@@ -53,7 +53,8 @@
             </paper-listbox>
         </paper-dropdown-menu>
 
-        <paper-input-container class="dependency-value">
+        <paper-input-container class="dependency-value"
+                               disabled="">
             <label>Value</label>
             <input is="iron-input"
                    bind-value="{{ dependencyValue }}">
@@ -86,6 +87,10 @@
                 type: String,
                 notify: true
             },
+            dependencyValueDisabled: {
+                type: Boolean,
+                value: false
+            },
             statusList: {
                 type: Array
             },
@@ -104,7 +109,6 @@
             this.set("modifierNameList", Object.assign([], this[this.dependencyLocation]));
             this.$.dependencyNameDropdown.selected = null;
             this.$.dependencyNameList.render();
-
         },
 
         _requestDeleteDependency: function (e) {

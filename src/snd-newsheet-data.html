@@ -28,8 +28,9 @@
                 this.name = "";
                 this.job = "";
                 this.race = "";
-                this.level = "1";
-                this.system = "",
+                this.level = 1;
+                this.system = "";
+                this.minimumModifierValue = 10;
                 this.statusList = [
                     new Status()
                 ];
@@ -44,6 +45,9 @@
                 ];
                 this.persistBonusList = [];
                 this.volatileBonusList = [];
+                this.notesList = [
+                    new Note(null, null);
+                ];
             }
 
             function Dependency () {
@@ -56,7 +60,6 @@
                 this.name = "Strength";
                 this.value = 0;
                 this.baseValue = 0;
-                this.minimumModifierValue = 10;
                 this.levelModifier = 0;
                 this.persistBonus = 0;
                 this.volatileBonus = 0;
@@ -77,13 +80,18 @@
                 ]
             }
 
+            function Note (title, text) {
+                this.title = title;
+                this.text = text;
+            }
+
             return new SheetBase();
         },
 
         _initializeNewSheet: function(e){
             if(!this.newSheet){
                 this.set("newSheet", this.sheetBaseContructor());
-                console.log("Creating Sheet Assigned as Base Sheet");
+                console.log("Creating: Empty Sheet Assigned as Base Sheet");
             }
         }
 

@@ -1,6 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
 
 <link rel="import" href="create-status-card.html">
 
@@ -20,7 +21,22 @@
                 bottom: 16px;
                 right: 16px;
             }
+
+            .card-content {
+                @apply(--layout-horizontal);
+            }
         </style>
+
+        <paper-card>
+            <div class="card-content">
+                <paper-checkbox checked="{{ useMinimumModifier }}"></paper-checkbox>
+                <paper-input-container disabled="[[ useMinimumModifier ]]">
+                    <label>Status Minimum Modifier Value</label>
+                    <input is="iron-input"
+                        bind-value="{{ minimumModifierValue }}">
+                </paper-input-container>
+            </div>
+        </paper-card>
 
         <template is="dom-repeat"
                   items="{{ statusList }}">
@@ -62,6 +78,13 @@
             },
             skillsList: {
                 type: Array
+            },
+            minimumModifierValue: {
+                type: Number
+            },
+            useMinimumModifier: {
+                type: Boolean,
+                value: true
             }
         },
 
@@ -80,7 +103,6 @@
                 this.name = "Strength";
                 this.value = 0;
                 this.baseValue = 0;
-                this.minimumModifierValue = 10;
                 this.levelModifier = 0;
                 this.persistBonus = 0;
                 this.volatileBonus = 0;
